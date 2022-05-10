@@ -1,0 +1,29 @@
+{
+  "name": "app_mrzgruop_github",
+  "version": "1.0.0",
+  "description": "This application will be an application developed by flipgamership which will be used with fines from the company mrzgroup which will be in charge of providing information to customers about the processes which are carried out on the customer's merchandise, such as where they are located and how the merchandise is transferred. merchandise or what will be its end",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/app.js"
+  },
+  "keywords": [],
+  "author": "flipgamership(github.com/flipgamership)",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "ejs": "^3.1.7",
+    "express": "^4.18.1",
+    "express-myconnection": "^1.0.4",
+    "express-session": "^1.17.2",
+    "generate-password": "^1.7.0",
+    "generate-pincode": "^6.0.0",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.4",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.16",
+    "sweetalert2": "^11.4.13",
+    "unique-username-generator": "^1.0.1",
+    "uuid": "^8.3.2"
+  }
+}
