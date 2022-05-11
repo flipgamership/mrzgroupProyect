@@ -1,0 +1,115 @@
+<%- include('./partials/nav.ejs') %> 
+
+
+<link rel="stylesheet" href="css/styleLogin.css">
+
+<body class="login">
+
+
+        <div class="container"  style="margin-top: 70px;">
+            <div class="row justify-content-center ">
+                <div class="col-lg-5 col-md-8 col-sm-8 pb-4">
+                    <div class="card m-sm-2 p-sm-3 p-md-3"
+                        style=" box-shadow: -0.843887px 1.81324px 156px rgba(0, 0, 0, 0.05), -0.496881px 1.06764px 81.3696px rgba(0, 0, 0, 0.03616), -0.255191px 0.548325px 38.1888px rgba(0, 0, 0, 0.02808), -0.102617px 0.220491px 16.7232px rgba(0, 0, 0, 0.02192), -0.0229537px 0.0493202px 7.2384px rgba(0, 0, 0, 0.01384);">
+                        <div class="card-title text-center">
+                            <h2 class="p-3 ">Register</h2>
+                        </div>
+                        <div class="card-body ">
+                            <form action="/sendRegister" method="POST">
+                                <div class="mb-3 ">
+                                    <h5 for="usuario ">Nombre completo</h5>
+                                    <input type="text " class="form-control" name="name">
+                                </div>
+                                <div class="mb-3 ">
+                                    <h5 for="usuario">Correo electrónico</h5>
+                                    <input type="email " class="form-control" name="email" required>
+                                </div>
+                               
+                                <div class="mb-3 ">
+                                    <h5 for="usuario ">Teléfono</h5>
+                                    <input type="text " class="form-control" name="phone" required>
+                                </div>
+                                <div class="mb-3 ">
+                                    <h5 for="usuario ">Cedula</h5>
+                                    <input type="text " class="form-control" name="warrant" required>
+                                </div>
+                               
+                                <h5 for="password ">contraseña</h5>
+                                <div class="input-group mb-3 ">
+                                    <input ID="txtPassword" type="Password" Class="form-control" name="pass"
+                                        required>
+                                    <div class="input-group-append">
+                                        <button id="show_password" class="btn" type="button"
+                                            style="background: #F57800; color: #fff " onclick="mostrarPassword() ">
+                                            <i class='bx bx-show-alt'></i> </button>
+                                    </div>
+                                </div>
+                               
+                                <div class="mb-3 ">
+                                    <h5 for="my-select">Nivel de acceso a la plataforma</h5>
+                                    <select id="my-select" class="form-control" name="role"
+                                        style="font-size: 12px; " required>
+                                       
+                                            <option style="font-size: 12px;">SuperAdmin</option>
+                                            <option style="font-size: 12px;">Administrador</option>
+                                            <option style="font-size: 12px;">Supervisor</option>
+                                            <option style="font-size: 12px;" selected>Usuario</option>
+                                             
+                                    </select>
+                                </div>
+                        </div>
+                        <div class="d-grid ">
+                            <button type="submit" class="btn btn-primary" style="background: #000e7c;">Registrar Usuario</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <script src=" //cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                                <% if(typeof alert !="undefined" ) { %>
+                                    <script>
+                                        Swal.fire({
+                                            title: '<%=alertTitle %>',
+                                            text: '<%= alertMessage%>',
+                                            icon: '<%=alertIcon %>',
+                                            showConfirmButton: '<%= showConfirmButton %>',
+                                            timer: '<%= timer %>'
+                                        }).then(() => {
+                                            window.location = '/<%= ruta %>'
+                                        })
+                                    </script>
+                                    <% } %>
+                                        <script type="text/javascript">
+                                            function mostrarPassword() {
+                                                var cambio = document.getElementById("txtPassword");
+                                                if (cambio.type == "password") {
+                                                    cambio.type = "text";
+                                                    $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+                                                } else {
+                                                    cambio.type = "password";
+                                                    $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+                                                }
+                                            }
+                                            $(document).ready(function () {
+                                                //CheckBox mostrar contraseña
+                                                $('#ShowPassword').click(function () {
+                                                    $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
+                                                });
+                                            });
+                                        </script>
+                                        <script>
+                                            var inputs = $("input[type=text]");
+                                            for (var i = 0; i < inputs.length; i++) {
+                                                var aux = $(inputs[i]).val().trim();
+                                                $(inputs[i]).val(aux);
+                                            }
+                                        </script>
+
+
+
+
+
+
+<%- include('./partials/footer.ejs') %> 

@@ -8,7 +8,12 @@ const funtionsPostApp = require('../funtions/post/post')
 
 
     //rutas get
-    // ruta de home index ventana de inicio
-router.get('/')
+    // ruta de registrar usuario gets
+router.get('/register', funtionsGetApp.registerUsers)
 
+
+
+// rutas post
+// ruta de registrar usuario post
+router.post('/sendRegister', funtionsPostApp.sendRegister)
 module.exports = router;

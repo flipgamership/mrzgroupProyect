@@ -24,6 +24,16 @@ app.listen(3000, ()=>{
     console.log('server on port', 3000)
 })
 app.use(morgan('dev'));
+// base de datos 
+app.use(myconnection(mysql,{
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    port: 3306,
+    database: 'mrzgroup'
+}, console.log('conexion exitosa')))
+
+
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
