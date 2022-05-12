@@ -10,7 +10,7 @@ const funtionsPostApp = require('../funtions/post/post')
     //rutas get
     // ruta de registrar usuario gets
 router.get('/register', funtionsGetApp.registerUsers)
-
+router.get('/registerTable', funtionsGetApp.registerTable)
 
 
 // rutas post

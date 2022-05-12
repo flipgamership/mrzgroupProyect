@@ -4,6 +4,10 @@ const bcryptjs = require("bcryptjs");
 const session = require("express-session");
 const funtions = {};
 
+
+
+
+
 funtions.sendRegister = async (req, res) => {
     const name = req.body.name;
     const pass = req.body.pass;
