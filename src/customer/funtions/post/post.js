@@ -5,6 +5,81 @@ const session = require("express-session");
 const funtions = {};
 
 
+//vistas login
+
+funtions.loginAuth = async (req, res) => {
+    const user = req.body.user;
+    const pass = req.body.pass;
+    let passwordHaash = await bcryptjs.hash(pass, 8);
+    if (user && pass) {
+        req.getConnection((error, conn) => {
+            conn.query(
+                "SELECT * FROM usuarios WHERE user=?", [user],
+                async (error, results) => {
+                    if (
+                        results.length === 0 ||
+                        !(await bcryptjs.compare(pass, results[0].password))
+                    ) {
+                        res.render("login", {
+                            role: req.session.role,
+                            alert: true,
+                            alertTitle: "Ups los datos no coinciden",
+                            alertMessage: "por favor revise correctamente la informacion y si este error continua vuelve a intentarlo mas tarde",
+                            alertIcon: "error",
+                            showConfirmButton: true,
+                            ruta: "login",
+                            timer: 10000,
+                        });
+                    } else {
+                        req.session.loggedin = true;
+                        req.session.name = results[0].nombre;
+                        req.session.role = results[0].role;
+                        req.session.ID = results[0].id;
+                        if (req.session.role == "bloqueado") {
+                            req.session.destroy(() => {
+                                res.render("login", {
+                                    idUSERActual: req.session.ID,
+                                    role: req.session.role,
+                                    alert: true,
+                                    alertTitle: "Ups este usuario esta BLOQUEADO",
+                                    alertMessage: "BLOQUEADO",
+                                    alertIcon: "error",
+                                    showConfirmButton: true,
+                                    ruta: "login",
+                                    timer: 10000,
+                                });
+                            });
+                        } else {
+                            res.render("login", {
+                                idUSERActual: req.session.ID,
+                                role: req.session.role,
+                                alert: true,
+                                alertTitle: "acceso consedido",
+                                alertMessage: "acceso valido",
+                                alertIcon: "success",
+                                showConfirmButton: false,
+                                ruta: "home",
+                                timer: 3000,
+                            });
+                        }
+
+                    }
+                }
+            );
+        });
+    } else {
+        res.render("login", {
+            role: req.session.role,
+            alert: true,
+            alertTitle: "Ups por favor llene todos los datos",
+            alertMessage: "por favor revise correctamente la informacion y si este error continua vuelve a intentarlo mas tarde",
+            alertIcon: "error",
+            showConfirmButton: true,
+            ruta: "login",
+            timer: 10000,
+        });
+    }
+};
 
 
 
@@ -85,5 +160,66 @@ funtions.sendRegister = async (req, res) => {
 
     )
 };
+
+
+funtions.sendUpdateUser = (req, res) => {
+    if (req.session.loggedin) {
+        if (req.session.role == "SuperAdmin" || req.session.role == "Administrador") {
+            const id = req.body.id
+            const name = req.body.name;
+            const pass = req.body.pass;
+            const email = req.body.email;
+            const warrant = req.body.warrant;
+            const phone = req.body.phone;
+            const role = req.body.role;
+            req.getConnection((error, conn) => {
+                conn.query(
+                    "UPDATE usuarios SET ? WHERE id = ?", [{
+                        nombre: name,
+                        password: passwordHaash,
+                        correo: email,
+                        warrant: warrant,
+                        telefono: phone,
+                        role: role,
+                    }, id],
+                    (error, results) => {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            res.redirect("/register");
+                        }
+                    }
+                );
+            });
+        } else {
+            res.redirect("/home");
+        }
+    } else {
+        res.redirect("/login");
+    }
+};
+
+funtions.savePasssword = async (req, res) => {
+    if (req.session.loggedin) {
+        if (req.session.role == "SuperAdmin" || req.session.role == "Administrador") {
+            const id = req.body.id;
+            const pass = req.body.password;
+            let passwordHaash = await bcryptjs.hash(pass, 8);
+            req.getConnection((error, conn) => {
+                conn.query(
+                    "UPDATE usuarios SET ? WHERE id = ?", [{ password: passwordHaash }, id],
+                    async (error, results) => {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            res.redirect("/register");
+                        }
+                    }
+                );
+            });
+        }
+    }
+};
+
 
 module.exports = funtions;
