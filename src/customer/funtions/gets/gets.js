@@ -4,16 +4,29 @@ const bcryptjs = require("bcryptjs");
 const session = require("express-session");
 const funtions = {};
 
+funtions.index = (req, res) => {
+        res.render("index");
+};
+
 funtions.logAut = (req, res) => {
     req.session.destroy(() => {
         res.redirect("/");
     });
 };
 funtions.login = (req, res) => {
-    res.render("login");
+    if(req.session.loggedin){
+        res.redirect("/");
+    }else{
+        res.render("login");
+    }
+    
 };
 funtions.registerUsers = (req, res) => {
-            res.render('registerUser')
+    if(req.session.loggedin){
+        res.render('registerUser')
+    }else{
+        res.render("login");
+    }
         };
 
 
@@ -90,7 +103,7 @@ funtions.passwordNew = (req, res) => {
 };
 funtions.BlockUser = (req, res) => {
     if (req.session.loggedin) {
-        if (req.session.role == "SuperAdmin" || req.session.role == "Administrador") {
+        
             const bloqueado = "bloqueado"
             const id = req.params.id;
             req.getConnection((error, conn) => {
@@ -100,12 +113,14 @@ funtions.BlockUser = (req, res) => {
                         if (error) {
                             console.log(error);
                         } else {
-                            res.redirect("/register");
+                            res.redirect("/registerTable");
                         }
                     }
                 );
             });
-        }
+        
+    }else{
+        res.redirect("/login")
     }
 };
 module.exports = funtions;

@@ -14,7 +14,7 @@ funtions.loginAuth = async (req, res) => {
     if (user && pass) {
         req.getConnection((error, conn) => {
             conn.query(
-                "SELECT * FROM usuarios WHERE user=?", [user],
+                "SELECT * FROM usuarios WHERE correo=?", [user],
                 async (error, results) => {
                     if (
                         results.length === 0 ||
