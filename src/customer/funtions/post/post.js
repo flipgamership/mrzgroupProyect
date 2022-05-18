@@ -99,7 +99,7 @@ funtions.sendRegister = async (req, res) => {
                 } else {
                     if ( results.length != 0 ) {
                         console.log('el correo esta registrado')
-                        res.render("", {
+                        res.render('notification', {
 
                             alert: true,
                             alertTitle: "el correo ya esta registrado",
@@ -125,7 +125,7 @@ funtions.sendRegister = async (req, res) => {
                                 async (error, results) => {
                                     if (error) {
                                         console.log(error);
-                                        res.render("", {
+                                        res.render('notification', {
                                             role: req.session.role,
                                             alert: true,
                                             alertTitle: "Ups hubo algun problema",
@@ -137,7 +137,7 @@ funtions.sendRegister = async (req, res) => {
                                         });
                                     } else {
                                         console.log(results);
-                                        res.render("", {
+                                        res.render('notification', {
                                             role: req.session.role,
                                             alert: true,
                                             alertTitle: "Registrado",
@@ -221,5 +221,47 @@ funtions.savePasssword = async (req, res) => {
     }
 };
 
+
+funtions.sendAddStatus = async (req, res) => {
+    const name = req.body.name;
+    const description = req.body.description;
+    const porcentaje = req.body.porcentaje
+    req.getConnection((error, conn) => {
+        conn.query(
+            "INSERT INTO status SET ?", {
+            name: name,
+            descripcion: description,
+            porcentaje: porcentaje
+        },
+            async (error, results) => {
+                if (error) {
+                    console.log(error);
+                    res.render('notification', {
+                        role: req.session.role,
+                        alert: true,
+                        alertTitle: "Ups hubo algun problema",
+                        alertMessage: "por favor revise correctamente la informacion y si este error continua vuelve a intentarlo mas tarde",
+                        alertIcon: "error",
+                        showConfirmButton: true,
+                        ruta: "AgregarStatus",
+                        timer: 15000,
+                    });
+                } else {
+                    console.log(results);
+                    res.render('notification', {
+                        role: req.session.role,
+                        alert: true,
+                        alertTitle: "agregado",
+                        alertMessage: "se agrego el estatus de forma  Exitosa",
+                        alertIcon: "success",
+                        showConfirmButton: true,
+                        ruta: "statustable",
+                        timer: 15000,
+                    });
+                }
+            }
+        );
+    });
+};
 
 module.exports = funtions;

@@ -1,0 +1,40 @@
+<%- include('./partials/nav.ejs') %>
+    <style>
+        lottie-player {
+            margin: 0 auto;
+        }
+    </style>
+    <div class="container">
+        <h1 class="text-center mt-4">
+            <i class='bx bx-bell'></i> Notificaciones
+        </h1>
+    </div>
+
+    <div class="container my-5 mx-auto text-center">
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+        <a href="/home">
+            <lottie-player src="https://assets3.lottiefiles.com/packages/lf20_4catdg2w.json" mode="bounce"
+                background="transparent" speed="1" style="width:600px; height:80%; opacity: 25%; filter:blur(1px)" loop
+                autoplay></lottie-player>
+        </a>
+
+
+    </div>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- script para llamar sweetalert -->
+    <% if(typeof alert != "undefined") { %>
+      <script>
+        Swal.fire({
+          title: "<%=alertTitle %>",
+          text: "<%= alertMessage%>",
+          icon: "<%=alertIcon %>",
+          showConfirmButton: "<%= showConfirmButton %>",
+          timer: "<%= timer %>",
+        }).then(() => {
+          window.location = "./<%= ruta %>";
+        });
+      </script>
+      <% } %>
+
+
+    <%- include('./partials/footer.ejs') %>
