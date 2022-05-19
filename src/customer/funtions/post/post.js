@@ -263,5 +263,51 @@ funtions.sendAddStatus = async (req, res) => {
         );
     });
 };
+funtions.sendAddMercancia = async (req, res) => {
+    const AWB = req.body.AWB;
+    const status = req.body.status;
+    const name = req.body.name;
+    const cliente = req.body.cliente;
+    const fecha = req.body.fecha;
+    req.getConnection((error, conn) => {
+        conn.query(
+            "INSERT INTO objetos SET ?", {
+            awb:AWB,
+            status:status,
+            name:name,
+            cliente:cliente,
+            fecha:fecha
+
+        },
+            async (error, results) => {
+                if (error) {
+                    console.log(error);
+                    res.render('notification', {
+                        role: req.session.role,
+                        alert: true,
+                        alertTitle: "Ups hubo algun problema",
+                        alertMessage: "por favor revise correctamente la informacion y si este error continua vuelve a intentarlo mas tarde",
+                        alertIcon: "error",
+                        showConfirmButton: true,
+                        ruta: "sendMercancia",
+                        timer: 15000,
+                    });
+                } else {
+                    console.log(results);
+                    res.render('notification', {
+                        role: req.session.role,
+                        alert: true,
+                        alertTitle: "agregado",
+                        alertMessage: "se agrego el estatus de forma  Exitosa",
+                        alertIcon: "success",
+                        showConfirmButton: true,
+                        ruta: "home",
+                        timer: 15000,
+                    });
+                }
+            }
+        );
+    });
+};
 
 module.exports = funtions;

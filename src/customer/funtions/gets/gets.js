@@ -165,7 +165,11 @@ funtions.statusTable = (req, res) => {
 };
 funtions.addstatus = (req, res) => {
     if(req.session.loggedin){
-        res.render('addstatus')
+        res.render('addstatus', {
+            login: true,
+            name: req.session.name,
+            role: req.session.role,
+        })
     }else{
         res.render("login");
     }
@@ -190,5 +194,106 @@ funtions.delateStatus = (req, res) => {
         res.redirect("/login")
     }
 };
+funtions.addMercancia = (req, res) => {
+    if(req.session.loggedin){
+
+
+        req.getConnection((error,conn) => {
+            conn.query(
+                'SELECT * FROM STATUS ', (error, results) => {
+                    if (error) {
+                        console.log(error)
+                    }else {
+                        res.render('addMercancia', {
+                            login: true,
+                            result: results,
+                            name: req.session.name,
+                            role: req.session.role,
+                        })
+                    }
+                }
+            )
+        })
+
+        
+    }else{
+        res.render("login");
+    }
+};
+
+funtions.mercanciaTable = (req, res) => {
+    if (req.session.loggedin) {
+        req.getConnection((error, conn) => {
+            conn.query("SELECT * FROM objetos", (error, results) => {
+                if (error) {
+                    console.log(error);
+                } else {
+                    res.render("mercanciaTable", {
+                        results: results,
+                        login: true,
+                        name: req.session.name,
+                        role: req.session.role,
+                    });
+                }
+            });
+        });
+    }else{
+        res.redirect('/login')
+    }
+   
+};
+
+
+
+funtions.mercanciaUpdateHistorial = (req, res) => {
+    if (req.session.loggedin) {
+        const id = req.params.id;
+        req.getConnection((error, conn) => {
+            conn.query("SELECT * FROM status", (error, data)=>{
+                if(error){
+                    console.log(error);
+                }else{
+                    req.getConnection((error, conn) => {
+                        conn.query("SELECT * FROM historial WHERE awbID  = ?", [id], (error, resultsHistory)=>{
+                            if (error) {
+                                console.log(error);
+                            }else{
+                                if(resultsHistory.length > 0){
+                                  res.render('addMercanciaUpdateStatus',{
+                                      results: resultsHistory,
+                                      login: true,
+                                      name: req.session.name,
+                                      role: req.session.role,
+                                  })
+                                }else{
+                                  req.getConnection((error, conn)=>{
+                                      conn.query("SELECT * FROM objetos WHERE id = ?" [id], (error, results)=> {
+                                              if (error) {
+                                                  console.log(error);
+                                              }else{
+                                                  res.render("addMercanciaUpdateStatus",{
+                                                      results: results,
+                                                      login: true,
+                                                      name: req.session.name,
+                                                      role: req.session.role,
+                                                  })
+                                              }
+                                          }
+                                      )
+                                  })
+                                }
+                            }
+                        } )
+                    })
+                }
+            })
+        })
+    }else{
+        res.redirect('/login')
+    }
+   
+};
+
+
 
 module.exports = funtions;

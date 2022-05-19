@@ -23,6 +23,11 @@ router.get('/loginAut', funtionsGetApp.logAut)
 router.get('/statusTable', funtionsGetApp.statusTable)
 router.get('/AgregarStatus', funtionsGetApp.addstatus)
 router.get('/delateStatus/:id', funtionsGetApp.delateStatus)
+// rutas get de mercancia
+router.get('/AgregarMercancia', funtionsGetApp.addMercancia)
+router.get('/mercanciaTable', funtionsGetApp.mercanciaTable)
+// rutas get de actualizar estatus historial
+router.get('/actualizarMercancia/:id', funtionsGetApp.mercanciaUpdateHistorial)
 
 // rutas post
 // ruta de registrar usuario post
@@ -35,6 +40,8 @@ router.post('/sendPassword', funtionsPostApp.savePasssword)
 router.post('/loginAuth', funtionsPostApp.loginAuth);
 // rutas post de status
 router.post('/statusSend', funtionsPostApp.sendAddStatus)
+//rutas post de mercancía
+router.post('/sendMercancia', funtionsPostApp.sendAddMercancia )
 //pruebas
 // router.get('/p', funtionsGetApp.p)
 module.exports = router;
