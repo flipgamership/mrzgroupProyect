@@ -37,6 +37,9 @@ CREATE TABLE `objetos` (
   `fecha` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+INSERT INTO `objetos` (`id`, `awb`, `status`, `name`, `cliente`, `fecha`) VALUES
+(1, 'HAF1926312Ag', 'envio', 'paqueteria express', 'mercanciaSas', '2022-05-19');
+
 DROP TABLE IF EXISTS `status`;
 CREATE TABLE `status` (
   `id` int(11) NOT NULL,
@@ -46,7 +49,7 @@ CREATE TABLE `status` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `status` (`id`, `name`, `descripcion`, `porcentaje`) VALUES
-(1, 'ingreso', 'se realiza el ingreso a la plataforma de rastreo mas el registro de la mercancia', '5');
+(4, 'envio', 'el envio ', '25');
 
 DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE `usuarios` (
@@ -89,10 +92,10 @@ ALTER TABLE `imagenes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `objetos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 ALTER TABLE `status`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 ALTER TABLE `usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
