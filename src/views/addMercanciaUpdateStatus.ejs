@@ -8,7 +8,7 @@
 
         <div class="container"  style="margin-top: 70px;">
             <div class="row justify-content-center ">
-                <div class="col-lg-5 col-md-8 col-sm-8 pb-4">
+                <div class="col-lg-5 col-md-6 col-sm-6 pb-4">
                     <div class="card m-sm-2 p-sm-3 p-md-3"
                         style=" box-shadow: -0.843887px 1.81324px 156px rgba(0, 0, 0, 0.05), -0.496881px 1.06764px 81.3696px rgba(0, 0, 0, 0.03616), -0.255191px 0.548325px 38.1888px rgba(0, 0, 0, 0.02808), -0.102617px 0.220491px 16.7232px rgba(0, 0, 0, 0.02192), -0.0229537px 0.0493202px 7.2384px rgba(0, 0, 0, 0.01384);">
                         <div class="card-title text-center">
@@ -23,7 +23,49 @@
                                 <div class="mb-3 ">
                                     <h5 for="usuario">Estatus</h5>
                                     <select class="form-select" aria-label="Default select example" name="status" >
-                                        <% result.forEach((Data)=> {%>
+                                        <% data.forEach((Data)=> {%>
+                                            <option>
+                                                <%= Data.name%>
+                                            </option>
+                                            <% }) %>
+                                      </select>
+                                </div>
+                                <div class="mb-3 ">
+                                    <h5 for="usuario ">Nombre de la mercancía</h5>
+                                    <input type="text " class="form-control" name="name" required>
+                                </div>     
+                                <div class="mb-3 ">
+                                    <h5 for="usuario ">Cliente propietario</h5>
+                                    <input type="text " class="form-control" name="cliente" required>
+                                </div>      
+                                <div class="mb-3 ">
+                                    <h5 for="usuario ">Fecha de ingreso de la mercancía</h5>
+                                    <input type="date" class="form-control" name="fecha" required>
+                                </div>                 
+                                       
+                        </div>
+                        <div class="d-grid ">
+                            <button type="submit" class="btn btn-primary" style="background: #000e7c;">registrar mercancía</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-6 col-sm-6 pb-4">
+                    <div class="card m-sm-2 p-sm-3 p-md-3"
+                        style=" box-shadow: -0.843887px 1.81324px 156px rgba(0, 0, 0, 0.05), -0.496881px 1.06764px 81.3696px rgba(0, 0, 0, 0.03616), -0.255191px 0.548325px 38.1888px rgba(0, 0, 0, 0.02808), -0.102617px 0.220491px 16.7232px rgba(0, 0, 0, 0.02192), -0.0229537px 0.0493202px 7.2384px rgba(0, 0, 0, 0.01384);">
+                        <div class="card-title text-center">
+                            <h2 class="p-3 ">Registro mercancía nueva</h2>
+                        </div>
+                        <div class="card-body ">
+                            <form action="/sendMercancia" method="POST">
+                                <div class="mb-3 ">
+                                    <h5 for="usuario ">AWB de la mercancía</h5>
+                                    <input type="text " class="form-control" name="AWB">
+                                </div>
+                                <div class="mb-3 ">
+                                    <h5 for="usuario">Estatus</h5>
+                                    <select class="form-select" aria-label="Default select example" name="status" >
+                                        <% data.forEach((Data)=> {%>
                                             <option>
                                                 <%= Data.name%>
                                             </option>
@@ -52,7 +94,7 @@
                 </div>
             </div>
         </div>
-        </div>
+        
         <script src=" //cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                                 <% if(typeof alert !="undefined" ) { %>
                                     <script>
