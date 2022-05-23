@@ -1,0 +1,96 @@
+<%- include('./partials/nav.ejs') %> 
+
+
+<link rel="stylesheet" href="css/styleLogin.css">
+
+<body class="login">
+
+
+        <div class="container"  style="margin-top: 70px;">
+            <div class="row justify-content-center ">
+                <div class="col-lg-5 col-md-8 col-sm-8 pb-4">
+                    <div class="card m-sm-2 p-sm-3 p-md-3"
+                        style=" box-shadow: -0.843887px 1.81324px 156px rgba(0, 0, 0, 0.05), -0.496881px 1.06764px 81.3696px rgba(0, 0, 0, 0.03616), -0.255191px 0.548325px 38.1888px rgba(0, 0, 0, 0.02808), -0.102617px 0.220491px 16.7232px rgba(0, 0, 0, 0.02192), -0.0229537px 0.0493202px 7.2384px rgba(0, 0, 0, 0.01384);">
+                        <div class="card-title text-center">
+                            <h2 class="p-3 ">Agregar foto de la mercancía</h2>
+                            <div class="container-fluid"> 
+                                <div class="row">
+                                        <div class="col-sm-12 d-flex justify-content-center">
+                                            <h5 class="p-3 bg-dark bg-gradient col-lg-5 d-flex justify-content-center" style="color: white; border-radius: 10px; "> <i style="font-size: 24px; margin-right:5px;" class='bx bx-qr' ></i> <%= results[0].awb %></h3>
+                                    </div>
+                                </div>
+                        
+                            </div>
+                        </div>
+                        <div class="card-body ">
+                            <form action="/statusSend" method="POST">
+                                <div class="mb-3 ">
+                                    <h5 for="usuario ">seleccione el estatus al que pertenece la imagen</h5>
+                                    <select class="form-select" aria-label="Default select example" name="status" >
+                                        <% data.forEach((Data)=> {%>
+                                            <option>
+                                                <%= Data.name%>
+                                            </option>
+                                            <% }) %>
+                                      </select>
+                                </div> 
+                                <div class="mb-3 ">
+                                    <h5 for="usuario ">imagen</h5>
+                                    <input type="file" class="form-control" name="porcentaje" placeholder="subir imagen" accept="image/png, image/jpeg, image/jpg," required>
+                                </div>                    
+                        </div>
+                        <div class="d-grid ">
+                            <button type="submit" class="btn btn-primary" style="background: #000e7c;">Agregar estatus</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <script src=" //cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                                <% if(typeof alert !="undefined" ) { %>
+                                    <script>
+                                        Swal.fire({
+                                            title: '<%=alertTitle %>',
+                                            text: '<%= alertMessage%>',
+                                            icon: '<%=alertIcon %>',
+                                            showConfirmButton: '<%= showConfirmButton %>',
+                                            timer: '<%= timer %>'
+                                        }).then(() => {
+                                            window.location = '/<%= ruta %>'
+                                        })
+                                    </script>
+                                    <% } %>
+                                        <script type="text/javascript">
+                                            function mostrarPassword() {
+                                                var cambio = document.getElementById("txtPassword");
+                                                if (cambio.type == "password") {
+                                                    cambio.type = "text";
+                                                    $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+                                                } else {
+                                                    cambio.type = "password";
+                                                    $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+                                                }
+                                            }
+                                            $(document).ready(function () {
+                                                //CheckBox mostrar contraseña
+                                                $('#ShowPassword').click(function () {
+                                                    $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
+                                                });
+                                            });
+                                        </script>
+                                        <script>
+                                            var inputs = $("input[type=text]");
+                                            for (var i = 0; i < inputs.length; i++) {
+                                                var aux = $(inputs[i]).val().trim();
+                                                $(inputs[i]).val(aux);
+                                            }
+                                        </script>
+
+
+
+
+
+
+<%- include('./partials/footer.ejs') %> 

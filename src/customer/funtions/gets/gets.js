@@ -292,4 +292,54 @@ funtions.mercanciaUpdateHistorial = (req, res) => {
   }
 };
 
+funtions.fotosHistorial = (req, res) => {
+  if (req.session.loggedin) {
+    const id = req.params.id;
+    req.getConnection((error, conn) => {
+      conn.query("SELECT * FROM imagenes WHERE idHistorial = ?", [id], (error, results) => {
+        if (error) {
+          console.log(error);
+        } else {
+            res.render("mercanciaImagenesTable",{
+              results:results,
+              idAWS: id,
+            })
+        }
+      });
+    });
+  } else {
+    res.redirect("/login");
+  }
+};
+funtions.foto = (req, res) => {
+  if (req.session.loggedin){
+    const id = req.params.id;
+    req.getConnection((error, conn) => {
+      conn.query("SELECT * FROM objetos WHERE id = ?", [id], (error, results)=>{
+        if (error) {
+          console.log(error);
+        }else{
+          req.getConnection((error, conn) => {
+            conn.query("SELECT * FROM STATUS ", (error, data) => {
+              if (error) {
+                console.log(error);
+              } else {
+                res.render("addFoto",{
+                  results: results,
+                  data: data,
+                })
+               
+              }
+            });
+          });
+          
+        }
+      })
+    })
+  }else{
+    res.redirect('/login')
+  }
+}
+
+
 module.exports = funtions;
