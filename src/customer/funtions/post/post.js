@@ -310,4 +310,47 @@ funtions.sendAddMercancia = async (req, res) => {
     });
 };
 
+funtions.SubirNuevoArchivos = (req, res) => {
+    var fecha = new Date(); //Fecha actual
+    var mes = fecha.getMonth() + 1; //obteniendo mes
+    var dia = fecha.getDate(); //obteniendo dia
+    var ano = fecha.getFullYear(); //obteniendo año
+    if (dia < 10)
+        dia = '0' + dia; //agrega cero si el menor de 10
+    if (mes < 10)
+        mes = '0' + mes //agrega cero si el menor de 10
+    var fechaActual = ano + "-" + mes + "-" + dia;
+
+    if (req.session.loggedin) {
+        const id_usuario = req.body.id_cliente
+        const fecha = fechaActual
+        const file = req.file.filename
+        const name = req.body.nombreArchivo
+        req.getConnection((error, conn) => {
+            conn.query(
+                "INSERT INTO archivos_clientes SET ? ", { archivo: file, fecha_subida: fecha, nombre: name, id_cliente: id_usuario }, (error, results) => {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log(results);
+                        res.render("notification", {
+                            alert: true,
+                            alertTitle: "Ducumento subido con exito",
+                            alertMessage: "el documento que ingresaste se Actualizo perfectamente",
+                            alertIcon: "success",
+                            showConfirmButton: false,
+                            ruta: "ArchivosUsuarios/" + id_usuario,
+                            timer: 3000,
+                            IDuser: req.session.ID,
+                            role: req.session.role,
+                        })
+                    }
+                }
+            )
+        })
+    } else {
+        res.redirect('/login')
+    }
+}
+
 module.exports = funtions;
