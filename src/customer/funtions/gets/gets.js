@@ -245,12 +245,13 @@ funtions.mercanciaUpdateHistorial = (req, res) => {
         } else {
           req.getConnection((error, conn) => {
             conn.query(
-              "SELECT * FROM historial WHERE awbID = ?",
+              "SELECT * FROM `historial` WHERE awbID = ? ORDER by id DESC;",
               [id],
               (error, resultsHistory) => {
                 if (error) {
                   console.log(error);
                 } else {
+                    console.log(resultsHistory)
                   if (resultsHistory.length > 0) {
                     req.getConnection((error, conn) => {
                       conn.query( 
@@ -267,6 +268,7 @@ funtions.mercanciaUpdateHistorial = (req, res) => {
                               login: true,
                               name: req.session.name,
                               role: req.session.role,
+                              id:id,
                             });
                           }
                         }
@@ -288,6 +290,7 @@ funtions.mercanciaUpdateHistorial = (req, res) => {
                               login: true,
                               name: req.session.name,
                               role: req.session.role,
+                              id:id,
                             });
                           }
                         }

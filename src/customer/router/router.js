@@ -58,6 +58,8 @@ router.post('/statusSend', funtionsPostApp.sendAddStatus)
 router.post('/sendMercancia', funtionsPostApp.sendAddMercancia )
 // rutas post de fotos
 router.post('/fotosSend/:id', uploadImagen , funtionsPostApp.SubirNuevoArchivos)
+// ruta pos actualizar estatus
+router.post('/statusUpdate/:id', funtionsPostApp.estatusNuevoRegister)
 //pruebas
 // router.get('/p', funtionsGetApp.p)
 module.exports = router;

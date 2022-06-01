@@ -35,11 +35,11 @@
                                 </div>      
                                 <div class="mb-3 ">
                                     <h5 for="usuario ">Fecha de ingreso de la mercancía</h5>
-                                    <input type="date" class="form-control" name="fecha" placeholder="<%= results1[0].fecha %>" readonly>
+                                    <input type="date" class="form-control" name="fecha" value="<%= results1[0].fecha %>" readonly>
                                 </div>
                                 <div class="mb-3 ">
                                     <h5 for="usuario ">Observaciones</h5>
-                                    <textarea id="" readonly><%= results1[0].observaciones %></textarea>
+                                    <textarea id="" class="form-control" readonly><%= results1[0].observaciones %></textarea>
                                 </div>                     
                                 <% } %> 
                                 <% if(typeof results2 !="undefined" ) { %>
@@ -61,7 +61,7 @@
                                     </div>      
                                     <div class="mb-3 ">
                                         <h5 for="usuario ">Fecha de ingreso de la mercancía</h5>
-                                        <input type="text" class="form-control" name="fecha" placeholder="<%= results2[0].fecha %>" readonly>
+                                        <input type="text" class="form-control" name="fecha" value="<%= results2[0].fecha %>" readonly>
                                     </div>                 
                                     <% } %> 
                             
@@ -82,11 +82,11 @@
                             <h2 class="p-3 ">Actualizar estatus de la mercancía</h2>
                         </div>
                         <div class="card-body ">
-                            <form action="/sendMercancia" method="POST">
+                            <form action="/statusUpdate/<%= id %>" method="POST">
                                 <% if(typeof results1 !="undefined"  ) { %>
                                 <div class="mb-3 ">
                                     <h5 for="usuario ">AWB de la mercancía</h5>
-                                    <input type="text " class="form-control" name="AWB" value="" value="<%= results3[0].awb %>">
+                                    <input type="text " class="form-control" name="AWB" value="<%= results3[0].awb %>">
                                 </div>
                                 <div class="mb-3 ">
                                     <h5 for="usuario">Estatus</h5>
@@ -97,24 +97,20 @@
                                             </option>
                                             <% }) %>
                                       </select>
-                                </div>
-                                <div class="mb-3 ">
-                                    <h5 for="usuario ">Nombre de la mercancía</h5>
-                                    <input type="text " class="form-control" name="name" required value="<%= results3[0].name %>">
-                                </div>     
-                                <div class="mb-3 ">
-                                    <h5 for="usuario ">Cliente propietario</h5>
-                                    <input type="text " class="form-control" name="cliente" required value="<%= results3[0].cliente %>">
-                                </div>      
+                                </div>    
                                 <div class="mb-3 ">
                                     <h5 for="usuario ">fecha actualización</h5>
                                     <input type="date" class="form-control" name="fecha" required value="<%= results3[0].fecha %>">
-                                </div>            
+                                </div>     
+                                <div class="mb-3 ">
+                                    <h5 for="usuario ">observaciones</h5>
+                                    <textarea class="form-control" type="text" class="form-control" name="observaciones" required value="<%= results1[0].observaciones %>"></textarea>
+                                </div>         
                                              
                             <% } %>  
                         </div>
                         <div class="card-body ">
-                            <form action="/sendMercancia" method="POST">
+                            <form action="/statusUpdate/<%= id %>" method="POST">
                                 <% if(typeof results2 !="undefined"  ) { %>
                                 <div class="mb-3 ">
                                     <h5 for="usuario ">AWB de la mercancía</h5>
@@ -130,18 +126,15 @@
                                             <% }) %>
                                       </select>
                                 </div>
-                                <div class="mb-3 ">
-                                    <h5 for="usuario ">Nombre de la mercancía</h5>
-                                    <input type="text " class="form-control" name="name" required value="<%= results2[0].name %>">
-                                </div>     
-                                <div class="mb-3 ">
-                                    <h5 for="usuario ">Cliente propietario</h5>
-                                    <input type="text " class="form-control" name="cliente" required value="<%= results2[0].cliente %>">
-                                </div>      
+                              
                                 <div class="mb-3 ">
                                     <h5 for="usuario ">fecha actualización</h5>
                                     <input type="date" class="form-control" name="fecha" required value="<%= results2[0].fecha %>">
-                                </div>                 
+                                </div>       
+                                <div class="mb-3 ">
+                                    <h5 for="usuario ">observaciones</h5>
+                                    <textarea class="form-control" type="text" class="form-control" name="observaciones" required></textarea>
+                                </div>              
                             <% } %>  
                         </div>
                         <div class="d-grid ">

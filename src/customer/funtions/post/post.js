@@ -330,7 +330,6 @@ funtions.SubirNuevoArchivos = (req, res) => {
                             showConfirmButton: false,
                             ruta: "addFotosTable/" + idHistorial,
                             timer: 3000,
-                            IDuser: req.session.ID,
                             role: req.session.role,
                         })
                     }
@@ -350,11 +349,29 @@ funtions.estatusNuevoRegister = (req, res)=>{
         const name = req.body.name
         const cliente = req.body.cliente
         const fecha = req.body.fecha
+        const observaciones = req.body.observaciones
         req.getConnection((error, conn) => {
-            conn.query(" INSERT * INTO historial SET ?", {
+            conn.query("INSERT INTO historial SET ?", {
                 awbID:id,
                 estatusHistorial:status,
+                fecha:fecha,
+                observaciones:observaciones
 
+            }, (error, result) => {
+                if (error){
+                    console.log(error)
+                }else{
+                    res.render("notification", {
+                        alert: true,
+                        alertTitle: "estatus actualizado",
+                        alertMessage: "",
+                        alertIcon: "success",
+                        showConfirmButton: false,
+                        ruta: "../mercanciaTable",
+                        timer: 3000,
+                        role: req.session.role,
+                    })
+                }
             })
         })
     }else{
