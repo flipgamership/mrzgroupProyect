@@ -56,6 +56,8 @@ router.post('/loginAuth', funtionsPostApp.loginAuth);
 router.post('/statusSend', funtionsPostApp.sendAddStatus)
 //rutas post de mercancía
 router.post('/sendMercancia', funtionsPostApp.sendAddMercancia )
+// rutas post de fotos
+router.post('/fotosSend/:id', uploadImagen , funtionsPostApp.SubirNuevoArchivos)
 //pruebas
 // router.get('/p', funtionsGetApp.p)
 module.exports = router;

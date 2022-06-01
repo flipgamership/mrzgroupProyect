@@ -311,35 +311,24 @@ funtions.sendAddMercancia = async (req, res) => {
 };
 
 funtions.SubirNuevoArchivos = (req, res) => {
-    var fecha = new Date(); //Fecha actual
-    var mes = fecha.getMonth() + 1; //obteniendo mes
-    var dia = fecha.getDate(); //obteniendo dia
-    var ano = fecha.getFullYear(); //obteniendo año
-    if (dia < 10)
-        dia = '0' + dia; //agrega cero si el menor de 10
-    if (mes < 10)
-        mes = '0' + mes //agrega cero si el menor de 10
-    var fechaActual = ano + "-" + mes + "-" + dia;
-
     if (req.session.loggedin) {
-        const id_usuario = req.body.id_cliente
-        const fecha = fechaActual
+        const idHistorial = req.params.id
         const file = req.file.filename
-        const name = req.body.nombreArchivo
+        const status = req.body.status
         req.getConnection((error, conn) => {
             conn.query(
-                "INSERT INTO archivos_clientes SET ? ", { archivo: file, fecha_subida: fecha, nombre: name, id_cliente: id_usuario }, (error, results) => {
+                "INSERT INTO imagenes SET ? ", { imagen: file, statusHistorial: status,  idHistorial: idHistorial }, (error, results) => {
                     if (error) {
                         console.log(error);
                     } else {
                         console.log(results);
                         res.render("notification", {
                             alert: true,
-                            alertTitle: "Ducumento subido con exito",
-                            alertMessage: "el documento que ingresaste se Actualizo perfectamente",
+                            alertTitle: "foto subida con exito",
+                            alertMessage: "",
                             alertIcon: "success",
                             showConfirmButton: false,
-                            ruta: "ArchivosUsuarios/" + id_usuario,
+                            ruta: "addFotosTable/" + idHistorial,
                             timer: 3000,
                             IDuser: req.session.ID,
                             role: req.session.role,
@@ -353,4 +342,24 @@ funtions.SubirNuevoArchivos = (req, res) => {
     }
 }
 
-module.exports = funtions;
+funtions.estatusNuevoRegister = (req, res)=>{
+    if (req.session.loggedin){
+        const id = req.params.id
+        const awb = req.body.AWB
+        const status = req.body.status
+        const name = req.body.name
+        const cliente = req.body.cliente
+        const fecha = req.body.fecha
+        req.getConnection((error, conn) => {
+            conn.query(" INSERT * INTO historial SET ?", {
+                awbID:id,
+                estatusHistorial:status,
+
+            })
+        })
+    }else{
+        res.redirect('/login')
+    }
+}
+
+module.exports = funtions; 

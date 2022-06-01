@@ -252,16 +252,8 @@ funtions.mercanciaUpdateHistorial = (req, res) => {
                   console.log(error);
                 } else {
                   if (resultsHistory.length > 0) {
-                    res.render("addMercanciaUpdateStatus", {
-                      data: data,
-                      results: resultsHistory,
-                      login: true,
-                      name: req.session.name,
-                      role: req.session.role,
-                    });
-                  } else {
                     req.getConnection((error, conn) => {
-                      conn.query(
+                      conn.query( 
                         "SELECT * FROM objetos WHERE id = ?",
                         [id],
                         (error, results) => {
@@ -270,7 +262,29 @@ funtions.mercanciaUpdateHistorial = (req, res) => {
                           } else {
                             res.render("addMercanciaUpdateStatus", {
                               data: data,
-                              results: results,
+                              results1: resultsHistory,
+                              results3: results,
+                              login: true,
+                              name: req.session.name,
+                              role: req.session.role,
+                            });
+                          }
+                        }
+                      );
+                    });
+                    
+                  } else {
+                    req.getConnection((error, conn) => {
+                      conn.query( 
+                        "SELECT * FROM objetos WHERE id = ?",
+                        [id],
+                        (error, results) => {
+                          if (error) {
+                            console.log(error);
+                          } else {
+                            res.render("addMercanciaUpdateStatus", {
+                              data: data,
+                              results2: results,
                               login: true,
                               name: req.session.name,
                               role: req.session.role,
@@ -327,6 +341,7 @@ funtions.foto = (req, res) => {
                 res.render("addFoto",{
                   results: results,
                   data: data,
+                  idFoto: id,
                 })
                
               }

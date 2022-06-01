@@ -23,7 +23,7 @@
                             </div>
                         </div>
                         <div class="card-body ">
-                            <form action="/statusSend" method="POST">
+                            <form action="/fotosSend/<%= idFoto %>" method="POST" enctype="multipart/form-data">
                                 <div class="mb-3 ">
                                     <h5 for="usuario ">seleccione el estatus al que pertenece la imagen</h5>
                                     <select class="form-select" aria-label="Default select example" name="status" >
@@ -36,7 +36,7 @@
                                 </div> 
                                 <div class="mb-3 ">
                                     <h5 for="usuario ">imagen</h5>
-                                    <input type="file" class="form-control" name="porcentaje" placeholder="subir imagen" accept="image/png, image/jpeg, image/jpg," required>
+                                    <input type="file" class="form-control" name="imagen" id="imagen" placeholder="subir imagen" accept="image/png, image/jpeg, image/jpg," required>
                                 </div>                    
                         </div>
                         <div class="d-grid ">

@@ -12,55 +12,81 @@
                     <div class="card m-sm-2 p-sm-3 p-md-3"
                         style=" box-shadow: -0.843887px 1.81324px 156px rgba(0, 0, 0, 0.05), -0.496881px 1.06764px 81.3696px rgba(0, 0, 0, 0.03616), -0.255191px 0.548325px 38.1888px rgba(0, 0, 0, 0.02808), -0.102617px 0.220491px 16.7232px rgba(0, 0, 0, 0.02192), -0.0229537px 0.0493202px 7.2384px rgba(0, 0, 0, 0.01384);">
                         <div class="card-title text-center">
-                            <h2 class="p-3 ">Registro mercancía nueva</h2>
+                            <h2 class="p-3 ">estatus de la mercancía actualmente</h2>
                         </div>
                         <div class="card-body ">
                             <form action="/sendMercancia" method="POST">
-                                <div class="mb-3 ">
-                                    <h5 for="usuario ">AWB de la mercancía</h5>
-                                    <input type="text " class="form-control" name="AWB">
-                                </div>
+                                <% if(typeof results1 !="undefined" ) { %>
+                                    <div class="mb-3 ">
+                                        <h5 for="usuario ">AWB de la mercancía</h5>
+                                        <input type="text " class="form-control" name="AWB" placeholder="<%= results3[0].awb %>" readonly>
+                                    </div>
                                 <div class="mb-3 ">
                                     <h5 for="usuario">Estatus</h5>
-                                    <select class="form-select" aria-label="Default select example" name="status" >
-                                        <% data.forEach((Data)=> {%>
-                                            <option>
-                                                <%= Data.name%>
-                                            </option>
-                                            <% }) %>
-                                      </select>
+                                    <input type="text" name="status" class="form-control" placeholder="<%= results1[0].estatusHistorial %>" readonly>
                                 </div>
                                 <div class="mb-3 ">
                                     <h5 for="usuario ">Nombre de la mercancía</h5>
-                                    <input type="text " class="form-control" name="name" required>
+                                    <input type="text " class="form-control" name="name" placeholder="<%= results3[0].name %>" readonly>
                                 </div>     
                                 <div class="mb-3 ">
                                     <h5 for="usuario ">Cliente propietario</h5>
-                                    <input type="text " class="form-control" name="cliente" required>
+                                    <input type="text " class="form-control" name="cliente" placeholder="<%= results3[0].cliente %>" readonly>
                                 </div>      
                                 <div class="mb-3 ">
                                     <h5 for="usuario ">Fecha de ingreso de la mercancía</h5>
-                                    <input type="date" class="form-control" name="fecha" required>
-                                </div>                 
-                                       
+                                    <input type="date" class="form-control" name="fecha" placeholder="<%= results1[0].fecha %>" readonly>
+                                </div>
+                                <div class="mb-3 ">
+                                    <h5 for="usuario ">Observaciones</h5>
+                                    <textarea id="" readonly><%= results1[0].observaciones %></textarea>
+                                </div>                     
+                                <% } %> 
+                                <% if(typeof results2 !="undefined" ) { %>
+                                    <div class="mb-3 ">
+                                        <h5 for="usuario ">AWB de la mercancía</h5>
+                                        <input type="text " class="form-control" name="AWB" placeholder="<%= results2[0].awb %>" readonly>
+                                    </div>
+                                    <div class="mb-3 ">
+                                        <h5 for="usuario">Estatus</h5>
+                                        <input type="text" name="status" class="form-control" placeholder="<%= results2[0].status %>" readonly>
+                                    </div>
+                                    <div class="mb-3 ">
+                                        <h5 for="usuario ">Nombre de la mercancía</h5>
+                                        <input type="text " class="form-control" name="name"  placeholder="<%= results2[0].name %>" readonly>
+                                    </div>     
+                                    <div class="mb-3 ">
+                                        <h5 for="usuario ">Cliente propietario</h5>
+                                        <input type="text " class="form-control" name="cliente" placeholder="<%= results2[0].cliente %>" readonly>
+                                    </div>      
+                                    <div class="mb-3 ">
+                                        <h5 for="usuario ">Fecha de ingreso de la mercancía</h5>
+                                        <input type="text" class="form-control" name="fecha" placeholder="<%= results2[0].fecha %>" readonly>
+                                    </div>                 
+                                    <% } %> 
+                            
                         </div>
-                        <div class="d-grid ">
-                            <button type="submit" class="btn btn-primary" style="background: #000e7c;">registrar mercancía</button>
-                        </div>
+                        
                         </form>
                     </div>
                 </div>
+
+
+
+
+
                 <div class="col-lg-5 col-md-6 col-sm-6 pb-4">
                     <div class="card m-sm-2 p-sm-3 p-md-3"
                         style=" box-shadow: -0.843887px 1.81324px 156px rgba(0, 0, 0, 0.05), -0.496881px 1.06764px 81.3696px rgba(0, 0, 0, 0.03616), -0.255191px 0.548325px 38.1888px rgba(0, 0, 0, 0.02808), -0.102617px 0.220491px 16.7232px rgba(0, 0, 0, 0.02192), -0.0229537px 0.0493202px 7.2384px rgba(0, 0, 0, 0.01384);">
                         <div class="card-title text-center">
-                            <h2 class="p-3 ">Registro mercancía nueva</h2>
+                            <h2 class="p-3 ">Actualizar estatus de la mercancía</h2>
                         </div>
                         <div class="card-body ">
                             <form action="/sendMercancia" method="POST">
+                                <% if(typeof results1 !="undefined"  ) { %>
                                 <div class="mb-3 ">
                                     <h5 for="usuario ">AWB de la mercancía</h5>
-                                    <input type="text " class="form-control" name="AWB">
+                                    <input type="text " class="form-control" name="AWB" value="" value="<%= results3[0].awb %>">
                                 </div>
                                 <div class="mb-3 ">
                                     <h5 for="usuario">Estatus</h5>
@@ -74,20 +100,52 @@
                                 </div>
                                 <div class="mb-3 ">
                                     <h5 for="usuario ">Nombre de la mercancía</h5>
-                                    <input type="text " class="form-control" name="name" required>
+                                    <input type="text " class="form-control" name="name" required value="<%= results3[0].name %>">
                                 </div>     
                                 <div class="mb-3 ">
                                     <h5 for="usuario ">Cliente propietario</h5>
-                                    <input type="text " class="form-control" name="cliente" required>
+                                    <input type="text " class="form-control" name="cliente" required value="<%= results3[0].cliente %>">
                                 </div>      
                                 <div class="mb-3 ">
-                                    <h5 for="usuario ">Fecha de ingreso de la mercancía</h5>
-                                    <input type="date" class="form-control" name="fecha" required>
+                                    <h5 for="usuario ">fecha actualización</h5>
+                                    <input type="date" class="form-control" name="fecha" required value="<%= results3[0].fecha %>">
+                                </div>            
+                                             
+                            <% } %>  
+                        </div>
+                        <div class="card-body ">
+                            <form action="/sendMercancia" method="POST">
+                                <% if(typeof results2 !="undefined"  ) { %>
+                                <div class="mb-3 ">
+                                    <h5 for="usuario ">AWB de la mercancía</h5>
+                                    <input type="text " class="form-control" name="AWB" value="<%= results2[0].awb %>">
+                                </div>
+                                <div class="mb-3 ">
+                                    <h5 for="usuario">Estatus</h5>
+                                    <select class="form-select" aria-label="Default select example" name="status">
+                                        <% data.forEach((Data)=> {%>
+                                            <option>
+                                                <%= Data.name%>
+                                            </option>
+                                            <% }) %>
+                                      </select>
+                                </div>
+                                <div class="mb-3 ">
+                                    <h5 for="usuario ">Nombre de la mercancía</h5>
+                                    <input type="text " class="form-control" name="name" required value="<%= results2[0].name %>">
+                                </div>     
+                                <div class="mb-3 ">
+                                    <h5 for="usuario ">Cliente propietario</h5>
+                                    <input type="text " class="form-control" name="cliente" required value="<%= results2[0].cliente %>">
+                                </div>      
+                                <div class="mb-3 ">
+                                    <h5 for="usuario ">fecha actualización</h5>
+                                    <input type="date" class="form-control" name="fecha" required value="<%= results2[0].fecha %>">
                                 </div>                 
-                                       
+                            <% } %>  
                         </div>
                         <div class="d-grid ">
-                            <button type="submit" class="btn btn-primary" style="background: #000e7c;">registrar mercancía</button>
+                            <button type="submit" class="btn btn-primary" style="background: #000e7c;">cambiar estatus de la mercancía</button>
                         </div>
                         </form>
                     </div>

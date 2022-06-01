@@ -1,7 +1,7 @@
 <%- include('./partials/nav.ejs') %>
 
 <head>
-  <link rel="shortcut icon" href="/img/favicon.png">
+  <link rel="shortcut icon" href="">
   <title>fotos mercancía</title>
   <link rel="stylesheet" href="styleTables.css">
  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.1/css/dataTables.bootstrap5.min.css">
@@ -26,8 +26,9 @@
       <thead>
         <tr>
         <th>ID</th>
-        <th>Estatus de la imagen</th>
+       
         <th>imagen</th>
+        <th>Estatus de la imagen</th>
         <th>administrar datos</th>
       </tr>
       </thead>
@@ -36,8 +37,9 @@
         <% results.forEach((user) => {%>
         <tr>
           <td><%= user.id %> </td>
+          
+          <td><img src="/multer/archivosUser/<%= user.imagen %>" alt="IMAGEN DE LA MERCANCÍA" width="200" height="100"> </td>
           <td><%= user.statusHistorial %> </td>
-          <td><%= user.imagen %></td>
           <td>
             <a onclick="alertDelate('<%= user.id %>')" class="btn btn-danger" type="button"><i class='bx bx-trash'></i></a>
           </td>
@@ -45,6 +47,7 @@
         <% }) %>
       </tbody>
     </table>
+    
 
   </div>
 </div>
