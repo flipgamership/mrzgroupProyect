@@ -43,6 +43,16 @@ router.get('/actualizarMercancia/:id', funtionsGetApp.mercanciaUpdateHistorial)
 // ruta get de estatus de fotos de mercancia
 router.get('/addFotosTable/:id', funtionsGetApp.fotosHistorial)
 router.get('/addFoto/:id', funtionsGetApp.foto)
+
+// ruta get de la tabla de busqueda de historiales de un dato
+
+router.get('/historiadata/:id', funtionsGetApp.dataHistorial)
+
+
+
+
+
+
 // rutas post
 // ruta de registrar usuario post
 router.post('/sendRegister', funtionsPostApp.sendRegister)
@@ -61,5 +71,6 @@ router.post('/fotosSend/:id', uploadImagen , funtionsPostApp.SubirNuevoArchivos)
 // ruta pos actualizar estatus
 router.post('/statusUpdate/:id', funtionsPostApp.estatusNuevoRegister)
 //pruebas
+
 // router.get('/p', funtionsGetApp.p)
 module.exports = router;

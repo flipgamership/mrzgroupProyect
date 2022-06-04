@@ -359,5 +359,73 @@ funtions.foto = (req, res) => {
   }
 }
 
+funtions.dataHistorial = (req, res) => {
+  if (req.session.loggedin) {
+    const id = req.params.id;
+    req.getConnection((error, conn) => {
+      conn.query(
+        "SELECT * FROM `historial` WHERE awbID = ? ORDER by id DESC;",
+        [id],
+        (error, resultsHistory) => {
+          if (error) {
+            console.log(error);
+          } else {
+              console.log(resultsHistory)
+            if (resultsHistory.length > 0) {
+              req.getConnection((error, conn) => {
+                conn.query( 
+                  "SELECT * FROM objetos WHERE id = ?",
+                  [id],
+                  (error, results) => {
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      res.render("tabledataHistori", {
+                        
+                        results: resultsHistory,
+                        dataMerc: results,
+                        login: true,
+                        name: req.session.name,
+                        role: req.session.role,
+                        id:id,
+                      });
+                    }
+                  }
+                );
+              });
+              
+            } else {
+              req.getConnection((error, conn) => {
+                conn.query( 
+                  "SELECT * FROM objetos WHERE id = ?",
+                  [id],
+                  (error, results) => {
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      res.render("notification", {
+                        alert: true,
+                        alertTitle: "lo sentimos pero esta mercancía aun no tiene historial de estatus",
+                        alertMessage: "",
+                        alertIcon: "error",
+                        showConfirmButton: false,
+                        ruta: "../mercanciaTable",
+                        timer: 3000,
+                        role: req.session.role,
+                    })
+                    }
+                  }
+                );
+              });
+            }
+          }
+        }
+      );
+    });
+  } else {
+    res.redirect("/login");
+  }
+};
+
 
 module.exports = funtions;
