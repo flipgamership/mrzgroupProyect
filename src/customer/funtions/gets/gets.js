@@ -427,5 +427,62 @@ funtions.dataHistorial = (req, res) => {
   }
 };
 
+funtions.BlockUser = (req, res) => {
+  if (req.session.loggedin) {
+          const bloqueado = "bloqueado"
+          const id = req.params.id;
+          req.getConnection((error, conn) => {
+              conn.query(
+                  "UPDATE usuarios SET ? WHERE id = ?", [{ role: bloqueado }, id],
+                  (error, results) => {
+                      if (error) {
+                          console.log(error);
+                      } else {
+                          res.redirect("/register");
+                      }
+                  }
+              );
+          });
+  }
+};
+
+funtions.delateMercancia = (req, res) => {
+  if (req.session.loggedin) {
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "DELETE FROM objetos WHERE id= ?",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.redirect("/inventarioConsumiblesRedline");
+            }
+          }
+        );
+      });
+  }
+};
+
+funtions.delateImagenes = (req, res) => {
+  if (req.session.loggedin) {
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "DELETE FROM imagenes WHERE id= ?",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.redirect("/inventarioConsumiblesRedline");
+            }
+          }
+        );
+      });
+    
+  }
+};
 
 module.exports = funtions;

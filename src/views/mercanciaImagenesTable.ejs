@@ -72,7 +72,7 @@
 <script>
   function alertDelate(id) {
     Swal.fire({
-      title: '¿Quieres eliminar este usuario?',
+      title: '¿Quieres eliminar esta foto?',
       icon: 'warning',
       showCancelButton: true,
       cancelButtonText: 'NO',
@@ -82,7 +82,7 @@
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire('Usuario eliminado exitosamente', '', 'success',1500)
+        Swal.fire('foto eliminado exitosamente', '', 'success',1500)
         const value = true
         setTimeout(timeUot, 2000, value, id);
       } 
@@ -90,7 +90,7 @@
   }
   function timeUot (values, id){
     if(values){
-      window.location='/registerUsersDelate/'+ id
+      window.location='/delateFoto/'+ id
     }
     
   }

@@ -38,16 +38,20 @@ router.get('/delateStatus/:id', funtionsGetApp.delateStatus)
 // rutas get de mercancia
 router.get('/AgregarMercancia', funtionsGetApp.addMercancia)
 router.get('/mercanciaTable', funtionsGetApp.mercanciaTable)
+router.get('/delateMercancia/:id', funtionsGetApp.delateMercancia)
 // rutas get de actualizar estatus historial
 router.get('/actualizarMercancia/:id', funtionsGetApp.mercanciaUpdateHistorial)
 // ruta get de estatus de fotos de mercancia
 router.get('/addFotosTable/:id', funtionsGetApp.fotosHistorial)
 router.get('/addFoto/:id', funtionsGetApp.foto)
+router.get('/delateFoto/:id', funtionsGetApp.delateImagenes)
 
 // ruta get de la tabla de busqueda de historiales de un dato
 
 router.get('/historiadata/:id', funtionsGetApp.dataHistorial)
 
+// ruta get de bloquear usuario 
+router.get('/registerUsersDelate/:id', funtionsGetApp.BlockUser)
 
 
 

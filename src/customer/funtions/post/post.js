@@ -38,8 +38,8 @@ funtions.loginAuth = async (req, res) => {
                         if (req.session.role == "bloqueado") {
                             req.session.destroy(() => {
                                 res.render("login", {
-                                    idUSERActual: req.session.ID,
-                                    role: req.session.role,
+                                    
+                                    
                                     alert: true,
                                     alertTitle: "Ups este usuario esta BLOQUEADO",
                                     alertMessage: "BLOQUEADO",
@@ -51,8 +51,8 @@ funtions.loginAuth = async (req, res) => {
                             });
                         } else {
                             res.render("login", {
-                                idUSERActual: req.session.ID,
-                                role: req.session.role,
+                                
+                                
                                 alert: true,
                                 alertTitle: "acceso consedido",
                                 alertMessage: "acceso valido",
@@ -378,5 +378,7 @@ funtions.estatusNuevoRegister = (req, res)=>{
         res.redirect('/login')
     }
 }
+
+
 
 module.exports = funtions; 

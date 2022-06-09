@@ -73,7 +73,7 @@
 <script>
   function alertDelate(id) {
     Swal.fire({
-      title: '¿Quieres eliminar este usuario?',
+      title: '¿Quieres BLOQUEAR este usuario?',
       icon: 'warning',
       showCancelButton: true,
       cancelButtonText: 'NO',
@@ -83,7 +83,7 @@
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire('Usuario eliminado exitosamente', '', 'success',1500)
+        Swal.fire('Usuario bloqueado exitosamente', '', 'success',1500)
         const value = true
         setTimeout(timeUot, 2000, value, id);
       } 
