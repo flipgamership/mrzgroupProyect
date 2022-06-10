@@ -485,4 +485,54 @@ funtions.delateImagenes = (req, res) => {
   }
 };
 
+
+funtions.passwordNew = (req, res) => {
+  if (req.session.loggedin) {
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM usuarios WHERE id = ?",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.render("newPassword", { user: results[0] });
+            }
+          }
+        );
+      });
+  } else {
+    res.redirect("/login");
+  }
+};
+
+funtions.registerUEdit = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "admin") {
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM usuarios WHERE id = ?",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.render("registerEditUser", { user: results[0] });
+            }
+          }
+        );
+      });
+    } else {
+      res.render("login", {
+        login: false,
+      });
+    }
+  } else {
+    res.redirect("/login");
+  }
+};
+
+
 module.exports = funtions;

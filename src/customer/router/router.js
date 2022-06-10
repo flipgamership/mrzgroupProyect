@@ -53,8 +53,12 @@ router.get('/historiadata/:id', funtionsGetApp.dataHistorial)
 // ruta get de bloquear usuario 
 router.get('/registerUsersDelate/:id', funtionsGetApp.BlockUser)
 
+// ruta get restart password
+
+router.get('/password/:id', funtionsGetApp.passwordNew)
 
 
+router.get('/registerUsersEdit/:id', funtionsGetApp.registerUEdit)
 
 
 // rutas post
@@ -74,6 +78,8 @@ router.post('/sendMercancia', funtionsPostApp.sendAddMercancia )
 router.post('/fotosSend/:id', uploadImagen , funtionsPostApp.SubirNuevoArchivos)
 // ruta pos actualizar estatus
 router.post('/statusUpdate/:id', funtionsPostApp.estatusNuevoRegister)
+// ruta post actualizar 
+router.post('/sendPassword', funtionsPostApp.savePasssword)
 //pruebas
 
 // router.get('/p', funtionsGetApp.p)

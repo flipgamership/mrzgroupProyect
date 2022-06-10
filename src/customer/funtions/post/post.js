@@ -201,7 +201,7 @@ funtions.sendUpdateUser = (req, res) => {
 
 funtions.savePasssword = async (req, res) => {
     if (req.session.loggedin) {
-        if (req.session.role == "SuperAdmin" || req.session.role == "Administrador") {
+       
             const id = req.body.id;
             const pass = req.body.password;
             let passwordHaash = await bcryptjs.hash(pass, 8);
@@ -217,7 +217,9 @@ funtions.savePasssword = async (req, res) => {
                     }
                 );
             });
-        }
+        
+    }else{
+        res.redirect("/login");
     }
 };
 
@@ -379,6 +381,26 @@ funtions.estatusNuevoRegister = (req, res)=>{
     }
 }
 
+funtions.savePasssword = async (req, res) => {
+    if (req.session.loggedin) {
+        const id = req.body.id;
+        const pass = req.body.password;
+        let passwordHaash = await bcryptjs.hash(pass, 8);
+        req.getConnection((error, conn) => {
+          conn.query(
+            "UPDATE usuarios SET ? WHERE id = ?",
+            [{ password: passwordHaash }, id],
+            async (error, results) => {
+              if (error) {
+                console.log(error);
+              } else {
+                
+              }
+            }
+          );
+        });
+    }
+  };
 
 
 module.exports = funtions; 
