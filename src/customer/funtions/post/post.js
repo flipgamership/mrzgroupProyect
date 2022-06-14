@@ -426,4 +426,17 @@ funtions.savePasssword = async (req, res) => {
   }
 };
 
+funtions.buscador = (req, res) => {
+    if (req.session.loggedin){
+      const busqueda = req.body.busqueda;
+      req.getConnection((error, conn) => {
+        conn.query("SELECT * FROM objetos WHERE awb = ?", [busqueda], )
+      })
+      
+    }else{
+  
+    }
+  }
+  
+
 module.exports = funtions;

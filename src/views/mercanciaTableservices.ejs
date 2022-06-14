@@ -48,7 +48,7 @@
             <% data.forEach((datas) => {%>
               <% if( datas.name == user.status){%>
               <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width: <%= datas.porcentaje %>%;" aria-valuenow="<%= datas.porcentaje %>" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-success" role="progressbar" style="width: <%= datas.porcentaje %>%;" aria-valuenow="<%= datas.porcentaje %>" aria-valuemin="0" aria-valuemax="100"><%= datas.porcentaje %>%</div>
               </div>
               <% } %> 
             <% }) %>

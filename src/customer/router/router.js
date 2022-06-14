@@ -59,6 +59,10 @@ router.get('/registerUsersEdit/:id', funtionsGetApp.registerUEdit)
 
 router.get('/tableService', funtionsGetApp.mercanciaService)
 
+// ruta get de servicios consulta usuarios
+
+
+
 
 // rutas post
 // ruta de registrar usuario post
