@@ -476,7 +476,7 @@ funtions.delateImagenes = (req, res) => {
             if (error) {
               console.log(error);
             } else {
-              res.redirect("/inventarioConsumiblesRedline");
+              res.redirect("/mercanciaTable");
             }
           }
         );
@@ -533,6 +533,38 @@ funtions.registerUEdit = (req, res) => {
     res.redirect("/login");
   }
 };
+
+
+funtions.mercanciaService = (req, res) => {
+  if (req.session.loggedin) {
+    req.getConnection((error, conn) => {
+      conn.query('SELECT * FROM status', (error, data) => {
+        if(error){
+          console.log(error);
+        }else{  
+          conn.query("SELECT * FROM objetos", (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.render("mercanciaTableservices", {
+                data: data,
+                results: results,
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
+              });
+            }
+          });
+        }
+      })
+      
+    });
+  } else {
+    res.redirect("/login");
+  }
+};
+
+
 
 
 module.exports = funtions;

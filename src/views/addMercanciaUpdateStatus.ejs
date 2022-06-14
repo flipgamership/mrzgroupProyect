@@ -112,6 +112,7 @@
                         <div class="card-body ">
                             <form action="/statusUpdate/<%= id %>" method="POST">
                                 <% if(typeof results2 !="undefined"  ) { %>
+                                    <input type="hidden" value="<%= results2[0].id%>" name="id">
                                 <div class="mb-3 ">
                                     <h5 for="usuario ">AWB de la mercancía</h5>
                                     <input type="text " class="form-control" name="AWB" value="<%= results2[0].awb %>">
