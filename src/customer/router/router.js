@@ -24,12 +24,14 @@ router.get('/', funtionsGetApp.index)
 router.get('/home', funtionsGetApp.home)
     // ruta de registrar usuario gets
 router.get('/register', funtionsGetApp.registerUsers)
+router.get('/registerClient', funtionsGetApp.registerUsers)
 router.get('/registerTable', funtionsGetApp.registerTable)
 router.get('/registerUsersEdit/:id', funtionsGetApp.registerUEdit)
 router.get('/registerUsersDelate/:id', funtionsGetApp.BlockUser)
 router.get('/password/:id', funtionsGetApp.passwordNew)
 // rutas get de login
 router.get('/login', funtionsGetApp.login);
+router.get('/loginClient', funtionsGetApp.loginClient);
 router.get('/loginAut', funtionsGetApp.logAut)
 // rutas get de status
 router.get('/statusTable', funtionsGetApp.statusTable)
@@ -67,12 +69,14 @@ router.get('/tableService', funtionsGetApp.mercanciaService)
 // rutas post
 // ruta de registrar usuario post
 router.post('/sendRegister', funtionsPostApp.sendRegister)
+router.post('/sendRegisterClients', funtionsPostApp.sendRegisterClients)
 router.post('/sendUpdateUser', funtionsPostApp.sendUpdateUser)
 
 router.post('/sendPassword', funtionsPostApp.savePasssword)
 
 // rutas post de login
 router.post('/loginAuth', funtionsPostApp.loginAuth);
+router.post('/loginAuthclientes', funtionsPostApp.loginAuthClients);
 // rutas post de status
 router.post('/statusSend', funtionsPostApp.sendAddStatus)
 //rutas post de mercancía

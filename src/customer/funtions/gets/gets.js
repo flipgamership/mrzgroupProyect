@@ -12,11 +12,16 @@ funtions.home = (req, res) => {
   if (req.session.loggedin) {
     res.render("home");
   } else {
-    res.redirect("/login");
+    res.redirect("/loginClient");
   }
 };
 funtions.index = (req, res) => {
-  res.render("index");
+  if (req.session.loggedin) {
+    res.render("index");
+  }else{
+    res.render('login')
+  }
+  
 };
 
 funtions.logAut = (req, res) => {
@@ -24,11 +29,20 @@ funtions.logAut = (req, res) => {
     res.redirect("/");
   });
 };
+
 funtions.login = (req, res) => {
   if (req.session.loggedin) {
     res.redirect("/home");
   } else {
     res.render("login");
+  }
+};
+
+funtions.loginClient = (req, res) => {
+  if (req.session.loggedin) {
+    res.redirect("/home");
+  } else {
+    res.render("loginClientes");
   }
 };
 funtions.registerUsers = (req, res) => {
