@@ -92,7 +92,7 @@ funtions.loginAuthClients = async (req, res) => {
             results.length === 0 ||
             !(await bcryptjs.compare(pass, results[0].password))
           ) {
-            res.render("login", {
+            res.render("loginClientes", {
               role: req.session.role,
               alert: true,
               alertTitle: "Ups los datos no coinciden",
@@ -100,7 +100,7 @@ funtions.loginAuthClients = async (req, res) => {
                 "por favor revise correctamente la informacion y si este error continua vuelve a intentarlo mas tarde",
               alertIcon: "error",
               showConfirmButton: true,
-              ruta: "login",
+              ruta: "loginClient",
               timer: 10000,
             });
           } else {
@@ -110,24 +110,24 @@ funtions.loginAuthClients = async (req, res) => {
             req.session.ID = results[0].id;
             if (req.session.role == "bloqueado") {
               req.session.destroy(() => {
-                res.render("login", {
+                res.render("loginClientes", {
                   alert: true,
                   alertTitle: "Ups este usuario esta BLOQUEADO",
                   alertMessage: "BLOQUEADO",
                   alertIcon: "error",
                   showConfirmButton: true,
-                  ruta: "login",
+                  ruta: "loginClient",
                   timer: 10000,
                 });
               });
             } else {
-              res.render("login", {
+              res.render("loginClientes", {
                 alert: true,
                 alertTitle: "acceso consedido",
                 alertMessage: "acceso valido",
                 alertIcon: "success",
                 showConfirmButton: false,
-                ruta: "/home",
+                ruta: "",
                 timer: 3000,
               });
             }
@@ -136,7 +136,7 @@ funtions.loginAuthClients = async (req, res) => {
       );
     });
   } else {
-    res.render("login", {
+    res.render("loginClientes", {
       role: req.session.role,
       alert: true,
       alertTitle: "Ups por favor llene todos los datos",
@@ -144,7 +144,7 @@ funtions.loginAuthClients = async (req, res) => {
         "por favor revise correctamente la informacion y si este error continua vuelve a intentarlo mas tarde",
       alertIcon: "error",
       showConfirmButton: true,
-      ruta: "login",
+      ruta: "loginClient",
       timer: 10000,
     });
   }

@@ -10,7 +10,10 @@ const funtions = {};
 
 funtions.home = (req, res) => {
   if (req.session.loggedin) {
-    res.render("home");
+    if (req.session.role == "superAdmin") {
+      res.render("home");
+    }else{res.redirect("/")}
+    
   } else {
     res.redirect("/loginClient");
   }
@@ -19,7 +22,7 @@ funtions.index = (req, res) => {
   if (req.session.loggedin) {
     res.render("index");
   }else{
-    res.render('login')
+    res.render('loginClientes')
   }
   
 };
@@ -55,20 +58,23 @@ funtions.registerUsers = (req, res) => {
 
 funtions.registerTable = (req, res) => {
   if (req.session.loggedin) {
-    req.getConnection((error, conn) => {
-      conn.query("SELECT * FROM usuarios", (error, results) => {
-        if (error) {
-          console.log(error);
-        } else {
-          res.render("registerTable", {
-            results: results,
-            login: true,
-            name: req.session.name,
-            role: req.session.role,
-          });
-        }
+    if (req.session.role == "superAdmin") {
+      req.getConnection((error, conn) => {
+        conn.query("SELECT * FROM usuarios", (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            res.render("registerTable", {
+              results: results,
+              login: true,
+              name: req.session.name,
+              role: req.session.role,
+            });
+          }
+        });
       });
-    });
+    }else{res.redirect("/")}
+   
   } else {
     res.redirect("/login");
   }
@@ -140,89 +146,112 @@ funtions.passwordNew = (req, res) => {
 };
 funtions.BlockUser = (req, res) => {
   if (req.session.loggedin) {
-    const bloqueado = "bloqueado";
-    const id = req.params.id;
-    req.getConnection((error, conn) => {
-      conn.query(
-        "UPDATE usuarios SET ? WHERE id = ?",
-        [{ role: bloqueado }, id],
-        (error, results) => {
-          if (error) {
-            console.log(error);
-          } else {
-            res.redirect("/registerTable");
+    if (req.session.role == "superAdmin") {
+      const bloqueado = "bloqueado";
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "UPDATE usuarios SET ? WHERE id = ?",
+          [{ role: bloqueado }, id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.redirect("/registerTable");
+            }
           }
-        }
-      );
-    });
+        );
+      });
+    }else{res.redirect("/")}
+    
+   
+  
   } else {
     res.redirect("/login");
   }
 };
 
 funtions.statusTable = (req, res) => {
+  
   if (req.session.loggedin) {
-    req.getConnection((error, conn) => {
-      conn.query("SELECT * FROM status", (error, results) => {
-        if (error) {
-          console.log(error);
-        } else {
-          res.render("statusTable", {
-            results: results,
-            login: true,
-            name: req.session.name,
-            role: req.session.role,
-          });
-        }
+   
+    if (req.session.role == "superAdmin") {
+      req.getConnection((error, conn) => {
+        conn.query("SELECT * FROM status", (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            res.render("statusTable", {
+              results: results,
+              login: true,
+              name: req.session.name,
+              role: req.session.role,
+            });
+          }
+        });
       });
-    });
+    }else{res.redirect("/")}
+
+    
   } else {
     res.redirect("/login");
   }
 };
 funtions.addstatus = (req, res) => {
   if (req.session.loggedin) {
-    res.render("addstatus", {
-      login: true,
-      name: req.session.name,
-      role: req.session.role,
-    });
+    if (req.session.role == "superAdmin") {
+      res.render("addstatus", {
+        login: true,
+        name: req.session.name,
+        role: req.session.role,
+      });
+    }else{res.redirect("/")}
+    
+    
   } else {
     res.render("login");
   }
 };
 funtions.delateStatus = (req, res) => {
   if (req.session.loggedin) {
-    const id = req.params.id;
-    req.getConnection((error, conn) => {
-      conn.query("DELETE FROM status WHERE id = ?", [id], (error, results) => {
-        if (error) {
-          console.log(error);
-        } else {
-          res.redirect("/statusTable");
-        }
+   
+    if (req.session.role == "superAdmin") {
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query("DELETE FROM status WHERE id = ?", [id], (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            res.redirect("/statusTable");
+          }
+        });
       });
-    });
+    }else{res.redirect("/")}
+    
   } else {
     res.redirect("/login");
   }
 };
 funtions.addMercancia = (req, res) => {
   if (req.session.loggedin) {
-    req.getConnection((error, conn) => {
-      conn.query("SELECT * FROM STATUS ", (error, results) => {
-        if (error) {
-          console.log(error);
-        } else {
-          res.render("addMercancia", {
-            login: true,
-            result: results,
-            name: req.session.name,
-            role: req.session.role,
-          });
-        }
+    if (req.session.role == "superAdmin") {
+      req.getConnection((error, conn) => {
+        conn.query("SELECT * FROM STATUS ", (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            res.render("addMercancia", {
+              login: true,
+              result: results,
+              name: req.session.name,
+              role: req.session.role,
+            });
+          }
+        });
       });
-    });
+    }else{res.redirect("/")} 
+   
+    
   } else {
     res.render("login");
   }
@@ -230,7 +259,7 @@ funtions.addMercancia = (req, res) => {
 
 funtions.mercanciaTable = (req, res) => {
   if (req.session.loggedin) {
-    req.getConnection((error, conn) => {
+        if (req.session.role == "superAdmin") {req.getConnection((error, conn) => {
       conn.query("SELECT * FROM objetos", (error, results) => {
         if (error) {
           console.log(error);
@@ -243,7 +272,8 @@ funtions.mercanciaTable = (req, res) => {
           });
         }
       });
-    });
+    });}else{req.redirect("/")}
+    
   } else {
     res.redirect("/login");
   }
@@ -251,80 +281,83 @@ funtions.mercanciaTable = (req, res) => {
 
 funtions.mercanciaUpdateHistorial = (req, res) => {
   if (req.session.loggedin) {
-    const id = req.params.id;
-    req.getConnection((error, conn) => {
-      conn.query("SELECT * FROM status", (error, data) => {
-        if (error) {
-          console.log(error);
-        } else {
-          req.getConnection((error, conn) => {
-            conn.query(
-              "SELECT * FROM `historial` WHERE awbID = ? ORDER by id DESC;",
-              [id],
-              (error, resultsHistory) => {
-                if (error) {
-                  console.log(error);
-                } else {
-                    console.log(resultsHistory)
-                  if (resultsHistory.length > 0) {
-                    req.getConnection((error, conn) => {
-                      conn.query( 
-                        "SELECT * FROM objetos WHERE id = ?",
-                        [id],
-                        (error, results) => {
-                          if (error) {
-                            console.log(error);
-                          } else {
-                            res.render("addMercanciaUpdateStatus", {
-                              data: data,
-                              results1: resultsHistory,
-                              results3: results,
-                              login: true,
-                              name: req.session.name,
-                              role: req.session.role,
-                              id:id,
-                            });
-                          }
-                        }
-                      );
-                    });
-                    
+    if (req.session.role == "superAdmin") { const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query("SELECT * FROM status", (error, data) => {
+          if (error) {
+            console.log(error);
+          } else {
+            req.getConnection((error, conn) => {
+              conn.query(
+                "SELECT * FROM `historial` WHERE awbID = ? ORDER by id DESC;",
+                [id],
+                (error, resultsHistory) => {
+                  if (error) {
+                    console.log(error);
                   } else {
-                    req.getConnection((error, conn) => {
-                      conn.query( 
-                        "SELECT * FROM objetos WHERE id = ?",
-                        [id],
-                        (error, results) => {
-                          if (error) {
-                            console.log(error);
-                          } else {
-                            res.render("addMercanciaUpdateStatus", {
-                              data: data,
-                              results2: results,
-                              login: true,
-                              name: req.session.name,
-                              role: req.session.role,
-                              id:id,
-                            });
+                      console.log(resultsHistory)
+                    if (resultsHistory.length > 0) {
+                      req.getConnection((error, conn) => {
+                        conn.query( 
+                          "SELECT * FROM objetos WHERE id = ?",
+                          [id],
+                          (error, results) => {
+                            if (error) {
+                              console.log(error);
+                            } else {
+                              res.render("addMercanciaUpdateStatus", {
+                                data: data,
+                                results1: resultsHistory,
+                                results3: results,
+                                login: true,
+                                name: req.session.name,
+                                role: req.session.role,
+                                id:id,
+                              });
+                            }
                           }
-                        }
-                      );
-                    });
+                        );
+                      });
+                      
+                    } else {
+                      req.getConnection((error, conn) => {
+                        conn.query( 
+                          "SELECT * FROM objetos WHERE id = ?",
+                          [id],
+                          (error, results) => {
+                            if (error) {
+                              console.log(error);
+                            } else {
+                              res.render("addMercanciaUpdateStatus", {
+                                data: data,
+                                results2: results,
+                                login: true,
+                                name: req.session.name,
+                                role: req.session.role,
+                                id:id,
+                              });
+                            }
+                          }
+                        );
+                      });
+                    }
                   }
                 }
-              }
-            );
-          });
-        }
-      });
-    });
+              );
+            });
+          }
+        });
+      });}else{req.redirect("/")}
+   
   } else {
     res.redirect("/login");
   }
 };
 
 funtions.fotosHistorial = (req, res) => {
+  
   if (req.session.loggedin) {
+    if (req.session.role == "superAdmin") {}
     const id = req.params.id;
     req.getConnection((error, conn) => {
       conn.query("SELECT * FROM imagenes WHERE idHistorial = ?", [id], (error, results) => {
