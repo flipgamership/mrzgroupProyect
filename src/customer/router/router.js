@@ -24,14 +24,14 @@ router.get('/', funtionsGetApp.index)
 router.get('/home', funtionsGetApp.home)
     // ruta de registrar usuario gets
 router.get('/register', funtionsGetApp.registerUsers)
-router.get('/registerClient', funtionsGetApp.registerUsers)
+
 router.get('/registerTable', funtionsGetApp.registerTable)
 router.get('/registerUsersEdit/:id', funtionsGetApp.registerUEdit)
 router.get('/registerUsersDelate/:id', funtionsGetApp.BlockUser)
 router.get('/password/:id', funtionsGetApp.passwordNew)
 // rutas get de login
 router.get('/login', funtionsGetApp.login);
-router.get('/loginClient', funtionsGetApp.loginClient);
+
 router.get('/loginAut', funtionsGetApp.logAut)
 // rutas get de status
 router.get('/statusTable', funtionsGetApp.statusTable)
@@ -54,7 +54,16 @@ router.get('/registerUsersDelate/:id', funtionsGetApp.BlockUser)
 // ruta get restart password
 router.get('/password/:id', funtionsGetApp.passwordNew)
 
+// ruta get clientes 
 
+//ruta get login clientes
+router.get('/loginClient', funtionsGetApp.loginClient);
+// ruta get register
+router.get('/registerTableClient', funtionsGetApp.registerTableClient)
+router.get('/registerClient', funtionsGetApp.registerUsers)
+router.get('/registerUsersDelateClient/:id', funtionsGetApp.BlockUserClient)
+
+// ruta editar usuario interno
 router.get('/registerUsersEdit/:id', funtionsGetApp.registerUEdit)
 
 // ruta get de servicios del cliente
@@ -69,14 +78,14 @@ router.get('/tableService', funtionsGetApp.mercanciaService)
 // rutas post
 // ruta de registrar usuario post
 router.post('/sendRegister', funtionsPostApp.sendRegister)
-router.post('/sendRegisterClients', funtionsPostApp.sendRegisterClients)
+
 router.post('/sendUpdateUser', funtionsPostApp.sendUpdateUser)
 
 router.post('/sendPassword', funtionsPostApp.savePasssword)
 
 // rutas post de login
 router.post('/loginAuth', funtionsPostApp.loginAuth);
-router.post('/loginAuthclientes', funtionsPostApp.loginAuthClients);
+
 // rutas post de status
 router.post('/statusSend', funtionsPostApp.sendAddStatus)
 //rutas post de mercancía
@@ -87,7 +96,15 @@ router.post('/fotosSend/:id', uploadImagen , funtionsPostApp.SubirNuevoArchivos)
 router.post('/statusUpdate/:id', funtionsPostApp.estatusNuevoRegister)
 // ruta post actualizar 
 router.post('/sendPassword', funtionsPostApp.savePasssword)
+//rutas post de clientes
+
+//ruta register clientes
+router.post('/sendRegisterClients', funtionsPostApp.sendRegisterClients)
+//ruta login clientes
+router.post('/loginAuthclientes', funtionsPostApp.loginAuthClients);
+
 //pruebas
+
 
 // router.get('/p', funtionsGetApp.p)
 module.exports = router;

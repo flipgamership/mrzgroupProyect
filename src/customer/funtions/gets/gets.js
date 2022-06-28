@@ -10,7 +10,7 @@ const funtions = {};
 
 funtions.home = (req, res) => {
   if (req.session.loggedin) {
-    if (req.session.role == "superAdmin") {
+    if (req.session.role == "SuperAdmin") {
       res.render("home");
     }else{res.redirect("/")}
     
@@ -50,7 +50,7 @@ funtions.loginClient = (req, res) => {
 };
 funtions.registerUsers = (req, res) => {
   if (req.session.loggedin) {
-    res.render("registerUser");
+    res.render("registerUserClient");
   } else {
     res.render("login");
   }
@@ -58,13 +58,37 @@ funtions.registerUsers = (req, res) => {
 
 funtions.registerTable = (req, res) => {
   if (req.session.loggedin) {
-    if (req.session.role == "superAdmin") {
+    if (req.session.role == "SuperAdmin") {
       req.getConnection((error, conn) => {
         conn.query("SELECT * FROM usuarios", (error, results) => {
           if (error) {
             console.log(error);
           } else {
             res.render("registerTable", {
+              results: results,
+              login: true,
+              name: req.session.name,
+              role: req.session.role,
+            });
+          }
+        });
+      });
+    }else{res.redirect("/")}
+   
+  } else {
+    res.redirect("/login");
+  }
+};
+
+funtions.registerTableClient = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "SuperAdmin") {
+      req.getConnection((error, conn) => {
+        conn.query("SELECT * FROM clientes", (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            res.render("registerTableClients", {
               results: results,
               login: true,
               name: req.session.name,
@@ -95,7 +119,8 @@ funtions.registerUEdit = (req, res) => {
             if (error) {
               console.log(error);
             } else {
-              res.render("editUsers", {
+              console.log(results);
+              res.render("registerEditUser", {
                 user: results[0],
                 login: true,
                 name: req.session.name,
@@ -114,6 +139,7 @@ funtions.registerUEdit = (req, res) => {
     res.redirect("/login");
   }
 };
+
 funtions.passwordNew = (req, res) => {
   if (req.session.loggedin) {
     if (
@@ -146,7 +172,7 @@ funtions.passwordNew = (req, res) => {
 };
 funtions.BlockUser = (req, res) => {
   if (req.session.loggedin) {
-    if (req.session.role == "superAdmin") {
+    if (req.session.role == "SuperAdmin") {
       const bloqueado = "bloqueado";
       const id = req.params.id;
       req.getConnection((error, conn) => {
@@ -175,7 +201,7 @@ funtions.statusTable = (req, res) => {
   
   if (req.session.loggedin) {
    
-    if (req.session.role == "superAdmin") {
+    if (req.session.role == "SuperAdmin") {
       req.getConnection((error, conn) => {
         conn.query("SELECT * FROM status", (error, results) => {
           if (error) {
@@ -199,7 +225,7 @@ funtions.statusTable = (req, res) => {
 };
 funtions.addstatus = (req, res) => {
   if (req.session.loggedin) {
-    if (req.session.role == "superAdmin") {
+    if (req.session.role == "SuperAdmin") {
       res.render("addstatus", {
         login: true,
         name: req.session.name,
@@ -215,7 +241,7 @@ funtions.addstatus = (req, res) => {
 funtions.delateStatus = (req, res) => {
   if (req.session.loggedin) {
    
-    if (req.session.role == "superAdmin") {
+    if (req.session.role == "SuperAdmin") {
       const id = req.params.id;
       req.getConnection((error, conn) => {
         conn.query("DELETE FROM status WHERE id = ?", [id], (error, results) => {
@@ -234,18 +260,25 @@ funtions.delateStatus = (req, res) => {
 };
 funtions.addMercancia = (req, res) => {
   if (req.session.loggedin) {
-    if (req.session.role == "superAdmin") {
+    if (req.session.role == "SuperAdmin") {
       req.getConnection((error, conn) => {
         conn.query("SELECT * FROM STATUS ", (error, results) => {
           if (error) {
             console.log(error);
           } else {
-            res.render("addMercancia", {
-              login: true,
-              result: results,
-              name: req.session.name,
-              role: req.session.role,
-            });
+            conn.query("SELECT * FROM clientes ", (error, resultsClient) => {
+              if (error) {console.log(error);}else{
+                console.log(resultsClient);
+                res.render("addMercancia", {
+                  login: true,
+                  result: results,
+                  resultsClient: resultsClient,
+                  name: req.session.name,
+                  role: req.session.role,
+                });
+              }
+            })
+            
           }
         });
       });
@@ -259,7 +292,7 @@ funtions.addMercancia = (req, res) => {
 
 funtions.mercanciaTable = (req, res) => {
   if (req.session.loggedin) {
-        if (req.session.role == "superAdmin") {req.getConnection((error, conn) => {
+        if (req.session.role == "SuperAdmin") {req.getConnection((error, conn) => {
       conn.query("SELECT * FROM objetos", (error, results) => {
         if (error) {
           console.log(error);
@@ -281,7 +314,7 @@ funtions.mercanciaTable = (req, res) => {
 
 funtions.mercanciaUpdateHistorial = (req, res) => {
   if (req.session.loggedin) {
-    if (req.session.role == "superAdmin") { const id = req.params.id;
+    if (req.session.role == "SuperAdmin") { const id = req.params.id;
       req.getConnection((error, conn) => {
         conn.query("SELECT * FROM status", (error, data) => {
           if (error) {
@@ -357,7 +390,7 @@ funtions.mercanciaUpdateHistorial = (req, res) => {
 funtions.fotosHistorial = (req, res) => {
   
   if (req.session.loggedin) {
-    if (req.session.role == "superAdmin") {}
+    if (req.session.role == "SuperAdmin") {}
     const id = req.params.id;
     req.getConnection((error, conn) => {
       conn.query("SELECT * FROM imagenes WHERE idHistorial = ?", [id], (error, results) => {
@@ -474,13 +507,13 @@ funtions.dataHistorial = (req, res) => {
   }
 };
 
-funtions.BlockUser = (req, res) => {
+funtions.BlockUserClient = (req, res) => {
   if (req.session.loggedin) {
           const bloqueado = "bloqueado"
           const id = req.params.id;
           req.getConnection((error, conn) => {
               conn.query(
-                  "UPDATE usuarios SET ? WHERE id = ?", [{ role: bloqueado }, id],
+                  "UPDATE clientes SET ? WHERE id = ?", [{ role: bloqueado }, id],
                   (error, results) => {
                       if (error) {
                           console.log(error);
@@ -554,32 +587,7 @@ funtions.passwordNew = (req, res) => {
   }
 };
 
-funtions.registerUEdit = (req, res) => {
-  if (req.session.loggedin) {
-    if (req.session.role == "admin") {
-      const id = req.params.id;
-      req.getConnection((error, conn) => {
-        conn.query(
-          "SELECT * FROM usuarios WHERE id = ?",
-          [id],
-          (error, results) => {
-            if (error) {
-              console.log(error);
-            } else {
-              res.render("registerEditUser", { user: results[0] });
-            }
-          }
-        );
-      });
-    } else {
-      res.render("login", {
-        login: false,
-      });
-    }
-  } else {
-    res.redirect("/login");
-  }
-};
+
 
 
 funtions.mercanciaService = (req, res) => {

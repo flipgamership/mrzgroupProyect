@@ -12,10 +12,10 @@
                     <div class="card m-sm-2 p-sm-3 p-md-3"
                         style=" box-shadow: -0.843887px 1.81324px 156px rgba(0, 0, 0, 0.05), -0.496881px 1.06764px 81.3696px rgba(0, 0, 0, 0.03616), -0.255191px 0.548325px 38.1888px rgba(0, 0, 0, 0.02808), -0.102617px 0.220491px 16.7232px rgba(0, 0, 0, 0.02192), -0.0229537px 0.0493202px 7.2384px rgba(0, 0, 0, 0.01384);">
                         <div class="card-title text-center">
-                            <h2 class="p-3 ">Register</h2>
+                            <h2 class="p-3 ">Registrar nuevo cliente</h2>
                         </div>
                         <div class="card-body ">
-                            <form action="/sendRegister" method="POST">
+                            <form action="/sendRegisterClients" method="POST">
                                 <div class="mb-3 ">
                                     <h5 for="usuario ">Nombre completo</h5>
                                     <input type="text " class="form-control" name="name">
@@ -45,21 +45,11 @@
                                     </div>
                                 </div>
                                
-                                <div class="mb-3 ">
-                                    <h5 for="my-select">Nivel de acceso a la plataforma</h5>
-                                    <select id="my-select" class="form-control" name="role"
-                                        style="font-size: 12px; " required>
-                                       
-                                            <option style="font-size: 12px;">SuperAdmin</option>
-                                            <option style="font-size: 12px;">Administrador</option>
-                                            <option style="font-size: 12px;">Supervisor</option>
-                                            <option style="font-size: 12px;" selected>Usuario</option>
-                                             
-                                    </select>
-                                </div>
+                               
+                                <input type="hidden" name="role" value="cliente">
                         </div>
                         <div class="d-grid ">
-                            <button type="submit" class="btn btn-primary" style="background: #000e7c;">Registrar Usuario</button>
+                            <button type="submit" class="btn btn-primary" style="background: #000e7c;">Registrar Cliente</button>
                         </div>
                         </form>
                     </div>

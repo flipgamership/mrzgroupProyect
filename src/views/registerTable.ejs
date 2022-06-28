@@ -39,7 +39,14 @@
           <td><%= user.id %> </td>
           <td><%= user.nombre %> </td>
           <td><%= user.correo %></td>
-          <td><%= user.role %></td>
+          <td>
+            <% if (user.role == 'bloqueado'){ %> 
+              <a href="#" class="btn btn-outline-danger">Bloqueado</a>
+              <% }else{ %> 
+                <a href="#" class="btn btn-outline-primary"><%= user.role %></a>
+              
+              <% } %> 
+          </td>
           <td>
             <a href="/registerUsersEdit/<%= user.id %>" class="btn btn-warning" type="button"><i class='bx bx-pencil'></i></a>
             <!-- <a href="/registerUsersDelate/" class="btn btn-danger" type="button"><i class='bx bxs-trash' ></i></a> -->

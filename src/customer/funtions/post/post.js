@@ -239,7 +239,7 @@ funtions.sendRegisterClients = async (req, res) => {
   console.log(name, pass, email, warrant, phone, role);
   req.getConnection((error, conn) => {
     conn.query(
-      "SELECT * FROM usuarios WHERE correo = ? ",
+      "SELECT * FROM clientes WHERE correo = ? ",
       [email],
       async (error, results) => {
         if (error) {
@@ -262,7 +262,7 @@ funtions.sendRegisterClients = async (req, res) => {
             let passwordHaash = await bcryptjs.hash(pass, 8);
             req.getConnection((error, conn) => {
               conn.query(
-                "INSERT INTO usuarios SET ?",
+                "INSERT INTO clientes SET ?",
                 {
                   nombre: name,
                   password: passwordHaash,
@@ -315,7 +315,6 @@ funtions.sendUpdateUser = (req, res) => {
     ) {
       const id = req.body.id;
       const name = req.body.name;
-      const pass = req.body.pass;
       const email = req.body.email;
       const warrant = req.body.warrant;
       const phone = req.body.phone;
@@ -326,7 +325,6 @@ funtions.sendUpdateUser = (req, res) => {
           [
             {
               nombre: name,
-              password: passwordHaash,
               correo: email,
               warrant: warrant,
               telefono: phone,

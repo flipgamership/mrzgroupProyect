@@ -37,7 +37,15 @@
                                 </div>     
                                 <div class="mb-3 ">
                                     <h5 for="usuario ">Cliente propietario</h5>
-                                    <input type="text " class="form-control" name="cliente" required>
+                                    <select class="form-select" aria-label="Default select example" name="cliente" >
+                                        <% resultsClient.forEach((DataClient)=> {%>
+                                            <option>
+                                                <%= DataClient.nombre%>
+                                            </option>
+                                            <% }) %>
+
+                                      </select>
+                                    
                                 </div>      
                                 <div class="mb-3 ">
                                     <h5 for="usuario ">Fecha de ingreso de la mercancía</h5>
