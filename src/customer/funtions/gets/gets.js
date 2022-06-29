@@ -12,8 +12,9 @@ funtions.home = (req, res) => {
   if (req.session.loggedin) {
     if (req.session.role == "SuperAdmin") {
       res.render("home");
-    }else{res.redirect("/")}
-    
+    } else {
+      res.redirect("/");
+    }
   } else {
     res.redirect("/loginClient");
   }
@@ -21,10 +22,9 @@ funtions.home = (req, res) => {
 funtions.index = (req, res) => {
   if (req.session.loggedin) {
     res.render("index");
-  }else{
-    res.render('loginClientes')
+  } else {
+    res.render("loginClientes");
   }
-  
 };
 
 funtions.logAut = (req, res) => {
@@ -73,8 +73,9 @@ funtions.registerTable = (req, res) => {
           }
         });
       });
-    }else{res.redirect("/")}
-   
+    } else {
+      res.redirect("/");
+    }
   } else {
     res.redirect("/login");
   }
@@ -97,8 +98,9 @@ funtions.registerTableClient = (req, res) => {
           }
         });
       });
-    }else{res.redirect("/")}
-   
+    } else {
+      res.redirect("/");
+    }
   } else {
     res.redirect("/login");
   }
@@ -188,19 +190,16 @@ funtions.BlockUser = (req, res) => {
           }
         );
       });
-    }else{res.redirect("/")}
-    
-   
-  
+    } else {
+      res.redirect("/");
+    }
   } else {
     res.redirect("/login");
   }
 };
 
 funtions.statusTable = (req, res) => {
-  
   if (req.session.loggedin) {
-   
     if (req.session.role == "SuperAdmin") {
       req.getConnection((error, conn) => {
         conn.query("SELECT * FROM status", (error, results) => {
@@ -216,9 +215,9 @@ funtions.statusTable = (req, res) => {
           }
         });
       });
-    }else{res.redirect("/")}
-
-    
+    } else {
+      res.redirect("/");
+    }
   } else {
     res.redirect("/login");
   }
@@ -231,29 +230,34 @@ funtions.addstatus = (req, res) => {
         name: req.session.name,
         role: req.session.role,
       });
-    }else{res.redirect("/")}
-    
-    
+    } else {
+      res.redirect("/");
+    }
   } else {
     res.render("login");
   }
 };
+
 funtions.delateStatus = (req, res) => {
   if (req.session.loggedin) {
-   
     if (req.session.role == "SuperAdmin") {
       const id = req.params.id;
       req.getConnection((error, conn) => {
-        conn.query("DELETE FROM status WHERE id = ?", [id], (error, results) => {
-          if (error) {
-            console.log(error);
-          } else {
-            res.redirect("/statusTable");
+        conn.query(
+          "DELETE FROM status WHERE id = ?",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.redirect("/statusTable");
+            }
           }
-        });
+        );
       });
-    }else{res.redirect("/")}
-    
+    } else {
+      res.redirect("/");
+    }
   } else {
     res.redirect("/login");
   }
@@ -267,7 +271,9 @@ funtions.addMercancia = (req, res) => {
             console.log(error);
           } else {
             conn.query("SELECT * FROM clientes ", (error, resultsClient) => {
-              if (error) {console.log(error);}else{
+              if (error) {
+                console.log(error);
+              } else {
                 console.log(resultsClient);
                 res.render("addMercancia", {
                   login: true,
@@ -277,14 +283,13 @@ funtions.addMercancia = (req, res) => {
                   role: req.session.role,
                 });
               }
-            })
-            
+            });
           }
         });
       });
-    }else{res.redirect("/")} 
-   
-    
+    } else {
+      res.redirect("/");
+    }
   } else {
     res.render("login");
   }
@@ -292,21 +297,24 @@ funtions.addMercancia = (req, res) => {
 
 funtions.mercanciaTable = (req, res) => {
   if (req.session.loggedin) {
-        if (req.session.role == "SuperAdmin") {req.getConnection((error, conn) => {
-      conn.query("SELECT * FROM objetos", (error, results) => {
-        if (error) {
-          console.log(error);
-        } else {
-          res.render("mercanciaTable", {
-            results: results,
-            login: true,
-            name: req.session.name,
-            role: req.session.role,
-          });
-        }
+    if (req.session.role == "SuperAdmin") {
+      req.getConnection((error, conn) => {
+        conn.query("SELECT * FROM objetos", (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            res.render("mercanciaTable", {
+              results: results,
+              login: true,
+              name: req.session.name,
+              role: req.session.role,
+            });
+          }
+        });
       });
-    });}else{req.redirect("/")}
-    
+    } else {
+      req.redirect("/");
+    }
   } else {
     res.redirect("/login");
   }
@@ -314,7 +322,8 @@ funtions.mercanciaTable = (req, res) => {
 
 funtions.mercanciaUpdateHistorial = (req, res) => {
   if (req.session.loggedin) {
-    if (req.session.role == "SuperAdmin") { const id = req.params.id;
+    if (req.session.role == "SuperAdmin") {
+      const id = req.params.id;
       req.getConnection((error, conn) => {
         conn.query("SELECT * FROM status", (error, data) => {
           if (error) {
@@ -328,10 +337,10 @@ funtions.mercanciaUpdateHistorial = (req, res) => {
                   if (error) {
                     console.log(error);
                   } else {
-                      console.log(resultsHistory)
+                    console.log(resultsHistory);
                     if (resultsHistory.length > 0) {
                       req.getConnection((error, conn) => {
-                        conn.query( 
+                        conn.query(
                           "SELECT * FROM objetos WHERE id = ?",
                           [id],
                           (error, results) => {
@@ -345,16 +354,15 @@ funtions.mercanciaUpdateHistorial = (req, res) => {
                                 login: true,
                                 name: req.session.name,
                                 role: req.session.role,
-                                id:id,
+                                id: id,
                               });
                             }
                           }
                         );
                       });
-                      
                     } else {
                       req.getConnection((error, conn) => {
-                        conn.query( 
+                        conn.query(
                           "SELECT * FROM objetos WHERE id = ?",
                           [id],
                           (error, results) => {
@@ -367,7 +375,7 @@ funtions.mercanciaUpdateHistorial = (req, res) => {
                                 login: true,
                                 name: req.session.name,
                                 role: req.session.role,
-                                id:id,
+                                id: id,
                               });
                             }
                           }
@@ -380,64 +388,72 @@ funtions.mercanciaUpdateHistorial = (req, res) => {
             });
           }
         });
-      });}else{req.redirect("/")}
-   
+      });
+    } else {
+      req.redirect("/");
+    }
   } else {
     res.redirect("/login");
   }
 };
 
 funtions.fotosHistorial = (req, res) => {
-  
   if (req.session.loggedin) {
-    if (req.session.role == "SuperAdmin") {}
+    if (req.session.role == "SuperAdmin") {
+    }
     const id = req.params.id;
     req.getConnection((error, conn) => {
-      conn.query("SELECT * FROM imagenes WHERE idHistorial = ?", [id], (error, results) => {
-        if (error) {
-          console.log(error);
-        } else {
-            res.render("mercanciaImagenesTable",{
-              results:results,
+      conn.query(
+        "SELECT * FROM imagenes WHERE idHistorial = ?",
+        [id],
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            res.render("mercanciaImagenesTable", {
+              results: results,
               idAWS: id,
-            })
+            });
+          }
         }
-      });
+      );
     });
   } else {
     res.redirect("/login");
   }
 };
 funtions.foto = (req, res) => {
-  if (req.session.loggedin){
+  if (req.session.loggedin) {
     const id = req.params.id;
     req.getConnection((error, conn) => {
-      conn.query("SELECT * FROM objetos WHERE id = ?", [id], (error, results)=>{
-        if (error) {
-          console.log(error);
-        }else{
-          req.getConnection((error, conn) => {
-            conn.query("SELECT * FROM STATUS ", (error, data) => {
-              if (error) {
-                console.log(error);
-              } else {
-                res.render("addFoto",{
-                  results: results,
-                  data: data,
-                  idFoto: id,
-                })
-               
-              }
+      conn.query(
+        "SELECT * FROM objetos WHERE id = ?",
+        [id],
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            req.getConnection((error, conn) => {
+              conn.query("SELECT * FROM STATUS ", (error, data) => {
+                if (error) {
+                  console.log(error);
+                } else {
+                  res.render("addFoto", {
+                    results: results,
+                    data: data,
+                    idFoto: id,
+                  });
+                }
+              });
             });
-          });
-          
+          }
         }
-      })
-    })
-  }else{
-    res.redirect('/login')
+      );
+    });
+  } else {
+    res.redirect("/login");
   }
-}
+};
 
 funtions.dataHistorial = (req, res) => {
   if (req.session.loggedin) {
@@ -450,10 +466,10 @@ funtions.dataHistorial = (req, res) => {
           if (error) {
             console.log(error);
           } else {
-              console.log(resultsHistory)
+            console.log(resultsHistory);
             if (resultsHistory.length > 0) {
               req.getConnection((error, conn) => {
-                conn.query( 
+                conn.query(
                   "SELECT * FROM objetos WHERE id = ?",
                   [id],
                   (error, results) => {
@@ -461,22 +477,20 @@ funtions.dataHistorial = (req, res) => {
                       console.log(error);
                     } else {
                       res.render("tabledataHistori", {
-                        
                         results: resultsHistory,
                         dataMerc: results,
                         login: true,
                         name: req.session.name,
                         role: req.session.role,
-                        id:id,
+                        id: id,
                       });
                     }
                   }
                 );
               });
-              
             } else {
               req.getConnection((error, conn) => {
-                conn.query( 
+                conn.query(
                   "SELECT * FROM objetos WHERE id = ?",
                   [id],
                   (error, results) => {
@@ -485,14 +499,15 @@ funtions.dataHistorial = (req, res) => {
                     } else {
                       res.render("notification", {
                         alert: true,
-                        alertTitle: "lo sentimos pero esta mercancía aun no tiene historial de estatus",
+                        alertTitle:
+                          "lo sentimos pero esta mercancía aun no tiene historial de estatus",
                         alertMessage: "",
                         alertIcon: "error",
                         showConfirmButton: false,
                         ruta: "../mercanciaTable",
                         timer: 3000,
                         role: req.session.role,
-                    })
+                      });
                     }
                   }
                 );
@@ -509,94 +524,82 @@ funtions.dataHistorial = (req, res) => {
 
 funtions.BlockUserClient = (req, res) => {
   if (req.session.loggedin) {
-          const bloqueado = "bloqueado"
-          const id = req.params.id;
-          req.getConnection((error, conn) => {
-              conn.query(
-                  "UPDATE clientes SET ? WHERE id = ?", [{ role: bloqueado }, id],
-                  (error, results) => {
-                      if (error) {
-                          console.log(error);
-                      } else {
-                          res.redirect("/register");
-                      }
-                  }
-              );
-          });
+    const bloqueado = "bloqueado";
+    const id = req.params.id;
+    req.getConnection((error, conn) => {
+      conn.query(
+        "UPDATE clientes SET ? WHERE id = ?",
+        [{ role: bloqueado }, id],
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            res.redirect("/register");
+          }
+        }
+      );
+    });
   }
 };
 
 funtions.delateMercancia = (req, res) => {
   if (req.session.loggedin) {
-      const id = req.params.id;
-      req.getConnection((error, conn) => {
-        conn.query(
-          "DELETE FROM objetos WHERE id= ?",
-          [id],
-          (error, results) => {
-            if (error) {
-              console.log(error);
-            } else {
-              res.redirect("/inventarioConsumiblesRedline");
-            }
-          }
-        );
+    const id = req.params.id;
+    req.getConnection((error, conn) => {
+      conn.query("DELETE FROM objetos WHERE id= ?", [id], (error, results) => {
+        if (error) {
+          console.log(error);
+        } else {
+          res.redirect("/inventarioConsumiblesRedline");
+        }
       });
+    });
   }
 };
 
 funtions.delateImagenes = (req, res) => {
   if (req.session.loggedin) {
-      const id = req.params.id;
-      req.getConnection((error, conn) => {
-        conn.query(
-          "DELETE FROM imagenes WHERE id= ?",
-          [id],
-          (error, results) => {
-            if (error) {
-              console.log(error);
-            } else {
-              res.redirect("/mercanciaTable");
-            }
-          }
-        );
+    const id = req.params.id;
+    req.getConnection((error, conn) => {
+      conn.query("DELETE FROM imagenes WHERE id= ?", [id], (error, results) => {
+        if (error) {
+          console.log(error);
+        } else {
+          res.redirect("/mercanciaTable");
+        }
       });
-    
+    });
   }
 };
 
-
 funtions.passwordNew = (req, res) => {
   if (req.session.loggedin) {
-      const id = req.params.id;
-      req.getConnection((error, conn) => {
-        conn.query(
-          "SELECT * FROM usuarios WHERE id = ?",
-          [id],
-          (error, results) => {
-            if (error) {
-              console.log(error);
-            } else {
-              res.render("newPassword", { user: results[0] });
-            }
+    const id = req.params.id;
+    req.getConnection((error, conn) => {
+      conn.query(
+        "SELECT * FROM usuarios WHERE id = ?",
+        [id],
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            res.render("newPassword", { user: results[0] });
           }
-        );
-      });
+        }
+      );
+    });
   } else {
     res.redirect("/login");
   }
 };
 
-
-
-
 funtions.mercanciaService = (req, res) => {
   if (req.session.loggedin) {
     req.getConnection((error, conn) => {
-      conn.query('SELECT * FROM status', (error, data) => {
-        if(error){
+      conn.query("SELECT * FROM status", (error, data) => {
+        if (error) {
           console.log(error);
-        }else{  
+        } else {
           conn.query("SELECT * FROM objetos", (error, results) => {
             if (error) {
               console.log(error);
@@ -611,15 +614,11 @@ funtions.mercanciaService = (req, res) => {
             }
           });
         }
-      })
-      
+      });
     });
   } else {
     res.redirect("/login");
   }
 };
-
-
-
 
 module.exports = funtions;

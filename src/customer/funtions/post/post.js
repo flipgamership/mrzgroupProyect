@@ -310,8 +310,7 @@ funtions.sendRegisterClients = async (req, res) => {
 funtions.sendUpdateUser = (req, res) => {
   if (req.session.loggedin) {
     if (
-      req.session.role == "SuperAdmin" ||
-      req.session.role == "Administrador"
+      req.session.role == "SuperAdmin"
     ) {
       const id = req.body.id;
       const name = req.body.name;
@@ -336,7 +335,16 @@ funtions.sendUpdateUser = (req, res) => {
             if (error) {
               console.log(error);
             } else {
-              res.redirect("/register");
+              res.render("notification", {
+                role: req.session.role,
+                alert: true,
+                alertTitle: "actualizado con exito",
+                alertMessage: "se actualizo la informacion de forma Exitosa",
+                alertIcon: "success",
+                showConfirmButton: true,
+                ruta: "registerTable",
+                timer: 15000,
+              });
             }
           }
         );
@@ -400,17 +408,16 @@ funtions.sendAddStatus = async (req, res) => {
             timer: 15000,
           });
         } else {
-            res.render("notification", {
-                role: req.session.role,
-                alert: true,
-                alertTitle: "agregado",
-                alertMessage: "se agrego el estatus de forma  Exitosa",
-                alertIcon: "success",
-                showConfirmButton: true,
-                ruta: "statustable",
-                timer: 15000,
-              });
-           
+          res.render("notification", {
+            role: req.session.role,
+            alert: true,
+            alertTitle: "agregado",
+            alertMessage: "se agrego el estatus de forma  Exitosa",
+            alertIcon: "success",
+            showConfirmButton: true,
+            ruta: "statustable",
+            timer: 15000,
+          });
         }
       }
     );
@@ -520,31 +527,30 @@ funtions.estatusNuevoRegister = (req, res) => {
             console.log(error);
           } else {
             conn.query(
-                "UPDATE objetos SET ? WHERE id = ?",
-                [
-                  {
-                    status: status,
-                  },
-                  id,
-                ],
-                (error, result) => {
-                  if (error) {
-                    console.log(error);
-                  } else {
-                    res.render("notification", {
-                        alert: true,
-                        alertTitle: "estatus actualizado",
-                        alertMessage: "",
-                        alertIcon: "success",
-                        showConfirmButton: false,
-                        ruta: "../mercanciaTable",
-                        timer: 3000,
-                        role: req.session.role,
-                      });
-                  }
+              "UPDATE objetos SET ? WHERE id = ?",
+              [
+                {
+                  status: status,
+                },
+                id,
+              ],
+              (error, result) => {
+                if (error) {
+                  console.log(error);
+                } else {
+                  res.render("notification", {
+                    alert: true,
+                    alertTitle: "estatus actualizado",
+                    alertMessage: "",
+                    alertIcon: "success",
+                    showConfirmButton: false,
+                    ruta: "../mercanciaTable",
+                    timer: 3000,
+                    role: req.session.role,
+                  });
                 }
-              );
-          
+              }
+            );
           }
         }
       );
@@ -575,16 +581,13 @@ funtions.savePasssword = async (req, res) => {
 };
 
 funtions.buscador = (req, res) => {
-    if (req.session.loggedin){
-      const busqueda = req.body.busqueda;
-      req.getConnection((error, conn) => {
-        conn.query("SELECT * FROM objetos WHERE awb = ?", [busqueda], )
-      })
-      
-    }else{
-  
-    }
+  if (req.session.loggedin) {
+    const busqueda = req.body.busqueda;
+    req.getConnection((error, conn) => {
+      conn.query("SELECT * FROM objetos WHERE awb = ?", [busqueda]);
+    });
+  } else {
   }
-  
+};
 
 module.exports = funtions;

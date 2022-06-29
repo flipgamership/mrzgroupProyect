@@ -15,7 +15,8 @@
                             <h2 class="p-3 ">Editar usuario</h2>
                         </div>
                         <div class="card-body ">
-                            <form action="/sendRegister" method="POST">
+                            <form action="/sendUpdateUser" method="POST">
+                                <input type="hidden" name="id" value="<%= user.id %>">
                                 <div class="mb-3 ">
                                     <h5 for="usuario ">Nombre completo</h5>
                                     <input type="text " class="form-control" name="name" value="<%= user.nombre %>">
