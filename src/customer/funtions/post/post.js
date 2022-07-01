@@ -357,28 +357,55 @@ funtions.sendUpdateUser = (req, res) => {
   }
 };
 
-funtions.savePasssword = async (req, res) => {
+funtions.sendUpdateUserClient = (req, res) => {
   if (req.session.loggedin) {
-    const id = req.body.id;
-    const pass = req.body.password;
-    let passwordHaash = await bcryptjs.hash(pass, 8);
-    req.getConnection((error, conn) => {
-      conn.query(
-        "UPDATE usuarios SET ? WHERE id = ?",
-        [{ password: passwordHaash }, id],
-        async (error, results) => {
-          if (error) {
-            console.log(error);
-          } else {
-            res.redirect("/register");
+    if (
+      req.session.role == "SuperAdmin"
+    ) {
+      const id = req.body.id;
+      const name = req.body.name;
+      const email = req.body.email;
+      const warrant = req.body.warrant;
+      const phone = req.body.phone;
+      const role = req.body.role;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "UPDATE clientes SET ? WHERE id = ?",
+          [
+            {
+              nombre: name,
+              correo: email,
+              telefono: phone,
+              role: role,
+            },
+            id,
+          ],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.render("notification", {
+                role: req.session.role,
+                alert: true,
+                alertTitle: "actualizado con exito",
+                alertMessage: "se actualizo la informacion de forma Exitosa",
+                alertIcon: "success",
+                showConfirmButton: true,
+                ruta: "registerTableClient",
+                timer: 15000,
+              });
+            }
           }
-        }
-      );
-    });
+        );
+      });
+    } else {
+      res.redirect("/home");
+    }
   } else {
     res.redirect("/login");
   }
 };
+
 
 funtions.sendAddStatus = async (req, res) => {
   const id = req.body.id;
@@ -573,12 +600,53 @@ funtions.savePasssword = async (req, res) => {
           if (error) {
             console.log(error);
           } else {
+            res.render("notification", {
+              alert: true,
+              alertTitle: "Contraseña actualizada con exito",
+              alertMessage: "",
+              alertIcon: "success",
+              showConfirmButton: false,
+              ruta: "../registerTable",
+              timer: 3000,
+              role: req.session.role,
+            });
           }
         }
       );
     });
   }
 };
+
+funtions.savePassswordCleint = async (req, res) => {
+  if (req.session.loggedin) {
+    const id = req.body.id;
+    const pass = req.body.password;
+    let passwordHaash = await bcryptjs.hash(pass, 8);
+    req.getConnection((error, conn) => {
+      conn.query(
+        "UPDATE clientes SET ? WHERE id = ?",
+        [{ password: passwordHaash }, id],
+        async (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            res.render("notification", {
+              alert: true,
+              alertTitle: "Contraseña actualizada con exito",
+              alertMessage: "",
+              alertIcon: "success",
+              showConfirmButton: false,
+              ruta: "../registerTableClient",
+              timer: 3000,
+              role: req.session.role,
+            });
+          }
+        }
+      );
+    });
+  }
+};
+
 
 funtions.buscador = (req, res) => {
   if (req.session.loggedin) {
@@ -589,5 +657,6 @@ funtions.buscador = (req, res) => {
   } else {
   }
 };
+
 
 module.exports = funtions;

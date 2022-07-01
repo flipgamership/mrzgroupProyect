@@ -53,7 +53,7 @@ router.get("/historiadata/:id", funtionsGetApp.dataHistorial);
 router.get("/registerUsersDelate/:id", funtionsGetApp.BlockUser);
 // ruta get restart password
 router.get("/password/:id", funtionsGetApp.passwordNew);
-
+router.get("/passwordClient/:id", funtionsGetApp.passwordNewClient);
 // ruta get clientes
 
 //ruta get login clientes
@@ -65,7 +65,8 @@ router.get("/registerUsersDelateClient/:id", funtionsGetApp.BlockUserClient);
 
 // ruta editar usuario interno
 router.get("/registerUsersEdit/:id", funtionsGetApp.registerUEdit);
-
+// rutda editar cliente interno
+router.get("/registerUsersEditClient/:id", funtionsGetApp.registerUEditClient);
 // ruta get de servicios del cliente
 
 router.get("/tableService", funtionsGetApp.mercanciaService);
@@ -78,8 +79,10 @@ router.post("/sendRegister", funtionsPostApp.sendRegister);
 
 router.post("/sendUpdateUser", funtionsPostApp.sendUpdateUser);
 
-router.post("/sendPassword", funtionsPostApp.savePasssword);
+router.post("/sendUpdateUserClient", funtionsPostApp.sendUpdateUserClient);
 
+router.post("/sendPassword", funtionsPostApp.savePasssword);
+router.post("/sendPasswordClient", funtionsPostApp.savePassswordCleint);
 // rutas post de login
 router.post("/loginAuth", funtionsPostApp.loginAuth);
 

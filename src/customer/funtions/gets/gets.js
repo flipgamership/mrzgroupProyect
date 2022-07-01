@@ -142,23 +142,25 @@ funtions.registerUEdit = (req, res) => {
   }
 };
 
-funtions.passwordNew = (req, res) => {
+funtions.registerUEditClient = (req, res) => {
   if (req.session.loggedin) {
     if (
-      req.session.role == "SuperAdmin" ||
-      req.session.role == "Administrador"
+      req.session.role == "SuperAdmin"
     ) {
       const id = req.params.id;
       req.getConnection((error, conn) => {
         conn.query(
-          "SELECT * FROM usuarios WHERE id = ?",
+          "SELECT * FROM clientes WHERE id = ?",
           [id],
           (error, results) => {
             if (error) {
               console.log(error);
             } else {
-              res.render("newPassword", {
+              console.log(results);
+              res.render("registerEditUserClient", {
                 user: results[0],
+                login: true,
+                name: req.session.name,
                 role: req.session.role,
               });
             }
@@ -166,12 +168,16 @@ funtions.passwordNew = (req, res) => {
         );
       });
     } else {
-      res.redirect("/home");
+      res.render("login", {
+        login: false,
+      });
     }
   } else {
     res.redirect("/login");
   }
 };
+
+
 funtions.BlockUser = (req, res) => {
   if (req.session.loggedin) {
     if (req.session.role == "SuperAdmin") {
@@ -534,7 +540,7 @@ funtions.BlockUserClient = (req, res) => {
           if (error) {
             console.log(error);
           } else {
-            res.redirect("/register");
+            res.redirect("/registerTableClient");
           }
         }
       );
@@ -572,26 +578,7 @@ funtions.delateImagenes = (req, res) => {
   }
 };
 
-funtions.passwordNew = (req, res) => {
-  if (req.session.loggedin) {
-    const id = req.params.id;
-    req.getConnection((error, conn) => {
-      conn.query(
-        "SELECT * FROM usuarios WHERE id = ?",
-        [id],
-        (error, results) => {
-          if (error) {
-            console.log(error);
-          } else {
-            res.render("newPassword", { user: results[0] });
-          }
-        }
-      );
-    });
-  } else {
-    res.redirect("/login");
-  }
-};
+
 
 funtions.mercanciaService = (req, res) => {
   if (req.session.loggedin) {
@@ -620,5 +607,53 @@ funtions.mercanciaService = (req, res) => {
     res.redirect("/login");
   }
 };
+
+funtions.passwordNew = (req, res) => {
+  if (req.session.loggedin) {
+      if (req.session.role == "SuperAdmin") {
+          const id = req.params.id;
+          req.getConnection((error, conn) => {
+              conn.query(
+                  "SELECT * FROM usuarios WHERE id = ?", [id],
+                  (error, results) => {
+                      if (error) {
+                          console.log(error);
+                      } else {
+                          res.render("newPassword", { user: results[0], role: req.session.role, });
+                      }
+                  }
+              );
+          });
+      } else {
+          res.redirect("/home");
+      }
+  } else {
+      res.redirect("/login");
+  }
+};
+funtions.passwordNewClient = (req, res) => {
+  if (req.session.loggedin) {
+      if (req.session.role == "SuperAdmin") {
+          const id = req.params.id;
+          req.getConnection((error, conn) => {
+              conn.query(
+                  "SELECT * FROM clientes WHERE id = ?", [id],
+                  (error, results) => {
+                      if (error) {
+                          console.log(error);
+                      } else {
+                          res.render("newPasswordClient", { user: results[0], role: req.session.role, });
+                      }
+                  }
+              );
+          });
+      } else {
+          res.redirect("/home");
+      }
+  } else {
+      res.redirect("/login");
+  }
+};
+
 
 module.exports = funtions;
