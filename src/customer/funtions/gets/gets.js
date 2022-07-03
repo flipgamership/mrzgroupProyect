@@ -21,7 +21,11 @@ funtions.home = (req, res) => {
 };
 funtions.index = (req, res) => {
   if (req.session.loggedin) {
-    res.render("index");
+    res.render("index",{
+      login: true,
+      name: req.session.name,
+      role: req.session.role,
+    });
   } else {
     res.render("loginClientes");
   }
@@ -43,7 +47,11 @@ funtions.login = (req, res) => {
 
 funtions.loginClient = (req, res) => {
   if (req.session.loggedin) {
-    res.redirect("/home");
+    res.redirect("/home",{
+      login: true,
+      name: req.session.name,
+      role: req.session.role,
+    });
   } else {
     res.render("loginClientes");
   }
@@ -655,5 +663,38 @@ funtions.passwordNewClient = (req, res) => {
   }
 };
 
+
+funtions.mercanciaServiceClient = (req, res) => {
+  if (req.session.loggedin) {
+    const client = req.params.client;
+    req.getConnection((error, conn) => {
+      conn.query("SELECT * FROM status", (error, data) => {
+        if (error) {
+          console.log(error);
+        } else {
+          conn.query("SELECT * FROM objetos WHERE cliente = ? ", [client], (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.render("mercanciaTableservicesClient", {
+                data: data,
+                results: results,
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
+              });
+            }
+          });
+        }
+      });
+    });
+  } else {
+    res.redirect("/login");
+  }
+};
+
+funtions.p = (req, res) => {
+  res.render("diseño")
+}
 
 module.exports = funtions;

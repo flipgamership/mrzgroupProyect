@@ -73,6 +73,9 @@ router.get("/tableService", funtionsGetApp.mercanciaService);
 
 // ruta get de servicios consulta usuarios
 
+
+// ruta get de servicios del cliente tabla 
+router.get("/tableServiceClient/:client", funtionsGetApp.mercanciaServiceClient);
 // rutas post
 // ruta de registrar usuario post
 router.post("/sendRegister", funtionsPostApp.sendRegister);
@@ -104,6 +107,6 @@ router.post("/sendRegisterClients", funtionsPostApp.sendRegisterClients);
 router.post("/loginAuthclientes", funtionsPostApp.loginAuthClients);
 
 //pruebas
-
+router.get("/pruebas", funtionsGetApp.p)
 // router.get('/p', funtionsGetApp.p)
 module.exports = router;
