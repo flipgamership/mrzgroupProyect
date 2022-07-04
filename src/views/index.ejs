@@ -36,11 +36,12 @@
       <div class="card-body">
         
         <h5 class="card-title">Buscar AWB</h5>
-        <form action="post" method="">
+        <form method="post" action="/pruebas">
+          <input type="hidden" name="name" value="<%= name %>"">
           <p class="card-text">Porfavor ingrese el AWB del servicio para buscarlo en nuestra base de datos</p>
           <div class="input-group flex-nowrap">
             <span class="input-group-text" id="addon-wrapping"><i class='bx bx-search-alt' ></i></span>
-            <input type="text" class="form-control" placeholder="AWB" aria-label="AWB" aria-describedby="addon-wrapping">
+            <input type="text" class="form-control" name="awb" placeholder="AWB" aria-label="AWB" aria-describedby="addon-wrapping">
           </div>
           <br>
           <button type="submit" class="btn btn-outline-primary btn-sm">Buscar <i class='bx bx-search-alt' ></i></button>
@@ -55,11 +56,12 @@
     <lottie-player src="https://assets7.lottiefiles.com/packages/lf20_hd9g6szl.json"  background="transparent"  class="card-img-top" speed="1"  style="width: 300px; height: 300px; margin: 0 auto;"  loop  autoplay></lottie-player>
       <div class="card-body">
         <h5 class="card-title">Buscar AWH</h5>
-        <form action="post" method="">
+        <form method="post" action="/pruebas">
+          <input type="hidden" name="name" value="<%= name %>"">
           <p class="card-text">Porfavor ingrese el AWH del servicio para buscarlo en nuestra base de datos</p>
           <div class="input-group flex-nowrap">
             <span class="input-group-text" id="addon-wrapping"><i class='bx bx-search-alt' ></i></span>
-            <input type="text" class="form-control" placeholder="AWH" aria-label="AWH" aria-describedby="addon-wrapping">
+            <input type="text" class="form-control" name="awb" placeholder="AWH" aria-label="AWH" aria-describedby="addon-wrapping">
           </div>
           <br>
           <button type="submit" class="btn btn-outline-primary btn-sm">Buscar</button>

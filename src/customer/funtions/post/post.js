@@ -430,7 +430,7 @@ funtions.sendAddStatus = async (req, res) => {
             alertMessage:
               "por favor revise correctamente la informacion y si este error continua vuelve a intentarlo mas tarde",
             alertIcon: "error",
-            showConfirmButton: true,
+            showConfirmButton: true,   
             ruta: "AgregarStatus",
             timer: 15000,
           });
@@ -657,6 +657,65 @@ funtions.buscador = (req, res) => {
   } else {
   }
 };
+
+funtions.p = (req, res) => {
+  const awb = req.body.awb
+  const name = req.body.name
+  req.getConnection((error, conn) => {
+    conn.query("SELECT * FROM status", (error, dataStatus) => {
+      if (error) {
+        console.log(error);
+      } else {
+        conn.query("SELECT * FROM objetos WHERE awb = ?", [awb], (error, datos) => {
+          if (error) {
+            console.log(error);
+          } else {
+            if (datos != 0 &&datos[0].cliente == name){
+              const  info = datos[0].id
+              conn.query("SELECT * FROM historial WHERE awbID = ?",[info], (error, dataHistorial) => {
+                if (error) {
+                  console.log(error);
+                } else {
+                  conn.query("SELECT * FROM imagenes WHERE idHistorial = ?",[info], (error, dataImg) => {
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      res.render("diseño", {
+                        dataStatus: dataStatus,
+                        datos: datos[0],
+                        dataHistorial: dataHistorial,
+                        dataImg: dataImg,
+                        login: true,
+                        name: req.session.name,
+                        role: req.session.role,
+                      });
+                    }
+                  });
+                }
+              });
+            }else{
+              res.render("notification", {
+                alert: true,
+                alertTitle:
+                  "lo sentimos pero este servicio que solicito no se encuentra registrada ",
+                alertMessage: "no se encuentra registrada en el software porfavor comunicarze con el area del servicio al cliente",
+                alertIcon: "error",
+                showConfirmButton: false,
+                ruta: "../../",
+                timer: 3000,
+                role: req.session.role,
+              });
+            }
+          
+          }
+        });
+      }
+    });
+  });
+  
+}
+
+
 
 
 module.exports = funtions;

@@ -693,8 +693,7 @@ funtions.mercanciaServiceClient = (req, res) => {
   }
 };
 
-funtions.p = (req, res) => {
-  res.render("diseño")
-}
+
+
 
 module.exports = funtions;

@@ -45,7 +45,16 @@
           <td><%= user.name %></td>
           <td><%= user.cliente %></td>
           <td><%= user.fecha %></td>
-          <td><a href="" class="btn btn-warning"><i class='bx bx-show-alt'></i> Informacion completa</a></td>
+          <td>
+            <form method="post" action="/pruebas">
+              <input type="hidden" name="awb" value="<%= user.awb %>">
+              <input type="hidden" name="name" value="<%= name %>">
+              <button type="submit" class="btn btn-warning"><i class='bx bx-show-alt'></i> Informacion completa</button>
+            </form>
+            
+            
+          
+          </td>
           <td>
             <% data.forEach((datas) => {%>
               <% if( datas.name == user.status){%>

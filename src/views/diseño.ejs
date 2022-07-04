@@ -20,38 +20,47 @@
   </nav>
 <section id="header" class="jumbotron text-center">
     <br>
-     <h1 class="display-3">AWB</h1>
+     <h1 class="display-3"><%= datos.awb %></h1>
      <p class="lead">su servicio se encuentra con el siguiente historial de procesos</p>
     
 </section>
 <hr class="d-grid gap-2 col-8 col-md-8 mx-auto" >
   <section class="d-grid gap-2 col-6 col-md-6 mx-auto">
-    <p class="lead">su servicio se encuentra actualmente en: <strong>entregado</strong> </p>
-    <div class="progress" style="height: 25px; background-color:  ;" >
-      <div class="progress-bar progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
+    <p class="lead">su servicio se encuentra actualmente en: <strong><%= datos.status %></strong></p>
+    <% dataStatus.forEach((status) => {%>
+    <% if( status.name == datos.status){%>
+    <div class="progress" style="height: 25px; background-color: rgb(181, 181, 181)  ;" >
+      <div class="progress-bar progress-bar bg-success" role="progressbar" style="width: <%= status.porcentaje %>%" aria-valuenow="<%= status.porcentaje %>" aria-valuemin="0" aria-valuemax="100"><%= status.porcentaje %>%</div>
     </div>
+    <% } %>
+    <% }) %>
     <br>
-    <div class="accordion" id="accordionExample1">
+    <% dataHistorial.forEach((historial) => {%>
+    <div class="accordion" id="accordionExample<%=historial.id%>">
       <div class="accordion-item">
-        <h2 class="accordion-header" id="headingOne">
+        <h2 class="accordion-header" id="headingOne<%=historial.id%>">
           <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-            titulo
+            <%= historial.estatusHistorial %> -- <%= historial.fecha %>
           </button>
         </h2>
-        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample1">
+        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne<%=historial.id%>" data-bs-parent="#accordionExample<%=historial.id%>">
           <div class="accordion-body">
             <div class="galery">
-              <img src="..." class="rounded float-left" alt="...">
-              <img src="..." class="rounded float-left" alt="...">
-              <img src="..." class="rounded float-left" alt="...">
-              <img src="..." class="rounded float-left" alt="...">
-            </div>
+              <% dataImg.forEach((img) => {%>
+              <% if (historial.awbID == img.idHistorial && historial.estatusHistorial== img.statusHistorial){ %> 
+              <img src="./multer/archivosUser/<%= img.imagen %>" class="rounded float-left" alt="..." style="width:300px">
+              <% } %>
+              <% }) %>
+            </div>  
             
-            <p class="lead"><strong>Observaciones:</strong> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Modi iste consequatur velit officia nesciunt? Illo, itaque ab molestias debitis, hic blanditiis ea repudiandae natus autem dolore eum sequi, nam unde!</p>
+            <p class="lead"><strong>Observaciones:</strong> <%= historial.observaciones %> </p>
+            <p class="lead"><strong>fecha de actualizacion:</strong> <%= historial.fecha %></p>
+
           </div>
         </div>
       </div>
-    </div>    
+    </div>
+    <% }) %>    
   </section>
 <div class="d-grid gap-2 col-3 col-md-3 mx-auto">
   <br>
