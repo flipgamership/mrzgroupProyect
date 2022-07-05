@@ -733,8 +733,24 @@ funtions.mercanciaServiceClient = (req, res) => {
     res.redirect("/login");
   }
 };
+funtions.p = (req, res) => {
+  req.getConnection((error, conn) => {
+    conn.query("SELECT cliente, COUNT(cliente) as totalPorCliente from objetos GROUP BY cliente;",(error, results) => {
+      if (error) {console.log(error);}else{
+        conn.query("SELECT status, COUNT(status) as totalPorCliente from objetos GROUP BY status;", (error, resultStatus) =>{
+          if (error){console.log(error);}else{
+            res.render("preubas",{
+              nameUsersLabels: results,
+              datosPrestamoDepartament: resultStatus,
+              
+            })
+          }
+        })
+      }
+    })
+  })
+}
 
-
-
+// SELECT status, COUNT(status) as totalPorCliente from objetos GROUP BY status;
 
 module.exports = funtions;

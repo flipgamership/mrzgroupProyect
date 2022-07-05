@@ -708,7 +708,7 @@ funtions.buscador = (req, res) => {
   }
 };
 
-funtions.p = (req, res) => {
+funtions.pF = (req, res) => {
   const awb = req.body.awb
   const name = req.body.name
   req.getConnection((error, conn) => {

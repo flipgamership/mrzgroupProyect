@@ -109,7 +109,9 @@ router.post("/sendRegisterClients", funtionsPostApp.sendRegisterClients);
 //ruta login clientes
 router.post("/loginAuthclientes", funtionsPostApp.loginAuthClients);
 
-//pruebas
-router.post("/pruebas", funtionsPostApp.p)
-// router.get('/p', funtionsGetApp.p)
+//pF
+router.post("/pF", funtionsPostApp.pF)
+//pruebas 
+router.get('/p', funtionsGetApp.p)
+
 module.exports = router;
