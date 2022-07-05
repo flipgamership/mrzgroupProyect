@@ -43,6 +43,7 @@ router.get("/mercanciaTable", funtionsGetApp.mercanciaTable);
 router.get("/delateMercancia/:id", funtionsGetApp.delateMercancia);
 // rutas get de actualizar estatus historial
 router.get("/actualizarMercancia/:id", funtionsGetApp.mercanciaUpdateHistorial);
+router.get("/actualizarMercanciaObjeto/:id", funtionsGetApp.mercanciaUpdateObjetos);
 // ruta get de estatus de fotos de mercancia
 router.get("/addFotosTable/:id", funtionsGetApp.fotosHistorial);
 router.get("/addFoto/:id", funtionsGetApp.foto);
@@ -82,6 +83,7 @@ router.post("/sendRegister", funtionsPostApp.sendRegister);
 
 router.post("/sendUpdateUser", funtionsPostApp.sendUpdateUser);
 
+
 router.post("/sendUpdateUserClient", funtionsPostApp.sendUpdateUserClient);
 
 router.post("/sendPassword", funtionsPostApp.savePasssword);
@@ -93,6 +95,7 @@ router.post("/loginAuth", funtionsPostApp.loginAuth);
 router.post("/statusSend", funtionsPostApp.sendAddStatus);
 //rutas post de mercancía
 router.post("/sendMercancia", funtionsPostApp.sendAddMercancia);
+router.post("/sendUpdateMercanciaObjetos", funtionsPostApp.sendUpdateMercanciaObjeto);
 // rutas post de fotos
 router.post("/fotosSend/:id", uploadImagen, funtionsPostApp.SubirNuevoArchivos);
 // ruta pos actualizar estatus

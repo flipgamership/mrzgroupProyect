@@ -411,6 +411,47 @@ funtions.mercanciaUpdateHistorial = (req, res) => {
   }
 };
 
+funtions.mercanciaUpdateObjetos = (req, res) => {
+  if (req.session.loggedin) {
+    if (req.session.role == "SuperAdmin") {
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query("SELECT * FROM clientes", (error, data) => {
+          if (error) {
+            console.log(error);
+          } else {
+            req.getConnection((error, conn) => {
+              conn.query(
+                "SELECT * FROM objetos WHERE id = ?",
+                [id],
+                (error, results) => {
+                  if (error) {
+                    console.log(error);
+                  } else {
+                    res.render("UpdateMercancia", {
+                      resultsClient: data,
+                      user : results[0],
+                      login: true,
+                      name: req.session.name,
+                      role: req.session.role,
+                      id: id,
+                    });
+                  }
+                }
+              );
+            });
+          }
+        });
+      });
+    } else {
+      req.redirect("/");
+    }
+  } else {
+    res.redirect("/login");
+  }
+};
+
+
 funtions.fotosHistorial = (req, res) => {
   if (req.session.loggedin) {
     if (req.session.role == "SuperAdmin") {
@@ -564,7 +605,7 @@ funtions.delateMercancia = (req, res) => {
         if (error) {
           console.log(error);
         } else {
-          res.redirect("/inventarioConsumiblesRedline");
+          res.redirect("/mercanciaTable");
         }
       });
     });

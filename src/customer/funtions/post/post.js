@@ -406,6 +406,56 @@ funtions.sendUpdateUserClient = (req, res) => {
   }
 };
 
+funtions.sendUpdateMercanciaObjeto = (req, res) => {
+  if (req.session.loggedin) {
+    if (
+      req.session.role == "SuperAdmin"
+    ) {
+      const id = req.body.id;
+      const awb = req.body.awb;
+      const name = req.body.name;
+      const client = req.body.cliente;
+      
+      const fecha= req.body.fecha;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "UPDATE objetos SET ? WHERE id = ?",
+          [
+            {
+              awb:awb,
+              name:name,
+              cliente:client,
+              fecha:fecha
+            },
+            id,
+          ],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.render("notification", {
+                role: req.session.role,
+                alert: true,
+                alertTitle: "actualizado con exito",
+                alertMessage: "se actualizo la informacion de forma Exitosa",
+                alertIcon: "success",
+                showConfirmButton: true,
+                ruta: "mercanciaTable",
+                timer: 15000,
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.redirect("/home");
+    }
+  } else {
+    res.redirect("/login");
+  }
+};
+
+
 
 funtions.sendAddStatus = async (req, res) => {
   const id = req.body.id;
