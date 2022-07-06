@@ -555,7 +555,7 @@ funtions.dataHistorial = (req, res) => {
                       res.render("notification", {
                         alert: true,
                         alertTitle:
-                          "lo sentimos pero esta mercancía aun no tiene historial de estatus",
+                          "lo sentimos pero esta mercancía aún no tiene historial de estatus",
                         alertMessage: "",
                         alertIcon: "error",
                         showConfirmButton: false,
@@ -751,6 +751,58 @@ funtions.p = (req, res) => {
   })
 }
 
+funtions.completed = (req, res) => {
+  if (req.session.loggedin){
+    const id = req.params.id
+    req.getConnection((error, conn) => {
+      conn.query("UPDATE objetos SET ? WHERE id = ?", [{proceso: "completo"}, id], (error, results) => {
+        if (error) {console.log(error);}else{
+          res.render("notification", {
+            alert: true,
+            alertTitle:
+              "el servicio se completó con éxito",
+            alertMessage: "",
+            alertIcon: "success",
+            showConfirmButton: false,
+            ruta: "../mercanciaTable",
+            timer: 3000,
+            role: req.session.role,
+          });
+        }
+      })
+    })
+  }else{res.redirect('/login')}
+  
+}
+
+funtions.mercanciaServiceFiltro = (req, res) => {
+  if (req.session.loggedin) {
+  const status =  req.body.status
+    req.getConnection((error, conn) => {
+      conn.query("SELECT * FROM status", (error, data) => {
+        if (error) {
+          console.log(error);
+        } else {
+          conn.query("SELECT * FROM objetos WHERE status = ?",[status], (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.render("mercanciaTableservices", {
+                data: data,
+                results: results,
+                login: true,
+                name: req.session.name,
+                role: req.session.role,
+              });
+            }
+          });
+        }
+      });
+    });
+  } else {
+    res.redirect("/login");
+  }
+};
 // SELECT status, COUNT(status) as totalPorCliente from objetos GROUP BY status;
 
 module.exports = funtions;

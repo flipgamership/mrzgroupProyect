@@ -73,7 +73,7 @@ router.get("/registerUsersEditClient/:id", funtionsGetApp.registerUEditClient);
 router.get("/tableService", funtionsGetApp.mercanciaService);
 
 // ruta get de servicios consulta usuarios
-
+router.get("/tableServiceCompleted/:id", funtionsGetApp.completed)
 
 // ruta get de servicios del cliente tabla 
 router.get("/tableServiceClient/:client", funtionsGetApp.mercanciaServiceClient);
@@ -113,5 +113,7 @@ router.post("/loginAuthclientes", funtionsPostApp.loginAuthClients);
 router.post("/pF", funtionsPostApp.pF)
 //pruebas 
 router.get('/p', funtionsGetApp.p)
+
+router.post("/sendstatusFiltro", funtionsGetApp.mercanciaServiceFiltro);
 
 module.exports = router;

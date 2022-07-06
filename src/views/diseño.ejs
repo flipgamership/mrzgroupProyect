@@ -21,19 +21,22 @@
 <section id="header" class="jumbotron text-center">
     <br>
      <h1 class="display-3"><%= datos.awb %></h1>
-     <p class="lead">su servicio se encuentra con el siguiente historial de procesos</p>
+     <p class="lead">Su servicio se encuentra con el siguiente historial de procesos</p>
+    
+     <% if (datos.proceso == 'En Proceso'){ %> 
+      <h2 class="display-3 text-danger font-weight-bold">Está en proceso</h1>
+      
+      <% }else{ %>
+        <h2 class="display-3 text-success font-weight-bold">Completo</h1>
+       
+       <% } %>
     
 </section>
 <hr class="d-grid gap-2 col-8 col-md-8 mx-auto" >
   <section class="d-grid gap-2 col-6 col-md-6 mx-auto">
-    <p class="lead">su servicio se encuentra actualmente en: <strong><%= datos.status %></strong></p>
-    <% dataStatus.forEach((status) => {%>
-    <% if( status.name == datos.status){%>
-    <div class="progress" style="height: 25px; background-color: rgb(181, 181, 181)  ;" >
-      <div class="progress-bar progress-bar bg-success" role="progressbar" style="width: <%= status.porcentaje %>%" aria-valuenow="<%= status.porcentaje %>" aria-valuemin="0" aria-valuemax="100"><%= status.porcentaje %>%</div>
-    </div>
-    <% } %>
-    <% }) %>
+    <p class="lead">Su servicio se encuentra actualmente en: <strong><%= datos.status %></strong></p>
+
+   
     <br>
     <% dataHistorial.forEach((historial) => {%>
     <div class="accordion" id="accordionExample<%=historial.id%>">
@@ -54,7 +57,7 @@
             </div>  
             
             <p class="lead"><strong>Observaciones:</strong> <%= historial.observaciones %> </p>
-            <p class="lead"><strong>fecha de actualizacion:</strong> <%= historial.fecha %></p>
+            <p class="lead"><strong>fecha de actualización:</strong> <%= historial.fecha %></p>
 
           </div>
         </div>

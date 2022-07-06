@@ -13,10 +13,45 @@
 <br>
 <br>
 <br>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-2" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Selecciona porque dato quieres filtrar</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/sendstatusFiltro" method="post">
+          <p>Filtrar por estatus</p>
+        <select class="form-select col-md-3" aria-label="Default select example" name="status" >
+          <% data.forEach((Data)=> {%>
+              <option>
+                  <%= Data.name%>
+              </option>
+              <% }) %>
+        </select>
+      </div>
+      
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <br>
-<br>
-<br>
+
 <div class="container">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Filtrar Servicios <i class='bx bxs-filter-alt' ></i>
+  </button>
+  <br>
+<br>
   <div class="row">
    
     
@@ -28,8 +63,8 @@
         <th>Estatus</th>
         <th>Nombre mercancía</th>
         <th>Nombre cliente</th>
-        <th>fecha de ingreso</th>
-        <th>porcentaje de proceso</th>
+        <th>Fecha de ingreso</th>
+        <th>Proceso</th>
        
       </tr>
       </thead>
@@ -45,13 +80,11 @@
           <td><%= user.cliente %></td>
           <td><%= user.fecha %></td>
           <td>
-            <% data.forEach((datas) => {%>
-              <% if( datas.name == user.status){%>
-              <div class="progress">
-                <div class="progress-bar bg-success" role="progressbar" style="width: <%= datas.porcentaje %>%;" aria-valuenow="<%= datas.porcentaje %>" aria-valuemin="0" aria-valuemax="100"><%= datas.porcentaje %>%</div>
-              </div>
-              <% } %> 
-            <% }) %>
+            <% if (user.proceso == 'En Proceso'){ %> 
+           <a class="btn btn-warning">Esta en proceso</a>
+           <% }else{ %>
+            <a class="btn btn-success">Completo</a>
+            <% } %>
           </td>
           
         </tr>
@@ -59,6 +92,7 @@
       </tbody>
     </table>
 
+    
   </div>
 </div>
 </body>

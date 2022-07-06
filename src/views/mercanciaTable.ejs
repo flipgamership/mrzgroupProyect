@@ -45,11 +45,19 @@
           <td><%= user.name %></td>
           <td><%= user.cliente %></td>
           <td><%= user.fecha %></td>
+          <% if (user.proceso == 'En Proceso'){ %> 
           <td>
             <a href="/actualizarMercancia/<%= user.id %>" class="btn btn-primary" type="button"><i class='bx bx-list-ul'></i> Actualizar estatus</a>
             <a href="/addFotosTable/<%= user.id %>" class="btn btn-dark" type="button"><i class='bx bxs-image-add'></i> fotos</a>
-            <a href="/historiadata/<%= user.id %>" class="btn btn-primary" type="button"><i class='bx bx-list-check'></i> historial</a>
+            <br>
+            <a href="/historiadata/<%= user.id %>" class="btn btn-secondary" type="button" style="margin-top: 3px;"><i class='bx bx-list-check'></i> historial</a>
+            <a href="/tableServiceCompleted/<%= user.id %>" class="btn btn-success" type="button" style="margin-top: 3px;"><i class='bx bxs-check-circle'></i> completar</a>
           </td>
+          <% }else{ %>
+            <td>
+              <a href="#" class="btn btn-success font-weight-bold" type="button" style="margin-top: 3px;"><i class='bx bxs-check-circle'></i><h6 class="font-weight-bold">completado</h6> </a>
+            </td>
+            <% } %> 
           <td>
             <a href="/actualizarMercanciaObjeto/<%= user.id %>" class="btn btn-warning" type="button"><i class='bx bx-pencil'></i></a>
             <!-- <a href="/registerUsersDelate/" class="btn btn-danger" type="button"><i class='bx bxs-trash' ></i></a> -->

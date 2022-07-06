@@ -25,7 +25,7 @@ funtions.loginAuth = async (req, res) => {
               alert: true,
               alertTitle: "Ups los datos no coinciden",
               alertMessage:
-                "por favor revise correctamente la informacion y si este error continua vuelve a intentarlo mas tarde",
+                "por favor revise correctamente la información y si este error continua vuelve a intentarlo más tarde",
               alertIcon: "error",
               showConfirmButton: true,
               ruta: "login",
@@ -51,8 +51,8 @@ funtions.loginAuth = async (req, res) => {
             } else {
               res.render("login", {
                 alert: true,
-                alertTitle: "acceso consedido",
-                alertMessage: "acceso valido",
+                alertTitle: "acceso concedido",
+                alertMessage: "acceso válido",
                 alertIcon: "success",
                 showConfirmButton: false,
                 ruta: "home",
@@ -69,7 +69,7 @@ funtions.loginAuth = async (req, res) => {
       alert: true,
       alertTitle: "Ups por favor llene todos los datos",
       alertMessage:
-        "por favor revise correctamente la informacion y si este error continua vuelve a intentarlo mas tarde",
+        "por favor revise correctamente la información y si este error continua vuelve a intentarlo más tarde",
       alertIcon: "error",
       showConfirmButton: true,
       ruta: "login",
@@ -170,9 +170,9 @@ funtions.sendRegister = async (req, res) => {
             console.log("el correo esta registrado");
             res.render("notification", {
               alert: true,
-              alertTitle: "el correo ya esta registrado",
+              alertTitle: "el correo ya está registrado",
               alertMessage:
-                "este correo de Usuario ya fue registrado en la plataforma",
+                "este correo de usuario ya fue registrado en la plataforma",
               alertIcon: "error",
               showConfirmButton: true,
               ruta: "usuario",
@@ -198,9 +198,9 @@ funtions.sendRegister = async (req, res) => {
                     res.render("notification", {
                       role: req.session.role,
                       alert: true,
-                      alertTitle: "Ups hubo algun problema",
+                      alertTitle: "Ups hubo algún problema",
                       alertMessage:
-                        "por favor revise correctamente la informacion y si este error continua vuelve a intentarlo mas tarde ten en cuenta que si el usuario ya esta creado no lo podras agregar",
+                        "por favor revise correctamente la información y si este error continua vuelve a intentarlo mas tarde, ten en cuenta que si el usuario ya está creado no lo podrás agregar",
                       alertIcon: "error",
                       showConfirmButton: true,
                       ruta: "usuario",
@@ -212,7 +212,7 @@ funtions.sendRegister = async (req, res) => {
                       role: req.session.role,
                       alert: true,
                       alertTitle: "Registrado",
-                      alertMessage: "Registro de cuenta Exitosa",
+                      alertMessage: "Registro de cuenta exitosa",
                       alertIcon: "success",
                       showConfirmButton: true,
                       ruta: "register",
@@ -249,9 +249,9 @@ funtions.sendRegisterClients = async (req, res) => {
             console.log("el correo esta registrado");
             res.render("notification", {
               alert: true,
-              alertTitle: "el correo ya esta registrado",
+              alertTitle: "el correo ya está registrado",
               alertMessage:
-                "este correo de Usuario ya fue registrado en la plataforma",
+                "este correo de usuario ya fue registrado en la plataforma",
               alertIcon: "error",
               showConfirmButton: true,
               ruta: "usuario",
@@ -277,9 +277,9 @@ funtions.sendRegisterClients = async (req, res) => {
                     res.render("notification", {
                       role: req.session.role,
                       alert: true,
-                      alertTitle: "Ups hubo algun problema",
+                      alertTitle: "Ups hubo algún problema",
                       alertMessage:
-                        "por favor revise correctamente la informacion y si este error continua vuelve a intentarlo mas tarde ten en cuenta que si el usuario ya esta creado no lo podras agregar",
+                        "por favor revise correctamente la información y si este error continua vuelve a intentarlo mas tarde, ten en cuenta que si el usuario ya está creado no lo podrás agregar",
                       alertIcon: "error",
                       showConfirmButton: true,
                       ruta: "usuario",
@@ -338,8 +338,8 @@ funtions.sendUpdateUser = (req, res) => {
               res.render("notification", {
                 role: req.session.role,
                 alert: true,
-                alertTitle: "actualizado con exito",
-                alertMessage: "se actualizo la informacion de forma Exitosa",
+                alertTitle: "actualizado con éxito",
+                alertMessage: "se actualizó la información de forma exitosa",
                 alertIcon: "success",
                 showConfirmButton: true,
                 ruta: "registerTable",
@@ -387,8 +387,8 @@ funtions.sendUpdateUserClient = (req, res) => {
               res.render("notification", {
                 role: req.session.role,
                 alert: true,
-                alertTitle: "actualizado con exito",
-                alertMessage: "se actualizo la informacion de forma Exitosa",
+                alertTitle: "actualizado con éxito",
+                alertMessage: "se actualizó la información de forma exitosa",
                 alertIcon: "success",
                 showConfirmButton: true,
                 ruta: "registerTableClient",
@@ -436,8 +436,8 @@ funtions.sendUpdateMercanciaObjeto = (req, res) => {
               res.render("notification", {
                 role: req.session.role,
                 alert: true,
-                alertTitle: "actualizado con exito",
-                alertMessage: "se actualizo la informacion de forma Exitosa",
+                alertTitle: "actualizado con éxito",
+                alertMessage: "se actualizó la información de forma exitosa",
                 alertIcon: "success",
                 showConfirmButton: true,
                 ruta: "mercanciaTable",
@@ -461,14 +461,14 @@ funtions.sendAddStatus = async (req, res) => {
   const id = req.body.id;
   const name = req.body.name;
   const description = req.body.description;
-  const porcentaje = req.body.porcentaje;
+  
   req.getConnection((error, conn) => {
     conn.query(
       "INSERT INTO status SET ?",
       {
         name: name,
         descripcion: description,
-        porcentaje: porcentaje,
+       
       },
       async (error, results) => {
         if (error) {
@@ -476,9 +476,9 @@ funtions.sendAddStatus = async (req, res) => {
           res.render("notification", {
             role: req.session.role,
             alert: true,
-            alertTitle: "Ups hubo algun problema",
+            alertTitle: "Ups hubo algún problema",
             alertMessage:
-              "por favor revise correctamente la informacion y si este error continua vuelve a intentarlo mas tarde",
+              "por favor revise correctamente la información y si este error continua vuelve a intentarlo más tarde",
             alertIcon: "error",
             showConfirmButton: true,   
             ruta: "AgregarStatus",
@@ -488,8 +488,8 @@ funtions.sendAddStatus = async (req, res) => {
           res.render("notification", {
             role: req.session.role,
             alert: true,
-            alertTitle: "agregado",
-            alertMessage: "se agrego el estatus de forma  Exitosa",
+            alertTitle: "Agregado",
+            alertMessage: "se agrego el estatus de forma  exitosa",
             alertIcon: "success",
             showConfirmButton: true,
             ruta: "statustable",
@@ -522,9 +522,9 @@ funtions.sendAddMercancia = async (req, res) => {
           res.render("notification", {
             role: req.session.role,
             alert: true,
-            alertTitle: "Ups hubo algun problema",
+            alertTitle: "Ups hubo algún problema",
             alertMessage:
-              "por favor revise correctamente la informacion y si este error continua vuelve a intentarlo mas tarde",
+              "por favor revise correctamente la información y si este error continua vuelve a intentarlo más tarde",
             alertIcon: "error",
             showConfirmButton: true,
             ruta: "sendMercancia",
@@ -536,7 +536,7 @@ funtions.sendAddMercancia = async (req, res) => {
             role: req.session.role,
             alert: true,
             alertTitle: "agregado",
-            alertMessage: "se agrego el estatus de forma  Exitosa",
+            alertMessage: "se agregó el estatus de forma exitosa",
             alertIcon: "success",
             showConfirmButton: true,
             ruta: "home",
@@ -564,7 +564,7 @@ funtions.SubirNuevoArchivos = (req, res) => {
             console.log(results);
             res.render("notification", {
               alert: true,
-              alertTitle: "foto subida con exito",
+              alertTitle: "foto subida con éxito",
               alertMessage: "",
               alertIcon: "success",
               showConfirmButton: false,
@@ -652,7 +652,7 @@ funtions.savePasssword = async (req, res) => {
           } else {
             res.render("notification", {
               alert: true,
-              alertTitle: "Contraseña actualizada con exito",
+              alertTitle: "Contraseña actualizada con éxito",
               alertMessage: "",
               alertIcon: "success",
               showConfirmButton: false,
@@ -682,7 +682,7 @@ funtions.savePassswordCleint = async (req, res) => {
           } else {
             res.render("notification", {
               alert: true,
-              alertTitle: "Contraseña actualizada con exito",
+              alertTitle: "Contraseña actualizada con éxito",
               alertMessage: "",
               alertIcon: "success",
               showConfirmButton: false,
@@ -748,7 +748,7 @@ funtions.pF = (req, res) => {
                 alert: true,
                 alertTitle:
                   "lo sentimos pero este servicio que solicito no se encuentra registrada ",
-                alertMessage: "no se encuentra registrada en el software porfavor comunicarze con el area del servicio al cliente",
+                alertMessage: "no se encuentra registrada en el software por favor comunicarse con el area del servicio al cliente",
                 alertIcon: "error",
                 showConfirmButton: false,
                 ruta: "../../",
