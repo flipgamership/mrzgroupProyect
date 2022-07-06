@@ -739,10 +739,15 @@ funtions.p = (req, res) => {
       if (error) {console.log(error);}else{
         conn.query("SELECT status, COUNT(status) as totalPorCliente from objetos GROUP BY status;", (error, resultStatus) =>{
           if (error){console.log(error);}else{
-            res.render("preubas",{
-              nameUsersLabels: results,
-              datosPrestamoDepartament: resultStatus,
-              
+            conn.query("SELECT proceso, COUNT(proceso) as totalPorCliente from objetos GROUP BY proceso;", (error, resultProceso) =>{
+              if (error){console.log(error);}else{
+                res.render("preubas",{
+                  nameUsersLabels: results,
+                  datosPrestamoDepartament: resultStatus,
+                  resultProceso:resultProceso
+                  
+                })
+              }
             })
           }
         })
@@ -750,6 +755,7 @@ funtions.p = (req, res) => {
     })
   })
 }
+
 
 funtions.completed = (req, res) => {
   if (req.session.loggedin){
