@@ -34,10 +34,16 @@
 </section>
 <hr class="d-grid gap-2 col-8 col-md-8 mx-auto" >
   <section class="d-grid gap-2 col-6 col-md-6 mx-auto">
-    <p class="lead">Su servicio se encuentra actualmente en: <strong><%= datos.status %></strong></p>
+    <p class="lead">Su servicio se encuentra actualmente en:  <strong><%= datos.status %></strong></p>
 
    
     <br>
+    
+    <% if (dataHistorial.length != 0){ %> 
+
+
+
+
     <% dataHistorial.forEach((historial) => {%>
     <div class="accordion" id="accordionExample<%=historial.id%>">
       <div class="accordion-item">
@@ -64,6 +70,24 @@
       </div>
     </div>
     <% }) %>    
+    <% }else{ %> 
+      <div class="accordion" id="accordionExample<%=datos.id%>">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne<%=datos.id%>">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              <%= datos.status %> -- <%= datos.fecha %>
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne<%=datos.id%>" data-bs-parent="#accordionExample<%=datos.id%>">
+            <div class="accordion-body">
+              <p class="lead"><strong>Observaciones:</strong> su servicio apenas ingreso a nuestro sistema por favor esperar para mas actualizaciones</p>
+              <p class="lead"><strong>fecha de actualización:</strong> <%= datos.fecha %></p>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+      <% } %> 
   </section>
 <div class="d-grid gap-2 col-3 col-md-3 mx-auto">
   <br>
