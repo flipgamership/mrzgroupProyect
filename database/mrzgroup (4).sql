@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-07-2022 a las 16:47:11
+-- Tiempo de generación: 06-07-2022 a las 21:03:55
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -29,6 +29,7 @@ USE `mrzgroup`;
 -- Estructura de tabla para la tabla `clientes`
 --
 
+DROP TABLE IF EXISTS `clientes`;
 CREATE TABLE `clientes` (
   `id` int(11) NOT NULL,
   `nombre` varchar(500) NOT NULL,
@@ -53,6 +54,7 @@ INSERT INTO `clientes` (`id`, `nombre`, `correo`, `password`, `telefono`, `warra
 -- Estructura de tabla para la tabla `historial`
 --
 
+DROP TABLE IF EXISTS `historial`;
 CREATE TABLE `historial` (
   `id` int(11) NOT NULL,
   `awbID` int(11) NOT NULL,
@@ -68,7 +70,9 @@ CREATE TABLE `historial` (
 INSERT INTO `historial` (`id`, `awbID`, `estatusHistorial`, `fecha`, `observaciones`) VALUES
 (3, 3, 'carga ingresada', '2022-07-06', 'La carga ingresó a nuestras instalaciones en perfecto estado '),
 (4, 3, 'selectividad fisica', '2022-07-06', 'Se realizó la selectividad física sin problemas'),
-(5, 4, 'En Servicio de embalaje', '2022-07-07', 'Se comenzó el servicio de embalaje ');
+(5, 4, 'En Servicio de embalaje', '2022-07-07', 'Se comenzó el servicio de embalaje '),
+(6, 5, 'selectividad fisica', '2022-07-07', 'Borde caja lastimada '),
+(7, 5, 'envio ejemplo', '2022-07-06', 'adhkshdsha');
 
 -- --------------------------------------------------------
 
@@ -76,6 +80,7 @@ INSERT INTO `historial` (`id`, `awbID`, `estatusHistorial`, `fecha`, `observacio
 -- Estructura de tabla para la tabla `imagenes`
 --
 
+DROP TABLE IF EXISTS `imagenes`;
 CREATE TABLE `imagenes` (
   `id` int(11) NOT NULL,
   `idHistorial` int(11) NOT NULL,
@@ -92,7 +97,8 @@ INSERT INTO `imagenes` (`id`, `idHistorial`, `statusHistorial`, `imagen`) VALUES
 (6, 3, 'carga ingresada', '82f24a48-bd3f-4e24-916b-e7571de7e1d6.jpg'),
 (7, 4, 'En Servicio de embalaje', '239a16a1-b614-4284-9743-9b4461007744.jpg'),
 (8, 4, 'En Servicio de embalaje', '1df1c9b9-0374-49e0-9f10-b7b31e6b7bf1.jpg'),
-(9, 4, 'carga ingresada', 'd11f80b8-1e63-4b5d-a642-35709b6ad16f.jpg');
+(9, 4, 'carga ingresada', 'd11f80b8-1e63-4b5d-a642-35709b6ad16f.jpg'),
+(10, 5, 'selectividad fisica', 'e35fefe3-b924-44d0-97f5-5f4b8ca803c4.jpg');
 
 -- --------------------------------------------------------
 
@@ -100,22 +106,26 @@ INSERT INTO `imagenes` (`id`, `idHistorial`, `statusHistorial`, `imagen`) VALUES
 -- Estructura de tabla para la tabla `objetos`
 --
 
+DROP TABLE IF EXISTS `objetos`;
 CREATE TABLE `objetos` (
   `id` int(11) NOT NULL,
   `awb` varchar(500) NOT NULL,
   `status` varchar(500) NOT NULL,
   `name` varchar(500) NOT NULL,
   `cliente` varchar(500) NOT NULL,
-  `fecha` varchar(500) NOT NULL
+  `fecha` varchar(500) NOT NULL,
+  `proceso` varchar(500) NOT NULL DEFAULT 'En Proceso'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `objetos`
 --
 
-INSERT INTO `objetos` (`id`, `awb`, `status`, `name`, `cliente`, `fecha`) VALUES
-(3, 'HAF1926312Ag', 'selectividad fisica', 'mercancía Avianca', 'Avianca', '2022-07-04'),
-(4, 'JAISUHDIAB1827', 'En Servicio de embalaje', 'empaquetado viiva', 'Viva', '2022-07-05');
+INSERT INTO `objetos` (`id`, `awb`, `status`, `name`, `cliente`, `fecha`, `proceso`) VALUES
+(3, 'HAF1926312Ag', 'selectividad fisica', 'mercancía Avianca', 'Avianca', '2022-07-04', 'En Proceso'),
+(4, 'JAISUHDIAB1827', 'En Servicio de embalaje', 'empaquetado viiva', 'Viva', '2022-07-05', 'En Proceso'),
+(5, 'ghfkgi78565', 'envio ejemplo', 'envio avianca', 'Avianca', '2022-07-06', 'completo'),
+(6, 'shdlfhskjdfhskdfhks', 'completo', 'envio', 'Avianca', '2022-07-06T12:27', 'En Proceso');
 
 -- --------------------------------------------------------
 
@@ -123,6 +133,7 @@ INSERT INTO `objetos` (`id`, `awb`, `status`, `name`, `cliente`, `fecha`) VALUES
 -- Estructura de tabla para la tabla `servicios`
 --
 
+DROP TABLE IF EXISTS `servicios`;
 CREATE TABLE `servicios` (
   `id` int(11) NOT NULL,
   `servicio` varchar(500) NOT NULL
@@ -134,30 +145,31 @@ CREATE TABLE `servicios` (
 -- Estructura de tabla para la tabla `status`
 --
 
+DROP TABLE IF EXISTS `status`;
 CREATE TABLE `status` (
   `id` int(11) NOT NULL,
   `name` varchar(500) NOT NULL,
-  `descripcion` varchar(500) NOT NULL,
-  `porcentaje` varchar(500) NOT NULL
+  `descripcion` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `status`
 --
 
-INSERT INTO `status` (`id`, `name`, `descripcion`, `porcentaje`) VALUES
-(6, 'completo', 'Se completó el servicio', '100'),
-(9, 'carga en aeropuerto', 'se recoge la carga y se carga en el aeropuerto', '25'),
-(10, 'carga ingresada', 'La carga se ingresó a nuestras instalaciones', '30'),
-(11, 'selectividad fisica', ' Se seleccionó físicamente', '40'),
-(12, 'selectividad documental', 'selectividad documental', '40'),
-(13, 'selectividad pendiente', 'la selectividad esta pendiente', '40'),
-(14, 'entrega de guia', 'Se le  realiza la entrega de la guía', '80'),
-(15, 'facturado', 'Se facturó el servicio', '90'),
-(16, 'notificacion cliente', 'se notifica al cliente de su importación', '25'),
-(17, 'liberación y/o pre-inspección', 'Se libera la mercancía o carga y también se puede realizar la pre- inspección ', '50'),
-(18, 'notificación embalaje', 'Se notifica al cliente de que su producto se embaló', '25'),
-(19, 'En Servicio de embalaje', 'Se está realizando el embalaje', '80');
+INSERT INTO `status` (`id`, `name`, `descripcion`) VALUES
+(6, 'completo', 'Se completó el servicio'),
+(9, 'carga en aeropuerto', 'se recoge la carga y se carga en el aeropuerto'),
+(10, 'carga ingresada', 'La carga se ingresó a nuestras instalaciones'),
+(11, 'selectividad fisica', ' Se seleccionó físicamente'),
+(12, 'selectividad documental', 'selectividad documental'),
+(13, 'selectividad pendiente', 'la selectividad esta pendiente'),
+(14, 'entrega de guia', 'Se le  realiza la entrega de la guía'),
+(15, 'facturado', 'Se facturó el servicio'),
+(16, 'notificacion cliente', 'se notifica al cliente de su importación'),
+(17, 'liberación y/o pre-inspección', 'Se libera la mercancía o carga y también se puede realizar la pre- inspección '),
+(18, 'notificación embalaje', 'Se notifica al cliente de que su producto se embaló'),
+(19, 'En Servicio de embalaje', 'Se está realizando el embalaje'),
+(20, 'envio ejemplo', 'envio ejemplo');
 
 -- --------------------------------------------------------
 
@@ -165,6 +177,7 @@ INSERT INTO `status` (`id`, `name`, `descripcion`, `porcentaje`) VALUES
 -- Estructura de tabla para la tabla `statusservice`
 --
 
+DROP TABLE IF EXISTS `statusservice`;
 CREATE TABLE `statusservice` (
   `id` int(11) NOT NULL,
   `name` varchar(500) NOT NULL,
@@ -178,6 +191,7 @@ CREATE TABLE `statusservice` (
 -- Estructura de tabla para la tabla `usuarios`
 --
 
+DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL,
   `nombre` varchar(500) NOT NULL,
@@ -259,19 +273,19 @@ ALTER TABLE `clientes`
 -- AUTO_INCREMENT de la tabla `historial`
 --
 ALTER TABLE `historial`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `imagenes`
 --
 ALTER TABLE `imagenes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `objetos`
 --
 ALTER TABLE `objetos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `servicios`
@@ -283,7 +297,7 @@ ALTER TABLE `servicios`
 -- AUTO_INCREMENT de la tabla `status`
 --
 ALTER TABLE `status`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
