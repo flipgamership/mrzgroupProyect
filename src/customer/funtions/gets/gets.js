@@ -643,13 +643,27 @@ funtions.delateImagenes = (req, res) => {
   if (req.session.loggedin) {
     const id = req.params.id;
     req.getConnection((error, conn) => {
-      conn.query("DELETE FROM imagenes WHERE id= ?", [id], (error, results) => {
+      conn.query("select * from imagenes WHERE id = ?", [id], (error, data) => {
         if (error) {
           console.log(error);
         } else {
-          res.redirect("/mercanciaTable");
+          const filePath = path.join(__dirname, "/../../../public/multer/archivosUser/")
+          const img = filePath + data[0].imagen
+          fs.unlink(img).then(() => {
+            console.log('file deleted successfully')
+              conn.query("DELETE FROM imagenes WHERE id= ?", [id], (error, results) => {
+                if (error) {
+                  console.log(error);
+                } else {
+                  res.redirect("/mercanciaTable");
+                }
+              });
+          }).catch(err => {
+            console.error('Something wrong happened removing the file', err)
+          }) 
         }
       });
+      
     });
   }
 };
