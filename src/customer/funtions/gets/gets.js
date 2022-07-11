@@ -3,7 +3,8 @@ const { render } = require("ejs");
 const bcryptjs = require("bcryptjs");
 const session = require("express-session");
 const funtions = {};
-
+const fs = require("fs").promises;
+const path = require('path')
 // funtions.p = (req, res) => {
 //     res.render("notification");
 // };
@@ -21,7 +22,7 @@ funtions.home = (req, res) => {
 };
 funtions.index = (req, res) => {
   if (req.session.loggedin) {
-    res.render("index",{
+    res.render("index", {
       login: true,
       name: req.session.name,
       role: req.session.role,
@@ -47,7 +48,7 @@ funtions.login = (req, res) => {
 
 funtions.loginClient = (req, res) => {
   if (req.session.loggedin) {
-    res.redirect("/home",{
+    res.redirect("/home", {
       login: true,
       name: req.session.name,
       role: req.session.role,
@@ -152,9 +153,7 @@ funtions.registerUEdit = (req, res) => {
 
 funtions.registerUEditClient = (req, res) => {
   if (req.session.loggedin) {
-    if (
-      req.session.role == "SuperAdmin"
-    ) {
+    if (req.session.role == "SuperAdmin") {
       const id = req.params.id;
       req.getConnection((error, conn) => {
         conn.query(
@@ -184,7 +183,6 @@ funtions.registerUEditClient = (req, res) => {
     res.redirect("/login");
   }
 };
-
 
 funtions.BlockUser = (req, res) => {
   if (req.session.loggedin) {
@@ -430,7 +428,7 @@ funtions.mercanciaUpdateObjetos = (req, res) => {
                   } else {
                     res.render("UpdateMercancia", {
                       resultsClient: data,
-                      user : results[0],
+                      user: results[0],
                       login: true,
                       name: req.session.name,
                       role: req.session.role,
@@ -450,7 +448,6 @@ funtions.mercanciaUpdateObjetos = (req, res) => {
     res.redirect("/login");
   }
 };
-
 
 funtions.fotosHistorial = (req, res) => {
   if (req.session.loggedin) {
@@ -601,13 +598,43 @@ funtions.delateMercancia = (req, res) => {
   if (req.session.loggedin) {
     const id = req.params.id;
     req.getConnection((error, conn) => {
-      conn.query("DELETE FROM objetos WHERE id= ?", [id], (error, results) => {
-        if (error) {
-          console.log(error);
-        } else {
-          res.redirect("/mercanciaTable");
+      conn.query(
+        "SELECT * FROM imagenes WHERE idHistorial = ?",
+        [id],
+        (error, data) => {
+          if (error) {
+            console.log(error);
+          } else {
+            let imagenesDelete = [];
+            const filePath = path.join(__dirname, "/../../../public/multer/archivosUser/")
+            for (let i = 0; i < data.length; i++) {
+              imagenesDelete.push(filePath+data[i].imagen);
+            }
+            Promise.all(imagenesDelete.map((file) => fs.unlink(file)))
+              .then(() => {
+                console.log("All files removed");
+                conn.query("DELETE FROM objetos WHERE id= ?", [id], (error, results) => {
+                  if (error) {
+                    console.log(error);
+                  } else {
+                    conn.query("DELETE FROM imagenes WHERE idHistorial = ?", [id], (error, results) => {
+                      if (error) {
+                        console.log(error);
+                      } else {
+                        res.redirect("/mercanciaTable");
+                      }
+                    });
+                  }
+                });
+              })
+              .catch((err) => {
+                console.error("Something wrong happened removing files", err);
+              });
+          }
         }
-      });
+      );
+
+      
     });
   }
 };
@@ -626,8 +653,6 @@ funtions.delateImagenes = (req, res) => {
     });
   }
 };
-
-
 
 funtions.mercanciaService = (req, res) => {
   if (req.session.loggedin) {
@@ -659,51 +684,58 @@ funtions.mercanciaService = (req, res) => {
 
 funtions.passwordNew = (req, res) => {
   if (req.session.loggedin) {
-      if (req.session.role == "SuperAdmin") {
-          const id = req.params.id;
-          req.getConnection((error, conn) => {
-              conn.query(
-                  "SELECT * FROM usuarios WHERE id = ?", [id],
-                  (error, results) => {
-                      if (error) {
-                          console.log(error);
-                      } else {
-                          res.render("newPassword", { user: results[0], role: req.session.role, });
-                      }
-                  }
-              );
-          });
-      } else {
-          res.redirect("/home");
-      }
+    if (req.session.role == "SuperAdmin") {
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM usuarios WHERE id = ?",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.render("newPassword", {
+                user: results[0],
+                role: req.session.role,
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.redirect("/home");
+    }
   } else {
-      res.redirect("/login");
+    res.redirect("/login");
   }
 };
 funtions.passwordNewClient = (req, res) => {
   if (req.session.loggedin) {
-      if (req.session.role == "SuperAdmin") {
-          const id = req.params.id;
-          req.getConnection((error, conn) => {
-              conn.query(
-                  "SELECT * FROM clientes WHERE id = ?", [id],
-                  (error, results) => {
-                      if (error) {
-                          console.log(error);
-                      } else {
-                          res.render("newPasswordClient", { user: results[0], role: req.session.role, });
-                      }
-                  }
-              );
-          });
-      } else {
-          res.redirect("/home");
-      }
+    if (req.session.role == "SuperAdmin") {
+      const id = req.params.id;
+      req.getConnection((error, conn) => {
+        conn.query(
+          "SELECT * FROM clientes WHERE id = ?",
+          [id],
+          (error, results) => {
+            if (error) {
+              console.log(error);
+            } else {
+              res.render("newPasswordClient", {
+                user: results[0],
+                role: req.session.role,
+              });
+            }
+          }
+        );
+      });
+    } else {
+      res.redirect("/home");
+    }
   } else {
-      res.redirect("/login");
+    res.redirect("/login");
   }
 };
-
 
 funtions.mercanciaServiceClient = (req, res) => {
   if (req.session.loggedin) {
@@ -713,19 +745,23 @@ funtions.mercanciaServiceClient = (req, res) => {
         if (error) {
           console.log(error);
         } else {
-          conn.query("SELECT * FROM objetos WHERE cliente = ? ", [client], (error, results) => {
-            if (error) {
-              console.log(error);
-            } else {
-              res.render("mercanciaTableservicesClient", {
-                data: data,
-                results: results,
-                login: true,
-                name: req.session.name,
-                role: req.session.role,
-              });
+          conn.query(
+            "SELECT * FROM objetos WHERE cliente = ? ",
+            [client],
+            (error, results) => {
+              if (error) {
+                console.log(error);
+              } else {
+                res.render("mercanciaTableservicesClient", {
+                  data: data,
+                  results: results,
+                  login: true,
+                  name: req.session.name,
+                  role: req.session.role,
+                });
+              }
             }
-          });
+          );
         }
       });
     });
@@ -735,73 +771,96 @@ funtions.mercanciaServiceClient = (req, res) => {
 };
 funtions.p = (req, res) => {
   req.getConnection((error, conn) => {
-    conn.query("SELECT cliente, COUNT(cliente) as totalPorCliente from objetos GROUP BY cliente;",(error, results) => {
-      if (error) {console.log(error);}else{
-        conn.query("SELECT status, COUNT(status) as totalPorCliente from objetos GROUP BY status;", (error, resultStatus) =>{
-          if (error){console.log(error);}else{
-            conn.query("SELECT proceso, COUNT(proceso) as totalPorCliente from objetos GROUP BY proceso;", (error, resultProceso) =>{
-              if (error){console.log(error);}else{
-                res.render("preubas",{
-                  nameUsersLabels: results,
-                  datosPrestamoDepartament: resultStatus,
-                  resultProceso:resultProceso
-                  
-                })
+    conn.query(
+      "SELECT cliente, COUNT(cliente) as totalPorCliente from objetos GROUP BY cliente;",
+      (error, results) => {
+        if (error) {
+          console.log(error);
+        } else {
+          conn.query(
+            "SELECT status, COUNT(status) as totalPorCliente from objetos GROUP BY status;",
+            (error, resultStatus) => {
+              if (error) {
+                console.log(error);
+              } else {
+                conn.query(
+                  "SELECT proceso, COUNT(proceso) as totalPorCliente from objetos GROUP BY proceso;",
+                  (error, resultProceso) => {
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      res.render("preubas", {
+                        nameUsersLabels: results,
+                        datosPrestamoDepartament: resultStatus,
+                        resultProceso: resultProceso,
+                      });
+                    }
+                  }
+                );
               }
-            })
-          }
-        })
+            }
+          );
+        }
       }
-    })
-  })
-}
-
+    );
+  });
+};
 
 funtions.completed = (req, res) => {
-  if (req.session.loggedin){
-    const id = req.params.id
+  if (req.session.loggedin) {
+    const id = req.params.id;
     req.getConnection((error, conn) => {
-      conn.query("UPDATE objetos SET ? WHERE id = ?", [{proceso: "completo"}, id], (error, results) => {
-        if (error) {console.log(error);}else{
-          res.render("notification", {
-            alert: true,
-            alertTitle:
-              "el servicio se completó con éxito",
-            alertMessage: "",
-            alertIcon: "success",
-            showConfirmButton: false,
-            ruta: "../mercanciaTable",
-            timer: 3000,
-            role: req.session.role,
-          });
+      conn.query(
+        "UPDATE objetos SET ? WHERE id = ?",
+        [{ proceso: "completo" }, id],
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            res.render("notification", {
+              alert: true,
+              alertTitle: "el servicio se completó con éxito",
+              alertMessage: "",
+              alertIcon: "success",
+              showConfirmButton: false,
+              ruta: "../mercanciaTable",
+              timer: 3000,
+              role: req.session.role,
+            });
+          }
         }
-      })
-    })
-  }else{res.redirect('/login')}
-  
-}
+      );
+    });
+  } else {
+    res.redirect("/login");
+  }
+};
 
 funtions.mercanciaServiceFiltro = (req, res) => {
   if (req.session.loggedin) {
-  const status =  req.body.status
+    const status = req.body.status;
     req.getConnection((error, conn) => {
       conn.query("SELECT * FROM status", (error, data) => {
         if (error) {
           console.log(error);
         } else {
-          conn.query("SELECT * FROM objetos WHERE status = ?",[status], (error, results) => {
-            if (error) {
-              console.log(error);
-            } else {
-              res.render("mercanciaTableservices", {
-                data: data,
-                results: results,
-                login: true,
-                name: req.session.name,
-                role: req.session.role,
-              });
+          conn.query(
+            "SELECT * FROM objetos WHERE status = ?",
+            [status],
+            (error, results) => {
+              if (error) {
+                console.log(error);
+              } else {
+                res.render("mercanciaTableservices", {
+                  data: data,
+                  results: results,
+                  login: true,
+                  name: req.session.name,
+                  role: req.session.role,
+                });
+              }
             }
-          });
+          );
         }
       });
     });
