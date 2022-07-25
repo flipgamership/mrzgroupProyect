@@ -44,7 +44,7 @@
                                 <% } %> 
                                 <% if(typeof results2 !="undefined" ) { %>
                                     <div class="mb-3 ">
-                                        <h5 for="usuario ">AWB de la mercancía</h5>
+                                        <h5 for="usuario ">AWB/HAWB de la mercancía</h5>
                                         <input type="text " class="form-control" name="AWB" placeholder="<%= results2[0].awb %>" readonly>
                                     </div>
                                     <div class="mb-3 ">
@@ -85,7 +85,7 @@
                             <form action="/statusUpdate/<%= id %>" method="POST">
                                 <% if(typeof results1 !="undefined"  ) { %>
                                 <div class="mb-3 ">
-                                    <h5 for="usuario ">AWB de la mercancía</h5>
+                                    <h5 for="usuario ">AWB/HAWB de la mercancía</h5>
                                     <input type="text " class="form-control" name="AWB" value="<%= results3[0].awb %>">
                                 </div>
                                 <div class="mb-3 ">
@@ -114,7 +114,7 @@
                                 <% if(typeof results2 !="undefined"  ) { %>
                                     <input type="hidden" value="<%= results2[0].id%>" name="id">
                                 <div class="mb-3 ">
-                                    <h5 for="usuario ">AWB de la mercancía</h5>
+                                    <h5 for="usuario ">AWB/HAWB de la mercancía</h5>
                                     <input type="text " class="form-control" name="AWB" value="<%= results2[0].awb %>">
                                 </div>
                                 <div class="mb-3 ">
