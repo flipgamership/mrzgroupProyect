@@ -18,10 +18,13 @@
                             <form action="/sendUpdateMercanciaObjetos" method="POST">
                                 <input type="hidden" name="id" value="<%= user.id %>">
                                 <div class="mb-3 ">
-                                    <h5 for="usuario ">AWB de la mercancía o servicio</h5>
-                                    <input type="text " class="form-control" name="awb" value="<%= user.awb %>">
+                                    <h5 for="usuario ">AWB de la mercancía</h5>
+                                    <input type="text " class="form-control" name="awb" id="buscador" value="<%= user.awb %>">
                                 </div>
-                               
+                                <div class="mb-3 ">
+                                    <h5 for="usuario ">HAWB de la mercancía</h5>
+                                    <input type="text " class="form-control" name="hawb" id="buscador2" value="<%= user.hawb %>">
+                                </div>
                                 <div class="mb-3 ">
                                     <h5 for="usuario ">Nombre de la mercancía</h5>
                                     <input type="text " class="form-control" name="name" value="<%= user.name %>" required> 
@@ -94,7 +97,28 @@
                                         </script>
 
 
-
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <script>
+      $("#buscador").bind('keypress', function(event) {
+      var regex = new RegExp("^[a-zA-Z0-9 ]+$");
+      var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+      if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+     }
+    });
+    $("#buscador2").bind('keypress', function(event) {
+      var regex = new RegExp("^[a-zA-Z0-9 ]+$");
+      var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+      if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+     }
+    });
+    </script>
 
 
 

@@ -783,6 +783,7 @@ funtions.mercanciaServiceClient = (req, res) => {
     res.redirect("/login");
   }
 };
+
 funtions.p = (req, res) => {
   req.getConnection((error, conn) => {
     conn.query(

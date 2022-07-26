@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-07-2022 a las 21:03:55
+-- Tiempo de generación: 27-07-2022 a las 01:03:49
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -29,7 +29,6 @@ USE `mrzgroup`;
 -- Estructura de tabla para la tabla `clientes`
 --
 
-DROP TABLE IF EXISTS `clientes`;
 CREATE TABLE `clientes` (
   `id` int(11) NOT NULL,
   `nombre` varchar(500) NOT NULL,
@@ -46,7 +45,7 @@ CREATE TABLE `clientes` (
 
 INSERT INTO `clientes` (`id`, `nombre`, `correo`, `password`, `telefono`, `warrant`, `role`) VALUES
 (1, 'Avianca', 'thefelipegamer7@gmail.com', '$2a$08$dW0cqp5CZZ3QqRBuSqWJcuwXaxmMRvJKAqei8Zs3XQmwt1ezwB5wu', '3003044512', '', 'cliente'),
-(2, 'Viva', 'flipgamer1313@gmail.com', '$2a$08$p3j13ylUb2S2DjAL8egE5.1u9McBK0ldlDMZLlIzI3JxFFhpSfljS', '3003044512', '1001724660', 'cliente');
+(2, 'Viva', 'flipgamer1313@gmail.com', '$2a$08$48JTWgP9.YpUEvUOQB7DjeC6d2DMDMTWYlc.u/UHks2Wa8sYzeHHe', '3003044512', '1001724660', 'cliente');
 
 -- --------------------------------------------------------
 
@@ -54,7 +53,6 @@ INSERT INTO `clientes` (`id`, `nombre`, `correo`, `password`, `telefono`, `warra
 -- Estructura de tabla para la tabla `historial`
 --
 
-DROP TABLE IF EXISTS `historial`;
 CREATE TABLE `historial` (
   `id` int(11) NOT NULL,
   `awbID` int(11) NOT NULL,
@@ -80,7 +78,6 @@ INSERT INTO `historial` (`id`, `awbID`, `estatusHistorial`, `fecha`, `observacio
 -- Estructura de tabla para la tabla `imagenes`
 --
 
-DROP TABLE IF EXISTS `imagenes`;
 CREATE TABLE `imagenes` (
   `id` int(11) NOT NULL,
   `idHistorial` int(11) NOT NULL,
@@ -106,10 +103,10 @@ INSERT INTO `imagenes` (`id`, `idHistorial`, `statusHistorial`, `imagen`) VALUES
 -- Estructura de tabla para la tabla `objetos`
 --
 
-DROP TABLE IF EXISTS `objetos`;
 CREATE TABLE `objetos` (
   `id` int(11) NOT NULL,
   `awb` varchar(500) NOT NULL,
+  `hawb` varchar(500) NOT NULL,
   `status` varchar(500) NOT NULL,
   `name` varchar(500) NOT NULL,
   `cliente` varchar(500) NOT NULL,
@@ -121,11 +118,12 @@ CREATE TABLE `objetos` (
 -- Volcado de datos para la tabla `objetos`
 --
 
-INSERT INTO `objetos` (`id`, `awb`, `status`, `name`, `cliente`, `fecha`, `proceso`) VALUES
-(3, 'HAF1926312Ag', 'selectividad fisica', 'mercancía Avianca', 'Avianca', '2022-07-04', 'En Proceso'),
-(4, 'JAISUHDIAB1827', 'En Servicio de embalaje', 'empaquetado viiva', 'Viva', '2022-07-05', 'En Proceso'),
-(5, 'ghfkgi78565', 'envio ejemplo', 'envio avianca', 'Avianca', '2022-07-06', 'completo'),
-(6, 'shdlfhskjdfhskdfhks', 'completo', 'envio', 'Avianca', '2022-07-06T12:27', 'En Proceso');
+INSERT INTO `objetos` (`id`, `awb`, `hawb`, `status`, `name`, `cliente`, `fecha`, `proceso`) VALUES
+(3, 'HAF1926312Ag', 'HAF1926312AgFHAIOKFHJAK', 'selectividad fisica', 'mercancía Avianca', 'Avianca', '2022-07-04', 'En Proceso'),
+(4, 'JAISUHDIAB1827', '', 'En Servicio de embalaje', 'empaquetado viiva', 'Viva', '2022-07-05', 'En Proceso'),
+(5, 'ghfkgi78565', 'HAF1926312AgFHAIOKFHJAK', 'envio ejemplo', 'envio avianca', 'Avianca', '2022-07-06', 'completo'),
+(6, 'shdlfhskjdfhskdfhks', 'HAF1926312AgFHAIOKFHJAK', 'completo', 'envio', 'Avianca', '2022-07-06T12:27', 'En Proceso'),
+(7, '123123js', 'mrz1723261823hhs', 'carga en aeropuerto', 'entrega', 'Viva', '2022-07-26T17:42', 'En Proceso');
 
 -- --------------------------------------------------------
 
@@ -133,7 +131,6 @@ INSERT INTO `objetos` (`id`, `awb`, `status`, `name`, `cliente`, `fecha`, `proce
 -- Estructura de tabla para la tabla `servicios`
 --
 
-DROP TABLE IF EXISTS `servicios`;
 CREATE TABLE `servicios` (
   `id` int(11) NOT NULL,
   `servicio` varchar(500) NOT NULL
@@ -145,7 +142,6 @@ CREATE TABLE `servicios` (
 -- Estructura de tabla para la tabla `status`
 --
 
-DROP TABLE IF EXISTS `status`;
 CREATE TABLE `status` (
   `id` int(11) NOT NULL,
   `name` varchar(500) NOT NULL,
@@ -177,7 +173,6 @@ INSERT INTO `status` (`id`, `name`, `descripcion`) VALUES
 -- Estructura de tabla para la tabla `statusservice`
 --
 
-DROP TABLE IF EXISTS `statusservice`;
 CREATE TABLE `statusservice` (
   `id` int(11) NOT NULL,
   `name` varchar(500) NOT NULL,
@@ -191,7 +186,6 @@ CREATE TABLE `statusservice` (
 -- Estructura de tabla para la tabla `usuarios`
 --
 
-DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL,
   `nombre` varchar(500) NOT NULL,
@@ -285,7 +279,7 @@ ALTER TABLE `imagenes`
 -- AUTO_INCREMENT de la tabla `objetos`
 --
 ALTER TABLE `objetos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `servicios`

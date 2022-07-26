@@ -41,7 +41,7 @@
           <p class="card-text">Por favor ingrese el AWB del servicio para buscarlo en nuestra base de datos</p>
           <div class="input-group flex-nowrap">
             <span class="input-group-text" id="addon-wrapping"><i class='bx bx-search-alt' ></i></span>
-            <input type="text" class="form-control" name="awb" placeholder="AWB" aria-label="AWB" aria-describedby="addon-wrapping">
+            <input type="text" class="form-control" name="awb" placeholder="AWB" id="buscador" aria-label="AWB" aria-describedby="addon-wrapping">
           </div>
           <br>
           <button type="submit" class="btn btn-outline-primary btn-sm">Buscar <i class='bx bx-search-alt' ></i></button>
@@ -56,12 +56,12 @@
     <lottie-player src="https://assets7.lottiefiles.com/packages/lf20_hd9g6szl.json"  background="transparent"  class="card-img-top" speed="1"  style="width: 300px; height: 300px; margin: 0 auto;"  loop  autoplay></lottie-player>
       <div class="card-body">
         <h5 class="card-title">Buscar HAWB</h5>
-        <form method="post" action="/pF">
+        <form method="post" action="/pF2">
           <input type="hidden" name="name" value="<%= name %>"">
           <p class="card-text">Por favor ingrese el HAWB del servicio para buscarlo en nuestra base de datos</p>
           <div class="input-group flex-nowrap">
             <span class="input-group-text" id="addon-wrapping"><i class='bx bx-search-alt' ></i></span>
-            <input type="text" class="form-control" name="awb" placeholder="HAWB" aria-label="" aria-describedby="addon-wrapping">
+            <input type="text" class="form-control" name="awb" placeholder="HAWB" id="buscador" aria-label="" aria-describedby="addon-wrapping">
           </div>
           <br>
           <button type="submit" class="btn btn-outline-primary btn-sm">Buscar <i class='bx bx-search-alt' ></i></button>
@@ -95,6 +95,21 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/boxicons@2.1.2/dist/boxicons.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <script>
+      $("#buscador").bind('keypress', function(event) {
+      var regex = new RegExp("^[a-zA-Z0-9 ]+$");
+      var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+      if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+     }
+    });
+    </script>
 </body>
 
 </html>
+

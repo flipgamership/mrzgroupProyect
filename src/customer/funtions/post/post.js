@@ -413,6 +413,7 @@ funtions.sendUpdateMercanciaObjeto = (req, res) => {
     ) {
       const id = req.body.id;
       const awb = req.body.awb;
+      const hawb = req.body.hawb;
       const name = req.body.name;
       const client = req.body.cliente;
       
@@ -423,6 +424,7 @@ funtions.sendUpdateMercanciaObjeto = (req, res) => {
           [
             {
               awb:awb,
+              hawb:hawb,
               name:name,
               cliente:client,
               fecha:fecha
@@ -502,6 +504,7 @@ funtions.sendAddStatus = async (req, res) => {
 };
 funtions.sendAddMercancia = async (req, res) => {
   const AWB = req.body.AWB;
+  const HAWB = req.body.HAWB;
   const status = req.body.status;
   const name = req.body.name;
   const cliente = req.body.cliente;
@@ -511,6 +514,7 @@ funtions.sendAddMercancia = async (req, res) => {
       "INSERT INTO objetos SET ?",
       {
         awb: AWB,
+        hawb: HAWB,
         status: status,
         name: name,
         cliente: cliente,
@@ -585,6 +589,7 @@ funtions.estatusNuevoRegister = (req, res) => {
   if (req.session.loggedin) {
     const id = req.params.id;
     const awb = req.body.AWB;
+    const hawb = req.body.HAWB;
     const status = req.body.status;
     const name = req.body.name;
     const cliente = req.body.cliente;
@@ -765,6 +770,69 @@ funtions.pF = (req, res) => {
   
 }
 
+funtions.pF2 = (req, res) => {
+  const hawb = req.body.awb
+  const name = req.body.name
+  req.getConnection((error, conn) => {
+    conn.query("SELECT * FROM status", (error, dataStatus) => {
+      if (error) {
+        console.log(error);
+      } else {
+        conn.query("SELECT * FROM objetos WHERE hawb = ?", [hawb], (error, datos) => {
+          if (error) {
+            console.log(error);
+          } else {
+            if(datos != 0 ){
+              const info = []
+              for (var i = 0; i < datos.length; i++){
+                if (datos[i].cliente == name){
+                 info.push(datos[i])
+                }
+              }
+              if(info != 0 ){
+                res.render("mercanciaTableservicesClient", {
+                  results: info,
+                  login: true,
+                  name: req.session.name,
+                  role: req.session.role,
+                });
+              }else{
+                res.render("notification", {
+                  alert: true,
+                  alertTitle:
+                    "lo sentimos pero este servicio que solicito no se encuentra registrada ",
+                  alertMessage: "no se encuentra registrada en el software por favor comunicarse con el area del servicio al cliente",
+                  alertIcon: "error",
+                  showConfirmButton: false,
+                  ruta: "../../",
+                  timer: 3000,
+                  role: req.session.role,
+                });
+              }
+              
+            }else{
+              res.render("notification", {
+                alert: true,
+                alertTitle:
+                  "lo sentimos pero este servicio que solicito no se encuentra registrada ",
+                alertMessage: "no se encuentra registrada en el software por favor comunicarse con el area del servicio al cliente",
+                alertIcon: "error",
+                showConfirmButton: false,
+                ruta: "../../",
+                timer: 3000,
+                role: req.session.role,
+              });
+            }
+          
+           
+           
+          }
+        });
+      }
+    });
+  });
+  
+}
 
 
 

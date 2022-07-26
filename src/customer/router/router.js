@@ -66,7 +66,7 @@ router.get("/registerUsersDelateClient/:id", funtionsGetApp.BlockUserClient);
 
 // ruta editar usuario interno
 router.get("/registerUsersEdit/:id", funtionsGetApp.registerUEdit);
-// rutda editar cliente interno
+// ruta editar cliente interno
 router.get("/registerUsersEditClient/:id", funtionsGetApp.registerUEditClient);
 // ruta get de servicios del cliente
 
@@ -111,6 +111,7 @@ router.post("/loginAuthclientes", funtionsPostApp.loginAuthClients);
 
 //pF
 router.post("/pF", funtionsPostApp.pF)
+router.post("/pF2", funtionsPostApp.pF2)
 //pruebas 
 router.get('/p', funtionsGetApp.p)
 
