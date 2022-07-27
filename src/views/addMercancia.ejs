@@ -17,8 +17,12 @@
                         <div class="card-body ">
                             <form action="/sendMercancia" method="POST">
                                 <div class="mb-3 ">
-                                    <h5 for="usuario ">AWB/HAWB de la mercancía </h5>
-                                    <input type="text " class="form-control" name="AWB">
+                                    <h5 for="usuario ">AWB de la mercancía </h5>
+                                    <input type="text " class="form-control" id="buscador" name="AWB">
+                                </div>
+                                <div class="mb-3 ">
+                                    <h5 for="usuario ">HAWB de la mercancía </h5>
+                                    <input type="text " class="form-control" id="buscador2" name="HAWB">
                                 </div>
                                 <div class="mb-3 ">
                                     <h5 for="usuario">Estatus</h5>
@@ -102,7 +106,28 @@
                                             }
                                         </script>
 
-
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.slim.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+<script>
+  $("#buscador").bind('keypress', function(event) {
+  var regex = new RegExp("^[a-zA-Z0-9 ]+$");
+  var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+  if (!regex.test(key)) {
+    event.preventDefault();
+    return false;
+ }
+});
+$("#buscador2").bind('keypress', function(event) {
+  var regex = new RegExp("^[a-zA-Z0-9 ]+$");
+  var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+  if (!regex.test(key)) {
+    event.preventDefault();
+    return false;
+ }
+});
+</script>
 
 
 

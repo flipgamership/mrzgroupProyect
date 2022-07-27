@@ -21,6 +21,10 @@
                                         <h5 for="usuario ">AWB de la mercancía</h5>
                                         <input type="text " class="form-control" name="AWB" placeholder="<%= results3[0].awb %>" readonly>
                                     </div>
+                                    <div class="mb-3 ">
+                                        <h5 for="usuario ">AWB de la mercancía</h5>
+                                        <input type="text " class="form-control" name="HAWB" placeholder="<%= results3[0].hawb %>" readonly>
+                                    </div>
                                 <div class="mb-3 ">
                                     <h5 for="usuario">Estatus</h5>
                                     <input type="text" name="status" class="form-control" placeholder="<%= results1[0].estatusHistorial %>" readonly>
@@ -85,8 +89,12 @@
                             <form action="/statusUpdate/<%= id %>" method="POST">
                                 <% if(typeof results1 !="undefined"  ) { %>
                                 <div class="mb-3 ">
-                                    <h5 for="usuario ">AWB/HAWB de la mercancía</h5>
+                                    <h5 for="usuario ">AWB de la mercancía</h5>
                                     <input type="text " class="form-control" name="AWB" value="<%= results3[0].awb %>">
+                                </div>
+                                <div class="mb-3 ">
+                                    <h5 for="usuario ">HAWB de la mercancía</h5>
+                                    <input type="text " class="form-control" name="HAWB" value="<%= results3[0].hawb %>">
                                 </div>
                                 <div class="mb-3 ">
                                     <h5 for="usuario">Estatus</h5>
@@ -114,8 +122,12 @@
                                 <% if(typeof results2 !="undefined"  ) { %>
                                     <input type="hidden" value="<%= results2[0].id%>" name="id">
                                 <div class="mb-3 ">
-                                    <h5 for="usuario ">AWB/HAWB de la mercancía</h5>
-                                    <input type="text " class="form-control" name="AWB" value="<%= results2[0].awb %>">
+                                    <h5 for="usuario ">AWB de la mercancía</h5>
+                                    <input type="text " class="form-control" name="AWB"  id="buscador" value="<%= results2[0].awb %>">
+                                </div>
+                                <div class="mb-3 ">
+                                    <h5 for="usuario ">HAWB de la mercancía</h5>
+                                    <input type="text " class="form-control" name="HAWB" id="buscador2" value="<%= results2[0].hawb %>">
                                 </div>
                                 <div class="mb-3 ">
                                     <h5 for="usuario">Estatus</h5>
@@ -146,6 +158,29 @@
                 </div>
             </div>
         </div>
+        
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.slim.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+<script>
+  $("#buscador").bind('keypress', function(event) {
+  var regex = new RegExp("^[a-zA-Z0-9 ]+$");
+  var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+  if (!regex.test(key)) {
+    event.preventDefault();
+    return false;
+ }
+});
+$("#buscador2").bind('keypress', function(event) {
+  var regex = new RegExp("^[a-zA-Z0-9 ]+$");
+  var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+  if (!regex.test(key)) {
+    event.preventDefault();
+    return false;
+ }
+});
+</script>
         
         <script src=" //cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                                 <% if(typeof alert !="undefined" ) { %>
@@ -186,7 +221,6 @@
                                                 $(inputs[i]).val(aux);
                                             }
                                         </script>
-
 
 
 
