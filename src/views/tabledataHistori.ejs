@@ -27,7 +27,7 @@
                 <div class="card-body ">
                     <div class="row">
                         <div class="col-sm-12 d-flex justify-content-center">
-                            <h5 class="p-3 bg-dark bg-gradient col-lg-5 d-flex justify-content-center" style="color: white; border-radius: 10px; "> <i style="font-size: 24px; margin-right:5px;" class='bx bx-qr' ></i> <%= dataMerc[0].awb %></h3>
+                            <h5 class="p-3 bg-dark bg-gradient col-lg-5 d-flex justify-content-center" style="color: white; border-radius: 10px; "> <i style="font-size: 24px; margin-right:5px;" class='bx bx-qr' ></i> <%= dataMerc[0].hawb %></h3>
                     </div>
                 </div>
         
@@ -42,7 +42,7 @@
       <thead>
         <tr>
         <th>ID</th>
-        <th>AWB</th>
+        <th>HAWB</th>
         <th>Estatus</th>
         <th>fecha del estatus</th>
         <th>observaciones</th>
@@ -57,7 +57,7 @@
           <td><%= user.id %> </td>
           <% dataMerc.forEach((database)=>{ %> 
           <% if(user.awbID == database.id){ %>
-          <td><%= database.awb %></td>
+          <td><%= database.hawb %></td>
             <% } %> 
             <% }) %> 
             <td><%= user.estatusHistorial %></td> 
